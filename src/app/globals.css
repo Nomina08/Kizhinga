@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'leaflet/dist/leaflet.css';
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased transition-colors duration-300;
+}
+
+.leaflet-container {
+  @apply z-0 rounded-2xl;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply rounded-xl shadow-lg;
+}
+
+.custom-marker {
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.custom-marker.visited {
+  box-shadow: 0 0 0 3px #c9a227, 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
