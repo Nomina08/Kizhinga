@@ -12,10 +12,13 @@ import {
   Mountain,
   Scroll,
   Music,
+  type LucideIcon,
 } from 'lucide-react';
 import { legends } from '@/data/data';
+import { SectionHeader } from './ui/SectionHeader';
+import { ScrollReveal } from './ui/ScrollReveal';
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, LucideIcon> = {
   utensils: Utensils,
   droplets: Droplets,
   landmark: Landmark,
@@ -36,76 +39,72 @@ export function LegendsCarousel() {
   return (
     <section
       id="legends"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-buryat-green/5 via-buryat-gold/5 to-buryat-blue/5 dark:from-buryat-green/10 dark:via-buryat-gold/10 dark:to-buryat-blue/10"
+      className="section-shell bg-gradient-to-br from-buryat-green/5 via-buryat-sand/20 to-buryat-blue/5 dark:from-buryat-green/10 dark:via-stone-900/30 dark:to-buryat-blue/10"
     >
-      <div className="mx-auto max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="inline-flex items-center gap-2 rounded-full bg-buryat-gold/15 px-4 py-1.5 text-sm font-medium text-buryat-earth dark:text-buryat-gold mb-4">
-            <BookOpen className="h-4 w-4" />
-            Легенды и факты
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-stone-900 dark:text-white">
-            Устное наследие степи
-          </h2>
-        </motion.div>
+      <div className="container-premium max-w-4xl">
+        <ScrollReveal>
+          <SectionHeader
+            icon={BookOpen}
+            eyebrow="Легенды и факты"
+            title="Устное наследие степи"
+            subtitle="Истории, передаваемые из поколения в поколение"
+          />
+        </ScrollReveal>
 
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={legend.id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.4 }}
-              className="rounded-2xl glass-card p-8 sm:p-12 text-center min-h-[280px] flex flex-col items-center justify-center"
-            >
-              <div className="mb-6 rounded-full bg-buryat-green/10 dark:bg-buryat-green/20 p-4">
-                <Icon className="h-10 w-10 text-buryat-green dark:text-buryat-gold" />
-              </div>
-              <h3 className="font-display text-2xl font-bold text-stone-900 dark:text-white mb-4">
-                {legend.title}
-              </h3>
-              <p className="text-stone-600 dark:text-stone-300 leading-relaxed max-w-xl">
-                {legend.text}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+        <ScrollReveal delay={100}>
+          <div className="relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={legend.id}
+                initial={{ opacity: 0, x: 32, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -32, scale: 0.98 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="glass-panel p-10 sm:p-14 text-center min-h-[320px] flex flex-col items-center justify-center"
+              >
+                <div className="mb-8 rounded-3xl bg-buryat-green/10 dark:bg-buryat-green/15 p-5 shadow-inner">
+                  <Icon className="h-10 w-10 text-buryat-green dark:text-buryat-gold" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-display text-h3 font-semibold text-stone-900 dark:text-white mb-4">
+                  {legend.title}
+                </h3>
+                <p className="text-body text-stone-600 dark:text-stone-300 leading-relaxed max-w-xl">
+                  {legend.text}
+                </p>
+              </motion.div>
+            </AnimatePresence>
 
-          <button
-            onClick={prev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-6 rounded-full bg-white dark:bg-stone-800 p-2 shadow-lg border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
-            aria-label="Предыдущий"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-6 rounded-full bg-white dark:bg-stone-800 p-2 shadow-lg border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
-            aria-label="Следующий"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="flex justify-center gap-2 mt-8">
-          {legends.map((_, i) => (
             <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current
-                  ? 'w-8 bg-buryat-green dark:bg-buryat-gold'
-                  : 'w-2 bg-stone-300 dark:bg-stone-600'
-              }`}
-              aria-label={`Слайд ${i + 1}`}
-            />
-          ))}
-        </div>
+              onClick={prev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-6 rounded-2xl glass-panel p-3 hover:shadow-card-hover transition-all duration-300"
+              aria-label="Предыдущий"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-6 rounded-2xl glass-panel p-3 hover:shadow-card-hover transition-all duration-300"
+              aria-label="Следующий"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-10">
+            {legends.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`h-2 rounded-full transition-all duration-500 ease-premium ${
+                  i === current
+                    ? 'w-10 bg-buryat-green dark:bg-buryat-gold'
+                    : 'w-2 bg-stone-300 dark:bg-stone-600 hover:bg-stone-400'
+                }`}
+                aria-label={`Слайд ${i + 1}`}
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

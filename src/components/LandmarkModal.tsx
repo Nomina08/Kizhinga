@@ -13,58 +13,55 @@ interface LandmarkModalProps {
 export function LandmarkModal({ landmark, onClose }: LandmarkModalProps) {
   if (!landmark) return null;
 
-  const shortDesc = landmark.description.slice(0, 120) + '...';
-
   return (
     <AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, scale: 0.94, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ type: 'spring', damping: 25 }}
-          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-stone-900 shadow-2xl"
+          exit={{ opacity: 0, scale: 0.94, y: 24 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-4xl bg-surface-elevated dark:bg-surface-dark-elevated shadow-2xl ring-1 ring-stone-200/50 dark:ring-stone-700/50"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 rounded-full bg-black/20 p-2 text-white hover:bg-black/40 transition-colors"
+            className="absolute top-5 right-5 z-10 rounded-2xl bg-black/30 backdrop-blur p-2.5 text-white hover:bg-black/50 transition-colors"
             aria-label="Закрыть"
           >
             <X className="h-5 w-5" />
           </button>
 
-          <div className="relative h-56 sm:h-64 overflow-hidden rounded-t-2xl">
+          <div className="relative h-60 sm:h-72 overflow-hidden rounded-t-4xl">
             <img
               src={landmark.imageUrl}
               alt={landmark.name}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              <span className="inline-block rounded-full bg-buryat-gold/90 px-3 py-1 text-xs font-medium text-white mb-2">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <span className="badge bg-buryat-gold/95 text-white border-0 mb-3">
                 {LANDMARK_TYPE_LABELS[landmark.type]}
               </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-white font-display">
+              <h2 className="font-display text-2xl sm:text-3xl font-semibold text-white leading-tight">
                 {landmark.name}
               </h2>
             </div>
           </div>
 
-          <div className="p-6">
-            <p className="text-sm text-buryat-blue dark:text-buryat-gold font-medium mb-4">
+          <div className="p-8 sm:p-10">
+            <p className="text-sm font-semibold text-buryat-blue dark:text-buryat-gold mb-4">
               {landmark.era}
             </p>
-            <p className="text-stone-700 dark:text-stone-300 leading-relaxed">
+            <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
               {landmark.description}
             </p>
-            <p className="mt-4 text-xs text-stone-400 sr-only">{shortDesc}</p>
           </div>
         </motion.div>
       </motion.div>

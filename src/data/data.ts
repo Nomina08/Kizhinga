@@ -158,6 +158,11 @@ export const tourRoutes: TourRoute[] = [
     description: 'Дацаны, ступы и священные места буддийской традиции',
     landmarkIds: [1],
     color: '#8b5cf6',
+    duration: '3–4 часа',
+    distance: '~25 км',
+    difficulty: 'Лёгкий',
+    season: 'Круглый год',
+    badge: 'Духовный',
   },
   {
     id: 'nature',
@@ -165,6 +170,11 @@ export const tourRoutes: TourRoute[] = [
     description: 'Горы, река Уда, целебные источники и боргойская степь',
     landmarkIds: [2, 3, 5],
     color: '#22c55e',
+    duration: '1–2 дня',
+    distance: '~120 км',
+    difficulty: 'Средний',
+    season: 'Май — сентябрь',
+    badge: 'Природа',
   },
   {
     id: 'historical',
@@ -172,6 +182,11 @@ export const tourRoutes: TourRoute[] = [
     description: 'Памятники воинам и археологические находки эпохи гуннов',
     landmarkIds: [4, 6],
     color: '#ef4444',
+    duration: '5–6 часов',
+    distance: '~45 км',
+    difficulty: 'Лёгкий',
+    season: 'Апрель — октябрь',
+    badge: 'История',
   },
 ];
 

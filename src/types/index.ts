@@ -38,6 +38,11 @@ export interface TourRoute {
   description: string;
   landmarkIds: number[];
   color: string;
+  duration: string;
+  distance: string;
+  difficulty: 'Лёгкий' | 'Средний' | 'Сложный';
+  season: string;
+  badge: string;
 }
 
 export interface DistrictStat {

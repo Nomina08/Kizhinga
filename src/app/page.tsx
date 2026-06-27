@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import { TourProgress } from '@/components/TourProgress';
+import { TourProgressSection } from '@/components/TourProgressSection';
 import { StatsSection } from '@/components/StatsSection';
 import { TourMap } from '@/components/TourMapWrapper';
 import { PeopleGallery } from '@/components/PeopleGallery';
@@ -14,10 +14,10 @@ import { Footer } from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Header />
       <Hero />
-      <TourProgress />
+      <TourProgressSection />
       <StatsSection />
       <TourMap />
       <PeopleGallery />

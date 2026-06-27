@@ -1,6 +1,20 @@
 import type { Metadata } from 'next';
+import { Inter, Cormorant_Garamond } from 'next/font/google';
 import { ClientProviders } from '@/components/ClientProviders';
 import './globals.css';
+
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const display = Cormorant_Garamond({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Кижинга — Виртуальный тур',
@@ -23,7 +37,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className="min-h-screen font-sans bg-stone-50 text-stone-900 dark:bg-stone-950 dark:text-stone-100">
+      <body
+        className={`${inter.variable} ${display.variable} min-h-screen font-sans bg-surface text-stone-900 dark:bg-surface-dark dark:text-stone-100`}
+      >
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

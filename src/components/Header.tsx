@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { Logo } from './Logo';
 import { TourProgress } from './TourProgress';
@@ -22,74 +22,70 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const linkClass = scrolled
+    ? 'text-stone-600 dark:text-stone-300 hover:text-buryat-green dark:hover:text-buryat-gold'
+    : 'text-white/85 hover:text-white';
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-premium ${
         scrolled
-          ? 'bg-white/85 dark:bg-stone-900/85 backdrop-blur-xl shadow-md border-b border-white/20 dark:border-stone-700/50'
-          : 'bg-transparent'
+          ? 'bg-white/80 dark:bg-surface-dark/80 backdrop-blur-2xl shadow-soft border-b border-stone-200/50 dark:border-stone-800/50 py-3'
+          : 'bg-transparent py-5'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-          <Logo size={40} />
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <a href="#" className="flex items-center gap-3 shrink-0 group">
+          <Logo size={scrolled ? 38 : 44} />
           <img
             src={FLAG_IMAGE}
             alt=""
-            className="h-8 w-12 rounded object-cover shadow-sm ring-1 ring-white/40 hidden sm:block"
+            className={`rounded-lg object-cover shadow-sm ring-1 ring-white/30 transition-all ${
+              scrolled ? 'h-7 w-10' : 'h-8 w-12'
+            } hidden sm:block`}
           />
           <div className="hidden md:block">
             <p
-              className={`font-display text-lg font-bold leading-tight ${
-                scrolled
-                  ? 'text-buryat-green dark:text-buryat-gold'
-                  : 'text-white drop-shadow'
+              className={`font-display text-lg font-semibold leading-tight transition-colors ${
+                scrolled ? 'text-buryat-green dark:text-buryat-gold' : 'text-white'
               }`}
             >
               Кижинга
             </p>
-            <p
-              className={`text-xs ${
-                scrolled ? 'text-stone-500 dark:text-stone-400' : 'text-white/80'
-              }`}
-            >
+            <p className={`text-xs ${scrolled ? 'text-stone-500' : 'text-white/70'}`}>
               Виртуальный тур
             </p>
           </div>
         </a>
 
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden xl:flex items-center gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${
-                scrolled
-                  ? 'text-stone-700 dark:text-stone-300 hover:text-buryat-green dark:hover:text-buryat-gold'
-                  : 'text-white/90 hover:text-white'
-              }`}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${linkClass}`}
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden sm:block">
             <TourProgress compact scrolled={scrolled} />
           </div>
 
           <button
             onClick={toggleTheme}
-            className={`rounded-full p-2.5 transition-colors ${
+            className={`rounded-2xl p-2.5 transition-all duration-300 ${
               scrolled
                 ? 'bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700'
-                : 'bg-white/20 backdrop-blur hover:bg-white/30'
+                : 'bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/10'
             }`}
             aria-label={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
           >
@@ -101,8 +97,8 @@ export function Header() {
           </button>
 
           <button
-            className={`lg:hidden rounded-full p-2.5 ${
-              scrolled ? 'bg-stone-100 dark:bg-stone-800' : 'bg-white/20 backdrop-blur'
+            className={`xl:hidden rounded-2xl p-2.5 ${
+              scrolled ? 'bg-stone-100 dark:bg-stone-800' : 'bg-white/10 backdrop-blur border border-white/10'
             }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Меню"
@@ -116,27 +112,32 @@ export function Header() {
         </div>
       </div>
 
-      {menuOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden border-t border-stone-200 dark:border-stone-700 bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl px-4 py-4"
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block py-2.5 text-stone-700 dark:text-stone-300 font-medium"
-            >
-              {link.label}
-            </a>
-          ))}
-          <div className="mt-3 pt-3 border-t border-stone-200 dark:border-stone-700">
-            <TourProgress />
-          </div>
-        </motion.nav>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="xl:hidden overflow-hidden border-t border-stone-200/50 dark:border-stone-800 bg-white/95 dark:bg-surface-dark/95 backdrop-blur-2xl"
+          >
+            <div className="px-4 py-6 space-y-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-4 py-3 rounded-2xl text-stone-700 dark:text-stone-300 font-medium hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="pt-4 mt-4 border-t border-stone-200 dark:border-stone-800">
+                <TourProgress />
+              </div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
