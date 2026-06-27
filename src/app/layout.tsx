@@ -5,7 +5,15 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Кижинга — Виртуальный тур',
   description:
-    'Виртуальный тур по Кижингинскому району Республики Бурятия',
+    'Виртуальный тур по Кижингинскому району Республики Бурятия — карта, маршруты, легенды и история',
+  openGraph: {
+    title: 'Кижинга — Сердце Удолии',
+    description: 'Виртуальный тур по Кижингинскому району',
+    type: 'website',
+  },
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

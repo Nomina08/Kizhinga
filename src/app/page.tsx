@@ -1,8 +1,13 @@
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
+import { TourProgress } from '@/components/TourProgress';
+import { StatsSection } from '@/components/StatsSection';
 import { TourMap } from '@/components/TourMapWrapper';
 import { PeopleGallery } from '@/components/PeopleGallery';
 import { LegendsCarousel } from '@/components/LegendsCarousel';
+import { GastronomySection } from '@/components/GastronomySection';
+import { TimelineSection } from '@/components/TimelineSection';
+import { PhotoGallery } from '@/components/PhotoGallery';
 import { RoutesSection } from '@/components/RoutesSection';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { Footer } from '@/components/Footer';
@@ -12,9 +17,14 @@ export default function Home() {
     <main>
       <Header />
       <Hero />
+      <TourProgress />
+      <StatsSection />
       <TourMap />
       <PeopleGallery />
       <LegendsCarousel />
+      <GastronomySection />
+      <TimelineSection />
+      <PhotoGallery />
       <RoutesSection />
       <AudioPlayer />
       <Footer />

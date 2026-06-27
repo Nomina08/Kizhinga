@@ -40,6 +40,36 @@ export interface TourRoute {
   color: string;
 }
 
+export interface DistrictStat {
+  id: number;
+  label: string;
+  value: string;
+  icon: string;
+}
+
+export interface TimelineEvent {
+  id: number;
+  year: string;
+  title: string;
+  description: string;
+}
+
+export interface GalleryImage {
+  id: number;
+  src: string;
+  title: string;
+  caption: string;
+}
+
+export interface TourBadge {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  type?: LandmarkType;
+  requiresAll?: boolean;
+}
+
 export const LANDMARK_TYPE_LABELS: Record<LandmarkType, string> = {
   nature: 'Природа',
   culture: 'Культура',

@@ -59,10 +59,10 @@ export function RoutesSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => handleSelect(route.id)}
-                className={`relative text-left rounded-2xl p-6 border-2 transition-all duration-300 hover:-translate-y-1 ${
+                className={`relative text-left rounded-2xl p-6 border-2 transition-all duration-300 glass-card-hover ${
                   isActive
-                    ? 'border-buryat-gold bg-buryat-gold/5 dark:bg-buryat-gold/10 shadow-lg'
-                    : 'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-buryat-green/50 shadow-md'
+                    ? 'border-buryat-gold shadow-lg ring-2 ring-buryat-gold/30'
+                    : 'border-transparent hover:border-buryat-green/40'
                 }`}
               >
                 {isActive && (

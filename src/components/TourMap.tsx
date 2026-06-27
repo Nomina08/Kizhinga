@@ -15,13 +15,14 @@ import { Map as MapIcon, CheckCircle2 } from 'lucide-react';
 import { landmarks, tourRoutes, MAP_CENTER, MAP_ZOOM } from '@/data/data';
 import { useApp } from '@/context/AppContext';
 import { LANDMARK_TYPE_COLORS, LANDMARK_TYPE_LABELS } from '@/types';
-import type { Landmark } from '@/types';
+import type { Landmark, LandmarkType } from '@/types';
 import { LandmarkModal } from './LandmarkModal';
 
-function createMarkerIcon(color: string, visited: boolean) {
+function createMarkerIcon(color: string, visited: boolean, pulse: boolean) {
+  const classes = `custom-marker${visited ? ' visited' : ''}${pulse ? ' pulse' : ''}`;
   return L.divIcon({
     className: '',
-    html: `<div class="custom-marker${visited ? ' visited' : ''}" style="width:18px;height:18px;background:${color};"></div>`,
+    html: `<div class="${classes}" style="width:18px;height:18px;background:${color};"></div>`,
     iconSize: [18, 18],
     iconAnchor: [9, 9],
     popupAnchor: [0, -12],
@@ -53,6 +54,12 @@ export function TourMapInner() {
   const { selectedRoute, visitedLandmarks, markLandmarkVisited } = useApp();
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [modalLandmark, setModalLandmark] = useState<Landmark | null>(null);
+  const [typeFilter, setTypeFilter] = useState<LandmarkType | 'all'>('all');
+
+  const filteredLandmarks = useMemo(() => {
+    if (typeFilter === 'all') return landmarks;
+    return landmarks.filter((l) => l.type === typeFilter);
+  }, [typeFilter]);
 
   const routeCoords = useMemo(() => {
     if (!selectedRoute) return [];
@@ -95,17 +102,38 @@ export function TourMapInner() {
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+          <button
+            onClick={() => setTypeFilter('all')}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
+              typeFilter === 'all'
+                ? 'bg-buryat-green text-white shadow-md'
+                : 'glass-card text-stone-600 dark:text-stone-300 hover:bg-white/80'
+            }`}
+          >
+            Все
+          </button>
           {(['nature', 'culture', 'religion', 'history'] as const).map((type) => (
-            <div key={type} className="flex items-center gap-2 text-sm">
+            <button
+              key={type}
+              onClick={() => setTypeFilter(type)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 ${
+                typeFilter === type
+                  ? 'text-white shadow-md'
+                  : 'glass-card text-stone-600 dark:text-stone-300 hover:bg-white/80'
+              }`}
+              style={
+                typeFilter === type
+                  ? { backgroundColor: LANDMARK_TYPE_COLORS[type] }
+                  : undefined
+              }
+            >
               <span
-                className="w-3 h-3 rounded-full border-2 border-white shadow"
+                className="w-2.5 h-2.5 rounded-full border border-white/50"
                 style={{ background: LANDMARK_TYPE_COLORS[type] }}
               />
-              <span className="text-stone-600 dark:text-stone-400">
-                {LANDMARK_TYPE_LABELS[type]}
-              </span>
-            </div>
+              {LANDMARK_TYPE_LABELS[type]}
+            </button>
           ))}
         </div>
 
@@ -127,13 +155,17 @@ export function TourMapInner() {
                 pathOptions={{ color: routeColor, weight: 4, opacity: 0.8, dashArray: '8 8' }}
               />
             )}
-            {landmarks.map((landmark) => {
+            {filteredLandmarks.map((landmark) => {
               const visited = visitedLandmarks.has(landmark.id);
               return (
                 <Marker
                   key={landmark.id}
                   position={landmark.coordinates}
-                  icon={createMarkerIcon(LANDMARK_TYPE_COLORS[landmark.type], visited)}
+                  icon={createMarkerIcon(
+                    LANDMARK_TYPE_COLORS[landmark.type],
+                    visited,
+                    !visited
+                  )}
                   eventHandlers={{
                     click: () => {
                       setSelectedLandmark(landmark);

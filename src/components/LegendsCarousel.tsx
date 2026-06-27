@@ -62,7 +62,7 @@ export function LegendsCarousel() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -40 }}
               transition={{ duration: 0.4 }}
-              className="rounded-2xl bg-white dark:bg-stone-800 shadow-xl border border-stone-200 dark:border-stone-700 p-8 sm:p-12 text-center min-h-[280px] flex flex-col items-center justify-center"
+              className="rounded-2xl glass-card p-8 sm:p-12 text-center min-h-[280px] flex flex-col items-center justify-center"
             >
               <div className="mb-6 rounded-full bg-buryat-green/10 dark:bg-buryat-green/20 p-4">
                 <Icon className="h-10 w-10 text-buryat-green dark:text-buryat-gold" />

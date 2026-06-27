@@ -6,9 +6,12 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   type ReactNode,
 } from 'react';
 import type { RouteType } from '@/types';
+import { landmarks } from '@/data/data';
+import { computeEarnedBadges } from '@/lib/badges';
 
 interface AppContextValue {
   theme: 'light' | 'dark';
@@ -18,6 +21,9 @@ interface AppContextValue {
   visitedLandmarks: Set<number>;
   markLandmarkVisited: (id: number) => void;
   visitedCount: number;
+  totalLandmarks: number;
+  progressPercent: number;
+  earnedBadges: string[];
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -30,6 +36,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [selectedRoute, setSelectedRoute] = useState<RouteType | null>(null);
   const [visitedLandmarks, setVisitedLandmarks] = useState<Set<number>>(new Set());
   const [mounted, setMounted] = useState(false);
+
+  const totalLandmarks = landmarks.length;
+
+  const earnedBadges = useMemo(
+    () => computeEarnedBadges(landmarks, visitedLandmarks),
+    [visitedLandmarks]
+  );
+
+  const progressPercent = useMemo(
+    () =>
+      totalLandmarks > 0
+        ? Math.round((visitedLandmarks.size / totalLandmarks) * 100)
+        : 0,
+    [visitedLandmarks, totalLandmarks]
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -77,6 +98,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         visitedLandmarks,
         markLandmarkVisited,
         visitedCount: visitedLandmarks.size,
+        totalLandmarks,
+        progressPercent,
+        earnedBadges,
       }}
     >
       {children}

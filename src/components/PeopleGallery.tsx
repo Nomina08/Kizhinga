@@ -40,7 +40,7 @@ export function PeopleGallery() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               onClick={() => setSelectedPerson(person)}
-              className="group text-left rounded-2xl overflow-hidden bg-white dark:bg-stone-800 shadow-md hover:shadow-xl border border-stone-200 dark:border-stone-700 transition-all duration-300 hover:-translate-y-1"
+              className="group text-left glass-card-hover overflow-hidden"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
