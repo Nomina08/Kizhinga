@@ -5,18 +5,20 @@ import { timelineEvents } from '@/data/data';
 import { SectionHeader } from './ui/SectionHeader';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-export function TimelineSection() {
+export function TimelineSection({ standalone = false }: { standalone?: boolean }) {
   return (
-    <section id="timeline" className="section-shell bg-stone-100/30 dark:bg-stone-900/20">
+    <section id={standalone ? undefined : 'timeline'} className="section-shell bg-stone-100/30 dark:bg-stone-900/20">
       <div className="container-premium max-w-4xl">
-        <ScrollReveal>
-          <SectionHeader
-            icon={History}
-            eyebrow="История района"
-            title="От кочевых племён до сегодня"
-            subtitle="Ключевые вехи Кижингинского района на временной шкале"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={History}
+              eyebrow="История района"
+              title="От кочевых племён до сегодня"
+              subtitle="Ключевые вехи Кижингинского района на временной шкале"
+            />
+          </ScrollReveal>
+        )}
 
         <div className="relative">
           <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-buryat-green via-buryat-gold to-buryat-blue sm:-translate-x-1/2" />

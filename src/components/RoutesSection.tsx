@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Route,
@@ -33,29 +34,39 @@ const difficultyColor: Record<string, string> = {
   'Сложный': 'bg-rose-500/15 text-rose-700 dark:text-rose-400',
 };
 
-export function RoutesSection() {
+interface RoutesSectionProps {
+  standalone?: boolean;
+}
+
+export function RoutesSection({ standalone = false }: RoutesSectionProps) {
+  const router = useRouter();
   const { selectedRoute, setSelectedRoute } = useApp();
 
-  const scrollToMap = () => {
-    document.getElementById('map')?.scrollIntoView({ behavior: 'smooth' });
+  const goToMap = () => {
+    router.push('/map/');
   };
 
   const handleSelect = (routeId: RouteType) => {
     setSelectedRoute(routeId);
-    setTimeout(scrollToMap, 150);
+    setTimeout(goToMap, 150);
   };
 
   return (
-    <section id="routes" className="section-shell bg-gradient-to-b from-buryat-mist/50 to-transparent dark:from-stone-900/30">
+    <section
+      id={standalone ? undefined : 'routes'}
+      className="section-shell bg-gradient-to-b from-buryat-mist/50 to-transparent dark:from-stone-900/30"
+    >
       <div className="container-premium">
-        <ScrollReveal>
-          <SectionHeader
-            icon={Route}
-            eyebrow="Маршруты"
-            title="Выберите своё путешествие"
-            subtitle="Три curated-маршрута по Кижингинскому району — карта автоматически построит путь"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={Route}
+              eyebrow="Маршруты"
+              title="Выберите своё путешествие"
+              subtitle="Три curated-маршрута по Кижингинскому району — карта автоматически построит путь"
+            />
+          </ScrollReveal>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {tourRoutes.map((route, index) => {
@@ -126,10 +137,10 @@ export function RoutesSection() {
                     <Button
                       variant={isActive ? 'primary' : 'secondary'}
                       iconRight={ArrowRight}
-                      onClick={() => handleSelect(route.id)}
+                      onClick={() => (isActive ? goToMap() : handleSelect(route.id))}
                       className="w-full mt-6"
                     >
-                      {isActive ? 'На карте' : 'Подробнее'}
+                      {isActive ? 'На карте' : 'Выбрать маршрут'}
                     </Button>
                   </div>
                 </motion.article>

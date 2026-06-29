@@ -13,18 +13,20 @@ const iconMap: Record<string, LucideIcon> = {
   building: Building2,
 };
 
-export function StatsSection() {
+export function StatsSection({ standalone = false }: { standalone?: boolean }) {
   return (
-    <section id="stats" className="section-shell bg-surface dark:bg-surface-dark">
+    <section id={standalone ? undefined : 'stats'} className="section-shell bg-surface dark:bg-surface-dark">
       <div className="container-premium">
-        <ScrollReveal>
-          <SectionHeader
-            icon={BarChart3}
-            eyebrow="Интересные числа"
-            title="Кижингинский район в цифрах"
-            subtitle="Краткая статистика о земле степей, традиций и истории"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={BarChart3}
+              eyebrow="Интересные числа"
+              title="Кижингинский район в цифрах"
+              subtitle="Краткая статистика о земле степей, традиций и истории"
+            />
+          </ScrollReveal>
+        )}
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {districtStats.map((stat, index) => {

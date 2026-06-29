@@ -27,7 +27,7 @@ const iconMap: Record<string, LucideIcon> = {
   music: Music,
 };
 
-export function LegendsCarousel() {
+export function LegendsCarousel({ standalone = false }: { standalone?: boolean }) {
   const [current, setCurrent] = useState(0);
 
   const next = () => setCurrent((c) => (c + 1) % legends.length);
@@ -38,18 +38,20 @@ export function LegendsCarousel() {
 
   return (
     <section
-      id="legends"
+      id={standalone ? undefined : 'legends'}
       className="section-shell bg-gradient-to-br from-buryat-green/5 via-buryat-sand/20 to-buryat-blue/5 dark:from-buryat-green/10 dark:via-stone-900/30 dark:to-buryat-blue/10"
     >
       <div className="container-premium max-w-4xl">
-        <ScrollReveal>
-          <SectionHeader
-            icon={BookOpen}
-            eyebrow="Легенды и факты"
-            title="Устное наследие степи"
-            subtitle="Истории, передаваемые из поколения в поколение"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={BookOpen}
+              eyebrow="Легенды и факты"
+              title="Устное наследие степи"
+              subtitle="Истории, передаваемые из поколения в поколение"
+            />
+          </ScrollReveal>
+        )}
 
         <ScrollReveal delay={100}>
           <div className="relative">

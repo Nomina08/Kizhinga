@@ -18,6 +18,10 @@ const TourMapInner = dynamic(
   }
 );
 
-export function TourMap() {
-  return <TourMapInner />;
+interface TourMapProps {
+  fullPage?: boolean;
+}
+
+export function TourMap({ fullPage = false }: TourMapProps) {
+  return <TourMapInner fullPage={fullPage} />;
 }

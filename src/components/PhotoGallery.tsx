@@ -10,7 +10,7 @@ import { ScrollReveal } from './ui/ScrollReveal';
 
 const masonryHeights = ['h-64', 'h-80', 'h-72', 'h-96', 'h-64', 'h-80'];
 
-export function PhotoGallery() {
+export function PhotoGallery({ standalone = false }: { standalone?: boolean }) {
   const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -26,16 +26,18 @@ export function PhotoGallery() {
   };
 
   return (
-    <section id="gallery" className="section-shell bg-stone-100/40 dark:bg-stone-900/20">
+    <section id={standalone ? undefined : 'gallery'} className="section-shell bg-stone-100/40 dark:bg-stone-900/20">
       <div className="container-premium">
-        <ScrollReveal>
-          <SectionHeader
-            icon={Images}
-            eyebrow="Фотогалерея"
-            title="Кижинга в объективе"
-            subtitle="Нажмите на фото для просмотра в полном размере"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={Images}
+              eyebrow="Фотогалерея"
+              title="Кижинга в объективе"
+              subtitle="Нажмите на фото для просмотра в полном размере"
+            />
+          </ScrollReveal>
+        )}
 
         <div className="masonry-grid">
           {galleryImages.map((img, index) => (

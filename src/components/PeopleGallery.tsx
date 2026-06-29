@@ -9,20 +9,22 @@ import { PersonModal } from './PersonModal';
 import { SectionHeader } from './ui/SectionHeader';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-export function PeopleGallery() {
+export function PeopleGallery({ standalone = false }: { standalone?: boolean }) {
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
   return (
-    <section id="people" className="section-shell bg-gradient-to-b from-transparent to-buryat-mist/30 dark:to-stone-900/20">
+    <section id={standalone ? undefined : 'people'} className="section-shell bg-gradient-to-b from-transparent to-buryat-mist/30 dark:to-stone-900/20">
       <div className="container-premium">
-        <ScrollReveal>
-          <SectionHeader
-            icon={Users}
-            eyebrow="Выдающиеся люди"
-            title="Сыновья и дочери Кижинги"
-            subtitle="Учёные, артисты и просветители, чьи имена связаны с историей района"
-          />
-        </ScrollReveal>
+        {!standalone && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={Users}
+              eyebrow="Выдающиеся люди"
+              title="Сыновья и дочери Кижинги"
+              subtitle="Учёные, артисты и просветители, чьи имена связаны с историей района"
+            />
+          </ScrollReveal>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {people.map((person, index) => (

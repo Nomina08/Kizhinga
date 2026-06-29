@@ -5,9 +5,9 @@ import { UtensilsCrossed, Sparkles } from 'lucide-react';
 import { gastronomy } from '@/data/data';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-export function GastronomySection() {
+export function GastronomySection({ standalone = false }: { standalone?: boolean }) {
   return (
-    <section id="gastronomy" className="section-shell">
+    <section id={standalone ? undefined : 'gastronomy'} className="section-shell">
       <div className="container-premium">
         <ScrollReveal>
           <motion.div whileHover={{ scale: 1.005 }} className="glass-panel overflow-hidden">

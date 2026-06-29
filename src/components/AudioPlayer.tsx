@@ -7,7 +7,7 @@ import { AUDIO_LEGEND_TEXT } from '@/data/data';
 import { ScrollReveal } from './ui/ScrollReveal';
 import { Button } from './ui/Button';
 
-export function AudioPlayer() {
+export function AudioPlayer({ standalone = false }: { standalone?: boolean }) {
   const [playing, setPlaying] = useState(false);
 
   const stop = useCallback(() => {
@@ -35,7 +35,7 @@ export function AudioPlayer() {
   }, [playing, stop]);
 
   return (
-    <section className="section-shell pb-30">
+    <section className={`section-shell ${standalone ? 'pb-10' : 'pb-30'}`}>
       <div className="container-premium max-w-3xl">
         <ScrollReveal>
           <div className="glass-panel p-8 sm:p-10">

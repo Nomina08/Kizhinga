@@ -1,37 +1,46 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   Polyline,
+  CircleMarker,
   ZoomControl,
   useMap,
 } from 'react-leaflet';
 import L from 'leaflet';
 import { motion } from 'framer-motion';
-import { Map as MapIcon, CheckCircle2, Layers } from 'lucide-react';
+import {
+  Map as MapIcon,
+  CheckCircle2,
+  Layers,
+  Maximize2,
+  Locate,
+  Satellite,
+  Moon,
+  Sun,
+  Calendar,
+  Building2,
+} from 'lucide-react';
 import { landmarks, tourRoutes, MAP_CENTER, MAP_ZOOM } from '@/data/data';
+import { districtEvents, settlements } from '@/data/extras';
 import { useApp } from '@/context/AppContext';
 import { LANDMARK_TYPE_COLORS, LANDMARK_TYPE_LABELS } from '@/types';
 import type { Landmark, LandmarkType } from '@/types';
-import { LandmarkModal } from './LandmarkModal';
 import { SectionHeader } from './ui/SectionHeader';
 import { ScrollReveal } from './ui/ScrollReveal';
 import { Button } from './ui/Button';
-
-function createMarkerIcon(color: string, visited: boolean, pulse: boolean) {
-  const classes = `custom-marker${visited ? ' visited' : ''}${pulse ? ' pulse' : ''}`;
-  return L.divIcon({
-    className: '',
-    html: `<div class="${classes}" style="width:22px;height:22px;background:${color};box-shadow:0 4px 14px ${color}66;"></div>`,
-    iconSize: [22, 22],
-    iconAnchor: [11, 11],
-    popupAnchor: [0, -14],
-  });
-}
+import { FavoriteButton } from './ui/FavoriteButton';
+import {
+  createLandmarkMarkerIcon,
+  createEventMarkerIcon,
+  MAP_TILES,
+  type MapStyle,
+} from '@/lib/mapMarkers';
 
 function MapController({
   selectedRoute,
@@ -54,11 +63,41 @@ function MapController({
   return null;
 }
 
-export function TourMapInner() {
-  const { selectedRoute, visitedLandmarks, markLandmarkVisited } = useApp();
+function MapRefSetter({ onMap }: { onMap: (map: L.Map) => void }) {
+  const map = useMap();
+  useEffect(() => {
+    onMap(map);
+  }, [map, onMap]);
+  return null;
+}
+
+function ThemeTileLayer({ mapStyle }: { mapStyle: MapStyle }) {
+  const { theme } = useApp();
+  const resolvedStyle: MapStyle =
+    mapStyle === 'satellite' ? 'satellite' : mapStyle === 'dark' ? 'dark' : theme === 'dark' ? 'dark' : 'light';
+  const tiles = MAP_TILES[resolvedStyle];
+
+  return <TileLayer key={tiles.url} attribution={tiles.attribution} url={tiles.url} />;
+}
+
+interface TourMapInnerProps {
+  fullPage?: boolean;
+}
+
+export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
+  const { theme, selectedRoute, visitedLandmarks, markLandmarkVisited, isFavorite } = useApp();
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
-  const [modalLandmark, setModalLandmark] = useState<Landmark | null>(null);
   const [typeFilter, setTypeFilter] = useState<LandmarkType | 'all'>('all');
+  const [mapStyle, setMapStyle] = useState<MapStyle>('light');
+  const [showSettlements, setShowSettlements] = useState(true);
+  const [showEvents, setShowEvents] = useState(true);
+  const [leafletMap, setLeafletMap] = useState<L.Map | null>(null);
+
+  useEffect(() => {
+    if (mapStyle !== 'satellite') {
+      setMapStyle(theme === 'dark' ? 'dark' : 'light');
+    }
+  }, [theme]);
 
   const filteredLandmarks = useMemo(() => {
     if (typeFilter === 'all') return landmarks;
@@ -80,30 +119,27 @@ export function TourMapInner() {
     return route?.color ?? '#c9a227';
   }, [selectedRoute]);
 
-  const handleDetails = (landmark: Landmark) => {
-    markLandmarkVisited(landmark.id);
-    setModalLandmark(landmark);
-  };
+  const mapHeight = fullPage
+    ? 'h-[calc(100vh-12rem)] min-h-[480px] sm:min-h-[560px] lg:min-h-[640px]'
+    : 'h-[420px] sm:h-[560px] lg:h-[620px]';
 
   return (
-    <section id="map" className="section-shell">
-      <div className="container-premium">
-        <ScrollReveal>
-          <SectionHeader
-            icon={MapIcon}
-            eyebrow="Интерактивная карта"
-            title="Достопримечательности района"
-            subtitle="Фильтруйте объекты по типу, нажимайте на маркеры — откроется описание и маршрут"
-          />
-        </ScrollReveal>
-
-        <ScrollReveal delay={100}>
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8">
-            <FilterChip
-              active={typeFilter === 'all'}
-              onClick={() => setTypeFilter('all')}
-              label="Все"
+    <section id={fullPage ? undefined : 'map'} className={fullPage ? '' : 'section-shell'}>
+      <div className={fullPage ? '' : 'container-premium'}>
+        {!fullPage && (
+          <ScrollReveal>
+            <SectionHeader
+              icon={MapIcon}
+              eyebrow="Интерактивная карта"
+              title="Достопримечательности района"
+              subtitle="Фильтруйте объекты, переключайте слои и исследуйте Кижингинский район"
             />
+          </ScrollReveal>
+        )}
+
+        <ScrollReveal delay={80}>
+          <div className="flex flex-wrap gap-2 mb-4">
+            <FilterChip active={typeFilter === 'all'} onClick={() => setTypeFilter('all')} label="Все" />
             {(['nature', 'culture', 'religion', 'history'] as const).map((type) => (
               <FilterChip
                 key={type}
@@ -116,65 +152,116 @@ export function TourMapInner() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={150}>
-          <div className="relative glass-panel p-2 sm:p-3 overflow-hidden">
-            <div className="absolute top-6 left-6 z-[400] hidden sm:block">
-              <div className="glass-panel p-4 max-w-[180px] shadow-card">
-                <div className="flex items-center gap-2 mb-3 text-stone-700 dark:text-stone-300">
-                  <Layers className="h-4 w-4" />
-                  <span className="text-xs font-bold uppercase tracking-wider">Легенда</span>
+        <ScrollReveal delay={120}>
+          <div className="relative map-shell">
+            <div className="absolute top-4 left-4 z-[500] hidden sm:block">
+              <div className="map-control-panel">
+                <div className="flex items-center gap-2 mb-3">
+                  <Layers className="h-4 w-4 text-buryat-green dark:text-buryat-gold" />
+                  <span className="text-xs font-bold uppercase tracking-wider">Слои</span>
                 </div>
-                <ul className="space-y-2">
-                  {(['nature', 'culture', 'religion', 'history'] as const).map((type) => (
-                    <li key={type} className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400">
-                      <span
-                        className="w-3 h-3 rounded-full shrink-0 ring-2 ring-white/80"
-                        style={{ background: LANDMARK_TYPE_COLORS[type] }}
-                      />
-                      {LANDMARK_TYPE_LABELS[type]}
-                    </li>
-                  ))}
-                </ul>
+                <LayerToggle active={showSettlements} onClick={() => setShowSettlements((v) => !v)} label="Населённые пункты" icon={Building2} />
+                <LayerToggle active={showEvents} onClick={() => setShowEvents((v) => !v)} label="Мероприятия" icon={Calendar} />
+                <div className="mt-4 pt-3 border-t border-stone-200/60 dark:border-stone-700/50">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Легенда</p>
+                  <ul className="space-y-1.5">
+                    {(['nature', 'culture', 'religion', 'history'] as const).map((type) => (
+                      <li key={type} className="flex items-center gap-2 text-[11px] text-stone-500">
+                        <span className="w-2.5 h-2.5 rounded-full ring-2 ring-white/50" style={{ background: LANDMARK_TYPE_COLORS[type] }} />
+                        {LANDMARK_TYPE_LABELS[type]}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-2xl sm:rounded-3xl overflow-hidden h-[420px] sm:h-[560px] lg:h-[620px] ring-1 ring-stone-200/50 dark:ring-stone-700/50">
-              <MapContainer
-                center={MAP_CENTER}
-                zoom={MAP_ZOOM}
-                className="h-full w-full"
-                scrollWheelZoom
-                zoomControl={false}
-              >
+            <div className="absolute top-4 right-4 z-[500] flex flex-col gap-2">
+              <MapToolButton onClick={() => setMapStyle('light')} active={mapStyle === 'light'} label="Светлая" icon={Sun} />
+              <MapToolButton onClick={() => setMapStyle('dark')} active={mapStyle === 'dark'} label="Тёмная" icon={Moon} />
+              <MapToolButton onClick={() => setMapStyle('satellite')} active={mapStyle === 'satellite'} label="Спутник" icon={Satellite} />
+              <MapToolButton
+                onClick={() => {
+                  if (!leafletMap || !navigator.geolocation) return;
+                  navigator.geolocation.getCurrentPosition(
+                    (pos) => leafletMap.flyTo([pos.coords.latitude, pos.coords.longitude], 12, { duration: 1.2 }),
+                    () => undefined,
+                    { enableHighAccuracy: true, timeout: 8000 }
+                  );
+                }}
+                label="Я здесь"
+                icon={Locate}
+              />
+              <MapToolButton
+                onClick={() => {
+                  if (!leafletMap) return;
+                  const allCoords = landmarks.map((l) => l.coordinates);
+                  leafletMap.fitBounds(L.latLngBounds(allCoords), { padding: [60, 60], maxZoom: 11 });
+                }}
+                label="Весь район"
+                icon={Maximize2}
+              />
+            </div>
+
+            <div className={`map-viewport rounded-3xl overflow-hidden ${mapHeight}`}>
+              <div className="map-vignette pointer-events-none" />
+              <MapContainer center={MAP_CENTER} zoom={MAP_ZOOM} className="h-full w-full map-container-premium" scrollWheelZoom zoomControl={false}>
                 <ZoomControl position="bottomright" />
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                <MapRefSetter onMap={setLeafletMap} />
+                <ThemeTileLayer mapStyle={mapStyle} />
                 <MapController selectedRoute={selectedRoute} routeCoords={routeCoords} />
+
                 {routeCoords.length > 1 && (
-                  <Polyline
-                    positions={routeCoords}
-                    pathOptions={{
-                      color: routeColor,
-                      weight: 5,
-                      opacity: 0.85,
-                      dashArray: '12 8',
-                      lineCap: 'round',
-                    }}
-                  />
+                  <>
+                    <Polyline positions={routeCoords} pathOptions={{ color: routeColor, weight: 10, opacity: 0.15, lineCap: 'round' }} />
+                    <Polyline positions={routeCoords} pathOptions={{ color: routeColor, weight: 4, opacity: 0.9, dashArray: '14 10', lineCap: 'round' }} />
+                  </>
                 )}
+
+                {showSettlements &&
+                  settlements.map((s) => (
+                    <CircleMarker
+                      key={`settlement-${s.id}`}
+                      center={s.coordinates}
+                      radius={s.type === 'center' ? 7 : 5}
+                      pathOptions={{
+                        color: s.type === 'center' ? '#c4a035' : '#64748b',
+                        fillColor: s.type === 'center' ? '#c4a035' : '#94a3b8',
+                        fillOpacity: 0.85,
+                        weight: 2,
+                      }}
+                    >
+                      <Popup>
+                        <div className="min-w-[140px]">
+                          <p className="font-semibold text-sm">{s.name}</p>
+                          <p className="text-xs text-stone-500 mt-1">~{s.population.toLocaleString('ru-RU')} жителей</p>
+                        </div>
+                      </Popup>
+                    </CircleMarker>
+                  ))}
+
+                {showEvents &&
+                  districtEvents.map((event) => (
+                    <Marker key={`event-${event.id}`} position={event.coordinates} icon={createEventMarkerIcon()}>
+                      <Popup>
+                        <div className="min-w-[200px]">
+                          <span className="badge bg-violet-500 text-white border-0 mb-2">📅 {event.date}</span>
+                          <h3 className="font-semibold text-sm mb-1">{event.title}</h3>
+                          <p className="text-xs text-stone-500 mb-2">{event.location}</p>
+                          <Link href={`/events/${event.id}/`} className="text-xs font-semibold text-buryat-green">Подробнее →</Link>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  ))}
+
                 {filteredLandmarks.map((landmark) => {
                   const visited = visitedLandmarks.has(landmark.id);
+                  const fav = isFavorite('landmark', landmark.id);
                   return (
                     <Marker
                       key={landmark.id}
                       position={landmark.coordinates}
-                      icon={createMarkerIcon(
-                        LANDMARK_TYPE_COLORS[landmark.type],
-                        visited,
-                        !visited
-                      )}
+                      icon={createLandmarkMarkerIcon(landmark.type, visited, !visited, fav)}
                       eventHandlers={{
                         click: () => {
                           setSelectedLandmark(landmark);
@@ -182,30 +269,23 @@ export function TourMapInner() {
                         },
                       }}
                     >
-                      <Popup className="premium-popup">
-                        <div className="min-w-[220px] max-w-[280px] p-1">
-                          <span
-                            className="badge mb-2 text-white border-0"
-                            style={{ background: LANDMARK_TYPE_COLORS[landmark.type] }}
-                          >
+                      <Popup maxWidth={320}>
+                        <div className="map-popup-content">
+                          <div className="relative h-28 mb-3 rounded-xl overflow-hidden">
+                            <img src={landmark.imageUrl} alt="" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                            <div className="absolute top-2 right-2">
+                              <FavoriteButton type="landmark" id={landmark.id} size="sm" />
+                            </div>
+                          </div>
+                          <span className="badge text-white border-0 mb-2" style={{ background: LANDMARK_TYPE_COLORS[landmark.type] }}>
                             {LANDMARK_TYPE_LABELS[landmark.type]}
                           </span>
-                          <div className="flex items-start gap-2 mb-2">
-                            <h3 className="font-semibold text-sm leading-snug">{landmark.name}</h3>
-                            {visited && (
-                              <CheckCircle2 className="h-4 w-4 text-buryat-gold shrink-0" />
-                            )}
-                          </div>
-                          <p className="text-xs text-stone-600 mb-4 line-clamp-3 leading-relaxed">
-                            {landmark.description.slice(0, 110)}...
-                          </p>
-                          <Button
-                            size="sm"
-                            onClick={() => handleDetails(landmark)}
-                            className="w-full btn-sm py-2"
-                          >
-                            Подробнее
-                          </Button>
+                          <h3 className="font-semibold text-sm leading-snug mb-2">{landmark.name}</h3>
+                          <p className="text-xs text-stone-500 mb-3 line-clamp-2">{landmark.description.slice(0, 100)}...</p>
+                          <Link href={`/places/${landmark.id}/`} className="block">
+                            <Button size="sm" className="w-full btn-sm py-2">Открыть страницу</Button>
+                          </Link>
                         </div>
                       </Popup>
                     </Marker>
@@ -217,50 +297,44 @@ export function TourMapInner() {
         </ScrollReveal>
 
         {selectedLandmark && visitedLandmarks.has(selectedLandmark.id) && (
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-6 text-center text-body-sm text-buryat-gold font-medium flex items-center justify-center gap-2"
-          >
-            <CheckCircle2 className="h-4 w-4" />
-            «{selectedLandmark.name}» отмечена как просмотренная
+          <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 text-center text-body-sm text-buryat-gold font-medium flex items-center justify-center gap-2">
+            <CheckCircle2 className="h-4 w-4" />«{selectedLandmark.name}» отмечена
           </motion.p>
         )}
       </div>
-
-      <LandmarkModal landmark={modalLandmark} onClose={() => setModalLandmark(null)} />
     </section>
   );
 }
 
-function FilterChip({
-  active,
-  onClick,
-  label,
-  color,
-}: {
-  active: boolean;
-  onClick: () => void;
-  label: string;
-  color?: string;
-}) {
+function FilterChip({ active, onClick, label, color }: { active: boolean; onClick: () => void; label: string; color?: string }) {
   return (
     <button
       onClick={onClick}
-      className={`rounded-2xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-        active
-          ? 'text-white shadow-glow-green scale-[1.02]'
-          : 'glass-card text-stone-600 dark:text-stone-300 hover:shadow-soft'
-      }`}
-      style={active && color ? { backgroundColor: color } : active ? { backgroundColor: '#1a6b47' } : undefined}
+      className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all flex items-center gap-2 ${active ? 'text-white shadow-glow-green' : 'glass-card text-stone-600 dark:text-stone-300'}`}
+      style={active ? { backgroundColor: color ?? '#1a6b47' } : undefined}
     >
-      {color && (
-        <span
-          className={`w-2.5 h-2.5 rounded-full ${active ? 'ring-2 ring-white/50' : ''}`}
-          style={{ background: color }}
-        />
-      )}
+      {color && <span className="w-2 h-2 rounded-full ring-2 ring-white/40" style={{ background: color }} />}
       {label}
+    </button>
+  );
+}
+
+function LayerToggle({ active, onClick, label, icon: Icon }: { active: boolean; onClick: () => void; label: string; icon: typeof Layers }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2 w-full rounded-lg px-2.5 py-2 text-left text-xs font-medium mb-1 ${active ? 'bg-buryat-green/10 text-buryat-green dark:text-buryat-gold' : 'text-stone-500 hover:bg-stone-100 dark:hover:bg-stone-800/50'}`}
+    >
+      <Icon className="h-3.5 w-3.5 shrink-0" />
+      {label}
+    </button>
+  );
+}
+
+function MapToolButton({ onClick, active, label, icon: Icon }: { onClick: () => void; active?: boolean; label: string; icon: typeof Sun }) {
+  return (
+    <button type="button" onClick={onClick} title={label} className={`map-tool-btn ${active ? 'map-tool-btn-active' : ''}`}>
+      <Icon className="h-4 w-4" />
     </button>
   );
 }
