@@ -6,6 +6,7 @@ import { ArrowLeft, MapPin, Route, Clock, Navigation } from 'lucide-react';
 import type { Landmark } from '@/types';
 import { LANDMARK_TYPE_LABELS, LANDMARK_TYPE_COLORS } from '@/types';
 import { FavoriteButton } from '@/components/ui/FavoriteButton';
+import { VisitToggle } from '@/components/visit/VisitToggle';
 import { useApp } from '@/context/AppContext';
 import { tourRoutes } from '@/data/data';
 import { Button } from '@/components/ui/Button';
@@ -15,16 +16,15 @@ interface LandmarkDetailViewProps {
 }
 
 export function LandmarkDetailView({ landmark }: LandmarkDetailViewProps) {
-  const { markLandmarkVisited, markRecentlyViewed, setSelectedRoute } = useApp();
+  const { markRecentlyViewed, setSelectedRoute } = useApp();
 
   const relatedRoutes = tourRoutes.filter((route) =>
     route.landmarkIds.includes(landmark.id)
   );
 
   useEffect(() => {
-    markLandmarkVisited(landmark.id);
     markRecentlyViewed('landmark', landmark.id);
-  }, [landmark.id, markLandmarkVisited, markRecentlyViewed]);
+  }, [landmark.id, markRecentlyViewed]);
 
   const handleShowOnMap = () => {
     if (relatedRoutes[0]) {
@@ -112,6 +112,10 @@ export function LandmarkDetailView({ landmark }: LandmarkDetailViewProps) {
               </ul>
             </div>
           )}
+
+          <div className="rounded-3xl border border-buryat-green/20 bg-buryat-green/5 dark:border-buryat-gold/20 dark:bg-buryat-gold/5 p-5 sm:p-6 mb-8">
+            <VisitToggle landmarkId={landmark.id} showHint />
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/map/" className="flex-1" onClick={handleShowOnMap}>

@@ -1,0 +1,13 @@
+{
+  "id": 3,
+  "slug": "forests",
+  "title": "Леса",
+  "subtitle": "Сосновые боры у источников",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+  "description": "Сосновые боры вокруг целебных источников создают особый микроклимат: чистый воздух, тишина и аромат хвои. Лесные тропы ведут к ключам и смотровым площадкам.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg"
+  ],
+  "latitude": 51.75,
+  "longitude": 109.8
+}

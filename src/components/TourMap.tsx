@@ -28,19 +28,23 @@ import {
 } from 'lucide-react';
 import { landmarks, tourRoutes, MAP_CENTER, MAP_ZOOM } from '@/data/data';
 import { districtEvents, settlements } from '@/data/extras';
+import { museums } from '@/data/museums';
 import { useApp } from '@/context/AppContext';
 import { LANDMARK_TYPE_COLORS, LANDMARK_TYPE_LABELS } from '@/types';
 import type { Landmark, LandmarkType } from '@/types';
 import { SectionHeader } from './ui/SectionHeader';
 import { ScrollReveal } from './ui/ScrollReveal';
 import { Button } from './ui/Button';
+import { VisitToggle } from './visit/VisitToggle';
 import { FavoriteButton } from './ui/FavoriteButton';
 import {
   createLandmarkMarkerIcon,
   createEventMarkerIcon,
+  createMuseumMarkerIcon,
   MAP_TILES,
   type MapStyle,
 } from '@/lib/mapMarkers';
+import { DistrictBoundaryLayer, fitMapToDistrict } from '@/components/map/DistrictBoundaryLayer';
 
 function MapController({
   selectedRoute,
@@ -85,12 +89,13 @@ interface TourMapInnerProps {
 }
 
 export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
-  const { theme, selectedRoute, visitedLandmarks, markLandmarkVisited, isFavorite } = useApp();
+  const { theme, selectedRoute, visitedLandmarks, isFavorite } = useApp();
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [typeFilter, setTypeFilter] = useState<LandmarkType | 'all'>('all');
   const [mapStyle, setMapStyle] = useState<MapStyle>('light');
   const [showSettlements, setShowSettlements] = useState(true);
   const [showEvents, setShowEvents] = useState(true);
+  const [showMuseums, setShowMuseums] = useState(true);
   const [leafletMap, setLeafletMap] = useState<L.Map | null>(null);
 
   useEffect(() => {
@@ -162,6 +167,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                 </div>
                 <LayerToggle active={showSettlements} onClick={() => setShowSettlements((v) => !v)} label="Населённые пункты" icon={Building2} />
                 <LayerToggle active={showEvents} onClick={() => setShowEvents((v) => !v)} label="Мероприятия" icon={Calendar} />
+                <LayerToggle active={showMuseums} onClick={() => setShowMuseums((v) => !v)} label="Музеи" icon={Building2} />
                 <div className="mt-4 pt-3 border-t border-stone-200/60 dark:border-stone-700/50">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-2">Легенда</p>
                   <ul className="space-y-1.5">
@@ -195,8 +201,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
               <MapToolButton
                 onClick={() => {
                   if (!leafletMap) return;
-                  const allCoords = landmarks.map((l) => l.coordinates);
-                  leafletMap.fitBounds(L.latLngBounds(allCoords), { padding: [60, 60], maxZoom: 11 });
+                  fitMapToDistrict(leafletMap, [60, 60]);
                 }}
                 label="Весь район"
                 icon={Maximize2}
@@ -209,6 +214,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                 <ZoomControl position="bottomright" />
                 <MapRefSetter onMap={setLeafletMap} />
                 <ThemeTileLayer mapStyle={mapStyle} />
+                <DistrictBoundaryLayer />
                 <MapController selectedRoute={selectedRoute} routeCoords={routeCoords} />
 
                 {routeCoords.length > 1 && (
@@ -254,6 +260,20 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                     </Marker>
                   ))}
 
+                {showMuseums &&
+                  museums.map((museum) => (
+                    <Marker key={`museum-${museum.id}`} position={museum.coordinates} icon={createMuseumMarkerIcon()}>
+                      <Popup>
+                        <div className="min-w-[200px]">
+                          <span className="badge bg-amber-600 text-white border-0 mb-2">🏛 Музей</span>
+                          <h3 className="font-semibold text-sm mb-1">{museum.name}</h3>
+                          <p className="text-xs text-stone-500 mb-2">{museum.village}</p>
+                          <Link href={`/museums/${museum.id}/`} className="text-xs font-semibold text-buryat-green">Подробнее →</Link>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  ))}
+
                 {filteredLandmarks.map((landmark) => {
                   const visited = visitedLandmarks.has(landmark.id);
                   const fav = isFavorite('landmark', landmark.id);
@@ -263,10 +283,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                       position={landmark.coordinates}
                       icon={createLandmarkMarkerIcon(landmark.type, visited, !visited, fav)}
                       eventHandlers={{
-                        click: () => {
-                          setSelectedLandmark(landmark);
-                          markLandmarkVisited(landmark.id);
-                        },
+                        click: () => setSelectedLandmark(landmark),
                       }}
                     >
                       <Popup maxWidth={320}>
@@ -283,6 +300,9 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                           </span>
                           <h3 className="font-semibold text-sm leading-snug mb-2">{landmark.name}</h3>
                           <p className="text-xs text-stone-500 mb-3 line-clamp-2">{landmark.description.slice(0, 100)}...</p>
+                          <div className="mb-3" onClick={(e) => e.stopPropagation()}>
+                            <VisitToggle landmarkId={landmark.id} className="w-full" />
+                          </div>
                           <Link href={`/places/${landmark.id}/`} className="block">
                             <Button size="sm" className="w-full btn-sm py-2">Открыть страницу</Button>
                           </Link>
@@ -298,7 +318,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
 
         {selectedLandmark && visitedLandmarks.has(selectedLandmark.id) && (
           <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 text-center text-body-sm text-buryat-gold font-medium flex items-center justify-center gap-2">
-            <CheckCircle2 className="h-4 w-4" />«{selectedLandmark.name}» отмечена
+            <CheckCircle2 className="h-4 w-4" />«{selectedLandmark.name}» — вы отметили посещение
           </motion.p>
         )}
       </div>

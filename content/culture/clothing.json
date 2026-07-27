@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "slug": "clothing",
+  "title": "Национальная одежда",
+  "subtitle": "Дээл, малгай и украшения",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/1280px-Buryat_family.jpg",
+  "description": "Традиционная бурятская одежда — дээл с широким поясом, малгай и серебряные украшения — отражает статус, возраст и принадлежность к роду. В Кижингинском районе сохранились мастера, передающие технику вышивки и пошива из поколения в поколение.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/1280px-Buryat_family.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg"
+  ]
+}

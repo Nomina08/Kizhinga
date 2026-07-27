@@ -1,0 +1,12 @@
+{
+  "id": 7,
+  "title": "День пожилого человека",
+  "date": "Октябрь",
+  "month": 10,
+  "location": "По всему району",
+  "latitude": 51.835,
+  "longitude": 109.932,
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+  "description": "Районный праздник в честь старшего поколения.",
+  "category": "culture"
+}

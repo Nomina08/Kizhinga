@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "slug": "mountains",
+  "title": "Горы",
+  "subtitle": "Ехэ-Хада и хребты Забайкалья",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+  "description": "Гора Ехэ-Хада возвышается над степью как немой страж. С вершины открываются панорамы на реку Уда и бескрайние удолия. Горы района — место для походов, медитаций и наблюдения за редкой флорой.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg"
+  ],
+  "latitude": 51.8,
+  "longitude": 110.05
+}

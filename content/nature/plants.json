@@ -1,0 +1,11 @@
+{
+  "id": 5,
+  "slug": "plants",
+  "title": "Редкие растения",
+  "subtitle": "Степные травы и лекарственные сборы",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+  "description": "Весной степь расцветает редкими травами: дикий лук, целебные сборы, степные цветы. Местные знахари передают знания о лекарственных растениях из поколения в поколение.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+  ]
+}

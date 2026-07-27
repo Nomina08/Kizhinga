@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "title": "День дацана",
+  "date": "Июль",
+  "month": 7,
+  "location": "Кижингинский дацан",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+  "description": "Ежегодное торжество в честь основания Кижингинского дацана. Паломники и гости приезжают со всей Бурятии: службы, молитвенные обряды, ярмарка народных промыслов и традиционная кухня.",
+  "category": "religion",
+  "latitude": 51.85,
+  "longitude": 109.95
+}

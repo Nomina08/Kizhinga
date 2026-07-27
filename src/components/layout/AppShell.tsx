@@ -113,7 +113,7 @@ export function AppShell({ children }: AppShellProps) {
           </button>
         </header>
 
-        <main className="flex-1 pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+        <main className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
           {children}
         </main>
 

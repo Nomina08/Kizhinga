@@ -1,0 +1,14 @@
+{
+  "id": 6,
+  "slug": "landscapes",
+  "title": "Красивые места",
+  "subtitle": "Боргойская степь и панорамы",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+  "description": "Боргойская степь, долины у Уды, виды с Ехэ-Хада — места, где золото заката встречается с изумрудом трав. Лучшее время для фото — рассвет и закат в летние месяцы.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg"
+  ],
+  "latitude": 51.82,
+  "longitude": 109.88
+}

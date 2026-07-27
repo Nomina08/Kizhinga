@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { settlements, populationHistory, ethnicComposition } from '@/data/extras';
 import { districtStats } from '@/data/data';
+import { DistrictStatCard } from '@/components/stats/DistrictStatCard';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 const SettlementsMap = dynamic(
@@ -109,11 +110,7 @@ export function StatsVisualization() {
       <ScrollReveal delay={160}>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {districtStats.map((stat) => (
-            <div key={stat.id} className="glass-card rounded-2xl p-5 text-center">
-              <p className="text-2xl mb-2">{stat.icon === 'calendar' ? '📅' : stat.icon === 'users' ? '👥' : stat.icon === 'map' ? '🗺' : '🏛'}</p>
-              <p className="font-display text-xl font-semibold">{stat.value}</p>
-              <p className="text-xs text-stone-500 mt-1">{stat.label}</p>
-            </div>
+            <DistrictStatCard key={stat.id} stat={stat} compact />
           ))}
         </div>
       </ScrollReveal>

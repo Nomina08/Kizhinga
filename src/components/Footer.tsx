@@ -1,12 +1,13 @@
 import { Github, Heart } from 'lucide-react';
 import { Logo } from './Logo';
 import { GITHUB_URL } from '@/data/data';
+import { LETOPIS_URL } from '@/data/letopis';
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-stone-200/80 dark:border-stone-800 bg-surface-elevated dark:bg-surface-dark-elevated py-16 px-4 sm:px-6 lg:px-8">
+    <footer className="border-t border-stone-200/80 dark:border-stone-800 bg-surface-elevated dark:bg-surface-dark-elevated py-10 px-4 sm:px-6 lg:px-8">
       <div className="container-premium">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-4">
@@ -39,7 +40,14 @@ export function Footer() {
             для Бурятии
           </p>
           <p className="mt-2 text-xs text-stone-400">
-            Карта: OpenStreetMap · Данные носят ознакомительный характер
+            Карта: OpenStreetMap ·{' '}
+            <a href={LETOPIS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-buryat-green dark:hover:text-buryat-gold">
+              Летопись Кижинги
+            </a>
+            {' · '}
+            <a href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/admin/index.html`} className="hover:text-buryat-green dark:hover:text-buryat-gold">
+              Редактировать сайт
+            </a>
           </p>
         </div>
       </div>

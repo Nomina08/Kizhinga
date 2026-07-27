@@ -5,17 +5,26 @@ import { UtensilsCrossed, Sparkles } from 'lucide-react';
 import { gastronomy } from '@/data/data';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-export function GastronomySection({ standalone = false }: { standalone?: boolean }) {
+export function GastronomySection({
+  standalone = false,
+  compact = false,
+}: {
+  standalone?: boolean;
+  compact?: boolean;
+}) {
   return (
-    <section id={standalone ? undefined : 'gastronomy'} className="section-shell">
+    <section
+      id={standalone ? undefined : 'gastronomy'}
+      className={compact ? 'section-shell-compact' : 'section-shell'}
+    >
       <div className="container-premium">
         <ScrollReveal>
           <motion.div whileHover={{ scale: 1.005 }} className="glass-panel overflow-hidden">
             <div className="grid lg:grid-cols-2">
-              <div className="relative h-64 lg:h-auto lg:min-h-[420px] overflow-hidden">
+              <div className="relative h-56 sm:h-64 lg:h-full lg:min-h-[280px] overflow-hidden">
                 <img
                   src={gastronomy.imageUrl}
-                  alt={gastronomy.title}
+                  alt=""
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />

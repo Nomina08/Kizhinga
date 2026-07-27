@@ -1,0 +1,907 @@
+{
+  "landmarks": [
+    {
+      "id": 1,
+      "name": "Кижингинский дацан «Дэчен Дагба Лхундублинг»",
+      "type": "religion",
+      "era": "XIX–XXI вв.",
+      "imageUrl": "/images/uploads/web-1785159211340.jpg",
+      "description": "Крупнейший дацан Республики Бурятия и один из главных духовных центров Забайкалья. История начинается в 1758 году, когда на склоне горы Челсана по монгольскому обычаю был основан первый храм в войлочной юрте. В 1773 году построили деревянный дацан, в 1853 — «Даши Лхумболинг» у реки Заха-Щибирь. В 1937 году дацан разрушили; современный комплекс восстановлен в 1991 году. На территории — четыре дугана, дома для лам, статуи Будды Шакьямуни (до 7 м) и Майтреи (до 3 м). Рядом — дуган-пещера, посвящённый yogin Миларепе. Земли района называют «долиной Субурганов»."
+    },
+    {
+      "id": 3,
+      "name": "Целебный источник Аршан",
+      "type": "nature",
+      "era": "Народная традиция",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "description": "Целебный источник Аршан — жемчужина природного наследия Кижингинского района, известная жителям Бурятии и далеко за её пределами. Минеральная вода, пробивающаяся из глубин земли, обладает приятным вкусом и, по преданию, исцеляет недуги, укрепляет здоровье и дарит бодрость. Вокруг источника вырос небольшой курортный посёлок, куда ежегодно приезжают тысячи отдыхающих. Сосновый бор, чистый воздух и тишина создают идеальные условия для восстановления сил. Местные шаманы и ламы считают Аршан священным местом, где пересекаются силы земли и неба. Археологи находили здесь следы древних стоянок, что говорит о том, что люди знали об источнике ещё в доисторические времена. Современная инфраструктура включает благоустроенные тропы, беседки и информационные стенды о свойствах воды. Посетители могут наполнить бутылки прямо у ключей, прогуляться по лесным тропам и насладиться видами на горные хребты."
+    },
+    {
+      "id": 4,
+      "name": "Памятник воинам-землякам",
+      "type": "history",
+      "era": "Советский период",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Memorial_in_Kizhinga.jpg/1280px-Memorial_in_Kizhinga.jpg",
+      "description": "Памятник воинам-землякам, установленный в центре села Кижинга, — священное для жителей района место памяти о тех, кто не вернулся с полей Великой Отечественной войны. Высокая стела из серого гранита увенчана звездой, у её подножия горит вечный огонь, а вокруг высажены кусты сирени и клёнов. На мраморных плитах высечены имена сотен кижингинцев, погибших за Родину. Каждый год 9 мая и в День памяти сюда приходят ветераны, школьники, родственники погибших — возложить цветы, минутой молчания почтить память героев. Памятник был открыт в послевоенные годы усилиями всего района: средства собирали колхозы, предприятия и простые жители. Архитектура монумента лаконична и строга, что подчёркивает торжественность момента. Рядом расположена аллея молодых деревьев, посаженных в честь каждого павшего. Для молодого поколения это место — урок патриотизма и уважения к истории."
+    },
+    {
+      "id": 5,
+      "name": "Боргойская степь",
+      "type": "culture",
+      "era": "Традиции кочевого скотоводства",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Боргойская степь — сердце кочевой культуры бурят, где веками разводили овец и сохраняли традиции скотоводства. Бескрайние пастбища, переплетённые редкими озёрами и солонцами, создают уникальный ландшафт, который меняется с каждым сезоном. Именно здесь зародилась знаменитая боргойская баранина — блюдо, известное далеко за пределами республики. Пастухи передают секреты отбора пород из поколения в поколение, а праздники урожая и сбора стада до сих пор собирают всю округу. В степи можно увидеть традиционные юрты, современные стойбища и табуны лошадей, свободно пасущихся на просторах. Это место притягивает этнографов, фотографов и путешественников, желающих познакомиться с аутентичным образом жизни. Летом степь утопает в цветах диких трав, осенью золотится под солнцем, зимой покрывается снежным покрывалом."
+    },
+    {
+      "id": 6,
+      "name": "Археологический комплекс «Кырен»",
+      "type": "history",
+      "era": "Эпоха гуннов",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Gunnski_kurgan.jpg/1280px-Gunnski_kurgan.jpg",
+      "description": "Археологический комплекс «Кырен» — уникальный памятник эпохи гуннов, раскрывающий тайны кочевых империй, некогда правивших просторами от Алтая до степей Забайкалья. Здесь археологи обнаружили остатки поселений, погребальные курганы и предметы быта, датируемые первыми веками нашей эры. Каменные ограды, сложенные без раствора, сохранились на ветру столетий и поражают точностью кладки. Находки — бронзовые украшения, костяные наконечники стрел, фрагменты керамики — хранятся в музеях Улан-Удэ и Кижинги. Комплекс включён в маршруты для любителей истории и студентов-археологов. Местные гиды рассказывают о кочевых традициях, религиозных верованиях гуннов и их связи с предками современных бурят и монголов. Посещение «Кырена» — это путешествие на две тысячи лет назад, когда степь была ареной великих передвижений народов."
+    },
+    {
+      "id": 7,
+      "name": "Ступа Джарун-Хашор",
+      "type": "religion",
+      "era": "1919 / восстановлена 2001",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "description": "Великая Ступа Джарун-Хашор («Исполняющая желания») — аналог ступы Бодхнатх в окрестностях Катманду. Первоначально построена в 1919 году. В 2001 году восстановлена — 12-метровая ступа у горы Челсан."
+    },
+    {
+      "id": 8,
+      "name": "Кижингинский заказник",
+      "type": "nature",
+      "era": "Конец XX века",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Природный заказник создан для охраны изюбра, зайца, тетерева. Под охраной — лебедь-кликун, орлан-белохвост, журавли. Произрастает родиола розовая."
+    },
+    {
+      "id": 9,
+      "name": "Озеро Хужарта",
+      "type": "nature",
+      "era": "Известно с 1904 г.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "description": "Озеро с лечебными грязями, о свойствах которых известно с 1904 года."
+    },
+    {
+      "id": 10,
+      "name": "Минеральные источники района",
+      "type": "nature",
+      "era": "Народная медицина",
+      "imageUrl": "/images/uploads/web-1785159254065.jpg",
+      "description": "15 минеральных источников. Самые доступные — Усть-Оротский, Булагский, Эрэнэйский. У каждого свой химический состав и минерализация."
+    },
+    {
+      "id": 11,
+      "name": "Гора Челсана",
+      "type": "culture",
+      "era": "1758 — настоящее время",
+      "imageUrl": "/images/uploads/web-1785159287440.jpg",
+      "description": "Священная гора района. В 1758 году на её склоне основан первый храм-дуган. Символ на гербе района."
+    }
+  ],
+  "people": [
+    {
+      "id": 2,
+      "name": "Цырендоржиев Ринчин",
+      "birthDate": "1905",
+      "achievement": "Народный артист СССР, сказитель улигершин",
+      "field": "Искусство и фольклор",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/800px-Buryat_musicians.jpg",
+      "connectionToDistrict": "Родился и провёл детство в Кижингинском районе, где впитал богатство устного народного творчества.",
+      "fullBiography": "Цырендоржиев Ринчин (1905–1980) — легендарный бурятский сказитель, мастер улигершин — традиционного эпического пения под аккомпанемент домбры. Народный артист СССР, он сохранил и передал потомкам десятки эпосов, легенд и былин. Для жителей Кижингинского района он остаётся гордостью: примером того, как корни малой родины могут дать миру великое искусство.",
+      "sourceUrl": "https://ru.wikipedia.org/wiki/Улигершин"
+    },
+    {
+      "id": 3,
+      "name": "Балдан-Бадма Бадмаев",
+      "birthDate": "1883",
+      "achievement": "Врач, общественный деятель, просветитель",
+      "field": "Медицина",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/800px-Buryat_family.jpg",
+      "connectionToDistrict": "Работал в медицинских учреждениях Забайкалья, оказывая помощь жителям Кижингинского района.",
+      "fullBiography": "Балдан-Бадма Бадмаев — один из первых бурятских врачей, посвятивший жизнь здравоохранению в отдалённых степных районах. Он сочетал современные методы лечения с уважением к народной медицине, рекомендовал целебные источники и здоровый образ жизни.",
+      "sourceUrl": "https://www.bur-culture.ru"
+    },
+    {
+      "fullBiography": "Хомто Намсараев — выдающийся писатель и поэт Бурятии.",
+      "connectionToDistrict": "Музей им. Х. Н. Намсараева — в с. Эдэрмык.",
+      "name": "Хоца Намсараев",
+      "birthDate": "1914",
+      "achievement": "Писатель, поэт, классик бурятской литературы",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/",
+      "field": "Литература",
+      "id": 4,
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/800px-Buryat_musicians.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Бато Базарон",
+      "birthDate": "1926",
+      "achievement": "Писатель",
+      "field": "Литература",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/800px-Buryat_family.jpg",
+      "connectionToDistrict": "Кижингинская литературная школа.",
+      "fullBiography": "Бато Базарон — писатель о жизни и традициях Кижингинского района.",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/"
+    },
+    {
+      "id": 6,
+      "name": "Намжил Бодиевич Чимитдоржиев",
+      "birthDate": "1938",
+      "achievement": "Физик, профессор",
+      "field": "Наука",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Banzarov.jpg",
+      "connectionToDistrict": "Родился в с. Улзытэ.",
+      "fullBiography": "Н. Б. Чимитдоржиев — учёный-физик, музей с. Улзытэ носит его имя.",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/"
+    },
+    {
+      "fullBiography": "Ц-Н. Очиров — прозаик и художник из Могсохона.",
+      "connectionToDistrict": "С. Могсохон.",
+      "name": "ЦЫРЕН-НАМЖИЛ ОЧИРОВ",
+      "birthDate": "XX век",
+      "achievement": "Писатель, художник",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/",
+      "field": "Литература и искусство",
+      "id": 7,
+      "photoUrl": "/images/uploads/web-1785159579304.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Ц. Н. Номтоев",
+      "birthDate": "1910",
+      "achievement": "Поэт",
+      "field": "Литература",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/800px-Buryat_musicians.jpg",
+      "connectionToDistrict": "Кижингинская долина.",
+      "fullBiography": "Ц. Н. Номтоев — поэт Кижингинской долины.",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/"
+    },
+    {
+      "id": 9,
+      "name": "Ц. Н. Цыренжапов",
+      "birthDate": "XX век",
+      "achievement": "Педагог-краевед",
+      "field": "Образование",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/800px-Buryat_family.jpg",
+      "connectionToDistrict": "Основал музей в с. Загустай.",
+      "fullBiography": "Ц. Н. Цыренжапов создал школьный музей в Загустае в 1960-е годы.",
+      "sourceUrl": "https://sites.google.com/view/letopise-kizhinga/"
+    }
+  ],
+  "museums": [
+    {
+      "id": 1,
+      "name": "Музей Чесанской средней школы",
+      "village": "с. Загустай",
+      "founded": "1960-е годы",
+      "founder": "Ц. Н. Цыренжапов",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "type": "school",
+      "description": "Музей, основанный талантливым педагогом Ц. Н. Цыренжаповым ещё в 1960-е годы. Когда-то это был богатый экспонатами краеведческий музей. Собраны материалы об истории происхождения бурят и обширные материалы о родословных жителей села Загустай.",
+      "highlights": [
+        "История происхождения бурят",
+        "Родословные жителей Загустая",
+        "Школьная краеведческая коллекция"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Школьный музей Верне-Кодунской средней школы",
+      "village": "с. Верхнее Кодунск",
+      "founded": "2000",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/1280px-Buryat_family.jpg",
+      "type": "school",
+      "description": "Музей занимает две классные комнаты. Одна оформлена как семейская изба: домашняя утварь, одежда и предметы быта семейских. Вторая комната — материалы об истории села, школы, выпускниках и земляках-защитниках.",
+      "highlights": [
+        "Быт семейских",
+        "История села и школы",
+        "Земляки-защитники Отечества"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Музей Средне-Кодунской СШ им. Ц-Н. Очирова",
+      "village": "с. Могсохон",
+      "founded": "XX век",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "type": "school",
+      "description": "Гордость села Могсохон — хранилище ценных материалов прошлого и настоящего. Центральное место занимает отдел о местном художнике и писателе Ц-Н. Очирове: рассказы, стихи, очерки. Отдельный раздел — односельчанах, не вернувшихся с войны. Более 20 видов альбомов о традициях и обычаях бурят, коллекция национальной одежды.",
+      "highlights": [
+        "Творчество Ц-Н. Очирова",
+        "Память о погибших в войне",
+        "Национальная одежда",
+        "20+ альбомов о традициях"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Музей им. Н. Чимитдоржиева",
+      "village": "с. Улзытэ",
+      "founded": "XX век",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Banzarov.jpg",
+      "type": "local",
+      "description": "Сельский музей села Улзытэ, названный в честь учёного-физика Намжила Бодиевича Чимитдоржиева. Экспонаты рассказывают об исторических вехах старинного бурятского села, знаменитых людях, организаторах производства, механизаторах, чабанах. Улзытэ — родина четырёх докторов наук и шести кандидатов наук.",
+      "highlights": [
+        "Н. Чимитдоржиев — физик, член-корр. РИА",
+        "4 доктора наук из одного села",
+        "История тружеников села"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Музей краеведения СЮТ",
+      "village": "п. Новокижингинск",
+      "founded": "1989",
+      "founder": "Матвеев Г. Е., Ефимова О. Е., Ковальская В. Н.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Gunnski_kurgan.jpg/1280px-Gunnski_kurgan.jpg",
+      "type": "tourist",
+      "description": "Музей станции юных туристов: краеведческий и геологический разделы. Археология района, эвенкийский комплекс, шаманизм, буддизм, дацаны, старообрядцы-семейские, село Вознесеновка, родословные. На стендах — наскальные рисунки, орудия из кварца, халцедона, кремния. Археологические находки позднего неолита (6–7 тыс. лет назад).",
+      "highlights": [
+        "Археология и неолит",
+        "Шаманизм и эвенки",
+        "Геологический раздел",
+        "Родословные двух сёл"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Музей им. Х. Намсараева",
+      "village": "с. Эдэрмык",
+      "founded": "XX век",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "type": "local",
+      "description": "Музей, названный в честь выдающегося писателя и поэта Х. Н. Намсараева — одного из классиков бурятской литературы. Материалы летописи заимствованы из фондов этого музея наряду с другими школьными и сельскими музеями района.",
+      "highlights": [
+        "Х. Н. Намсараев — писатель и поэт",
+        "Литературное наследие",
+        "Краеведение Эдэрмыка"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Музей истории села Кижинга",
+      "village": "с. Кижинга",
+      "founded": "XX–XXI вв.",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "type": "local",
+      "description": "Краеведческий музей районного центра. Рассказывает об истории села Кижинга — от основания в 1915 году под названием Шулуута до современного административного центра Кижингинского района. Экспозиции об образовании, культуре и жизни степного края.",
+      "highlights": [
+        "История села Шулуута — Кижинга",
+        "Районный центр",
+        "Культура и образование"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Сур Харбан — весенний праздник",
+      "date": "Март — апрель",
+      "month": 3,
+      "location": "Село Кижинга",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Сур Харбан — один из главных весенних праздников бурят. Жители района собираются на степных просторах, устраивают состязания в борьбе, скачках и стрельбе из лука. Праздник символизирует пробуждение природы и начало нового скотоводческого сезона.",
+      "category": "holiday"
+    },
+    {
+      "id": 2,
+      "title": "День дацана",
+      "date": "Июль",
+      "month": 7,
+      "location": "Кижингинский дацан",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "description": "Ежегодное торжество в честь основания Кижингинского дацана. Паломники и гости приезжают со всей Бурятии: службы, молитвенные обряды, ярмарка народных промыслов и традиционная кухня.",
+      "category": "religion"
+    },
+    {
+      "id": 3,
+      "title": "Праздник боргойской баранины",
+      "date": "Август",
+      "month": 8,
+      "location": "Боргойская степь",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Гастрономический фестиваль, посвящённый знаменитой боргойской баранине. Пастухи демонстрируют лучшие породы овец, повара готовят блюда на открытом огне, звучат улигершин и народные песни.",
+      "category": "culture"
+    },
+    {
+      "id": 4,
+      "title": "День Победы — митинг у памятника",
+      "date": "9 мая",
+      "month": 5,
+      "location": "Село Кижинга",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Memorial_in_Kizhinga.jpg/1280px-Memorial_in_Kizhinga.jpg",
+      "description": "Торжественный митинг и шествие у памятника воинам-землякам. Возложение цветов, минута молчания, концерт для ветеранов и участников Великой Отечественной войны.",
+      "category": "holiday"
+    },
+    {
+      "id": 5,
+      "title": "Сagaalgan — белый месяц",
+      "date": "Февраль — март",
+      "month": 2,
+      "location": "По всему району",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "description": "Сagaalgan — главный буддийский праздник встречи нового года по лунному календарю. В дацанах проходят молитвы, а семьи навещают друг друга с белыми дарами — символами чистоты и благополучия.",
+      "category": "religion"
+    },
+    {
+      "id": 6,
+      "title": "Степной марафон и конные скачки",
+      "date": "Июнь",
+      "month": 6,
+      "location": "Боргойская степь",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "description": "Спортивные состязания на степных просторах: конные скачки, национальная борьба и эстафеты. Молодёжь и гости района участвуют в соревнованиях под открытым небом.",
+      "category": "sport"
+    },
+    {
+      "id": 7,
+      "title": "День пожилого человека",
+      "date": "Октябрь",
+      "month": 10,
+      "location": "По всему району",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "description": "Районный праздник в честь старшего поколения.",
+      "category": "culture"
+    }
+  ],
+  "culture": [
+    {
+      "id": 6,
+      "slug": "buddhism",
+      "title": "Буддизм",
+      "subtitle": "Дацаны и духовная жизнь",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "description": "Буддизм пронизывает жизнь района: дацаны, ступы, молитвенные флаги и обряды. Кижингинский дацан «Дэчен Дагба Лхундублинг» — один из главных духовных центров Забайкалья.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg"
+      ]
+    },
+    {
+      "id": 1,
+      "slug": "clothing",
+      "title": "Национальная одежда",
+      "subtitle": "Дээл, малгай и украшения",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/1280px-Buryat_family.jpg",
+      "description": "Традиционная бурятская одежда — дээл с широким поясом, малгай и серебряные украшения — отражает статус, возраст и принадлежность к роду. В Кижингинском районе сохранились мастера, передающие технику вышивки и пошива из поколения в поколение.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Buryat_family.jpg/1280px-Buryat_family.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg"
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "cuisine",
+      "title": "Кухня",
+      "subtitle": "Боргойская баранина и традиционные блюда",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Боргойская баранина, буузы, сэсэг и традиционный чай с молоком — визитная карточка гостеприимства. Мясо готовят на открытом огне, используя травы степи.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "games",
+      "title": "Игры и состязания",
+      "subtitle": "Борьба, стрельба из лука, скачки",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "description": "Национальные игры бурят — бóхэ, стрельба из лука и конные скачки — до сих пор проводятся на праздниках. Они воспитывают силу, ловкость и уважение к сопернику.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "holidays",
+      "title": "Праздники",
+      "subtitle": "Сур Харбан, Сagaalgan и народные гулянья",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Календарь района насыщен праздниками: весенний Сур Харбан, буддийский Сagaalgan, праздники урожая и сбора стада. Каждый праздник сочетает древние обряды с современными народными гуляньями.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "music",
+      "title": "Песни и улигершин",
+      "subtitle": "Эпическое пение под домбру",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "description": "Улигершин — уникальное искусство бурятских сказителей. Цырендоржиев Ринчин, уроженец этих мест, стал легендой жанра. Эпосы рассказывают о героях, духах степи и судьбе народа.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg"
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "rituals",
+      "title": "Обряды",
+      "subtitle": "Шаманские и буддийские традиции",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "description": "В районе переплетаются буддийские и шаманские традиции: подношения духам гор, обряды у источников, молитвы в дацанах. Священные места — Аршан, Ехэ-Хада — окружены особым почтением.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "traditions",
+      "title": "Традиции",
+      "subtitle": "Кочевое скотоводство и гостеприимство",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Кижингинский район — край кочевых традиций: уважение к старшим, гостеприимство, передача скота по наследству и общинные праздники. Боргойская степь хранит живую память о nomadic образе жизни.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+      ]
+    }
+  ],
+  "nature": [
+    {
+      "id": 3,
+      "slug": "forests",
+      "title": "Леса",
+      "subtitle": "Сосновые боры у источников",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "description": "Сосновые боры вокруг целебных источников создают особый микроклимат: чистый воздух, тишина и аромат хвои. Лесные тропы ведут к ключам и смотровым площадкам.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg"
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "landscapes",
+      "title": "Красивые места",
+      "subtitle": "Боргойская степь и панорамы",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Боргойская степь, долины у Уды, виды с Ехэ-Хада — места, где золото заката встречается с изумрудом трав. Лучшее время для фото — рассвет и закат в летние месяцы.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg"
+      ]
+    },
+    {
+      "id": 1,
+      "slug": "mountains",
+      "title": "Горы",
+      "subtitle": "Ехэ-Хада и хребты Забайкалья",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "description": "Гора Ехэ-Хада возвышается над степью как немой страж. С вершины открываются панорамы на реку Уда и бескрайние удолия. Горы района — место для походов, медитаций и наблюдения за редкой флорой.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "plants",
+      "title": "Редкие растения",
+      "subtitle": "Степные травы и лекарственные сборы",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "Весной степь расцветает редкими травами: дикий лук, целебные сборы, степные цветы. Местные знахари передают знания о лекарственных растениях из поколения в поколение.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "rivers",
+      "title": "Реки",
+      "subtitle": "Уда и степные притоки",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "description": "Река Уда и её притоки питают степные долины. Весной воды разливаются, создавая зелёные оазисы среди золотых просторов. Рыбалка и отдых у воды — часть жизни местных жителей.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "wildlife",
+      "title": "Животные",
+      "subtitle": "Степная фауна Забайкалья",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "description": "На просторах района обитают суслики, журавли, орлы, лисы и табуны лошадей. Степь — дом для овец и крупного рогатого скота, а также редких видов птиц, занесённых в Красную книгу.",
+      "gallery": [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+      ]
+    }
+  ],
+  "panoramas": [
+    {
+      "id": 1,
+      "title": "Кижингинский дацан",
+      "subtitle": "360° вид на белоснежные стены храма",
+      "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "panoramaImage": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "landmarkId": 1
+    },
+    {
+      "id": 2,
+      "title": "Боргойская степь",
+      "subtitle": "Панорама бескрайних пастбищ",
+      "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "panoramaImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "landmarkId": 5
+    },
+    {
+      "id": 3,
+      "title": "Гора Ехэ-Хада",
+      "subtitle": "Вид с подножия священной горы",
+      "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "panoramaImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "landmarkId": 2
+    },
+    {
+      "id": 4,
+      "title": "Целебный источник Аршан",
+      "subtitle": "Сосновый бор и минеральные ключи",
+      "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "panoramaImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "landmarkId": 3
+    }
+  ],
+  "legends": [
+    {
+      "id": 1,
+      "title": "Боргойская баранина",
+      "text": "Боргойская баранина славится на весь Байкал своим неповторимым вкусом. Секрет — в травах боргойской степи и вековых традициях отбора пород.",
+      "icon": "utensils"
+    },
+    {
+      "id": 2,
+      "title": "Целебные источники Аршан",
+      "text": "Вода Аршана пробивается из глубин земли уже тысячи лет. По преданию, её открыл шаман, которому дух гор указал путь к ключу.",
+      "icon": "droplets"
+    },
+    {
+      "id": 3,
+      "title": "Буддийские дацаны",
+      "text": "Кижингинский дацан — один из духовных центров буддизма в Забайкалье. Белые стены, золотые крыши и молитвенные барабаны.",
+      "icon": "landmark"
+    },
+    {
+      "id": 4,
+      "title": "Дух горы Ехэ-Хада",
+      "text": "Старики рассказывают, что на вершине Ехэ-Хада живёт дух-хранитель степи. Тот, кто поднимется с чистым сердцем, услышит шёпот ветра.",
+      "icon": "mountain"
+    },
+    {
+      "id": 5,
+      "title": "Эпоха гуннов",
+      "text": "На земле Кижинги археологи находят следы древних кочевников — гуннов, создавших одну из величайших империй степи.",
+      "icon": "scroll"
+    },
+    {
+      "id": 6,
+      "title": "Улигершин — пение эпоса",
+      "text": "Улигершин — древнее искусство бурятских сказителей. Цырендоржиев Ринчин был одним из величайших мастеров этого жанра.",
+      "icon": "music"
+    },
+    {
+      "id": 7,
+      "title": "Долина Субурганов",
+      "text": "Земли Кижингинского района называют «долиной Субурганов» — белоснежные ступы символизируют Просветление.",
+      "icon": "landmark"
+    }
+  ],
+  "timeline": [
+    {
+      "id": 1,
+      "year": "1758",
+      "title": "Первый храм на Челсане",
+      "description": "На горе Челсана построен первый храм-дуган в войлочной юрте."
+    },
+    {
+      "id": 2,
+      "year": "1853",
+      "title": "Дацан «Даши Лхумболинг»",
+      "description": "Дацан перенесён в низовья реки Заха-Щибирь."
+    },
+    {
+      "id": 3,
+      "year": "1915",
+      "title": "Основание села Шулуута",
+      "description": "Село основано под названием Шулуута."
+    },
+    {
+      "id": 4,
+      "year": "1919",
+      "title": "Ступа Джарун-Хашор",
+      "description": "Освящена Великая Ступа «Исполняющая желания»."
+    },
+    {
+      "id": 5,
+      "year": "1940",
+      "title": "Кижингинский аймак",
+      "description": "Образован Кижингинский аймак."
+    },
+    {
+      "id": 6,
+      "year": "1941",
+      "title": "Переименование в Кижингу",
+      "description": "Село Шулуута переименовано в Кижингу."
+    },
+    {
+      "id": 7,
+      "year": "1966",
+      "title": "Кижингинский район",
+      "description": "Район выделен как самостоятельная единица."
+    },
+    {
+      "id": 8,
+      "year": "1991",
+      "title": "Восстановление дацана",
+      "description": "Строительство современного Кижингинского дацана."
+    },
+    {
+      "id": 9,
+      "year": "2001",
+      "title": "Ступа восстановлена",
+      "description": "12-метровая ступа Джарун-Хашор вновь возведена."
+    },
+    {
+      "id": 10,
+      "year": "Сегодня",
+      "title": "Летопись и туризм",
+      "description": "Летопись Кижинги (2021) сохраняет память о земле и людях."
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Kizhinginsky_datsan.jpg",
+      "title": "Кижингинский дацан",
+      "caption": "Белоснежные стены и золотые крыши духовного центра"
+    },
+    {
+      "id": 2,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+      "title": "Боргойская степь",
+      "caption": "Бескрайние пастбища — сердце кочевой культуры"
+    },
+    {
+      "id": 3,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+      "title": "Горы Забайкалья",
+      "caption": "Панорамы, открывающиеся с вершин удолий"
+    },
+    {
+      "id": 4,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+      "title": "Целебный источник",
+      "caption": "Минеральная вода из глубин земли"
+    },
+    {
+      "id": 5,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Buryat_musicians.jpg/1280px-Buryat_musicians.jpg",
+      "title": "Улигершин",
+      "caption": "Традиционное пение эпоса под домбру"
+    },
+    {
+      "id": 6,
+      "src": "/images/flag.svg",
+      "title": "Флаг района",
+      "caption": "Символы: лилия улаалзай, лебедь, солнце, гора Челсана"
+    }
+  ],
+  "settings": {
+    "districtStats": [
+      {
+        "id": 1,
+        "label": "Образование района",
+        "value": "1966",
+        "icon": "calendar"
+      },
+      {
+        "id": 2,
+        "label": "Население",
+        "value": "~19 000",
+        "icon": "users"
+      },
+      {
+        "id": 3,
+        "label": "Минеральные источники",
+        "value": "15",
+        "icon": "map"
+      },
+      {
+        "id": 4,
+        "label": "Административный центр",
+        "value": "Кижинга",
+        "icon": "building"
+      },
+      {
+        "id": 5,
+        "label": "Основано село",
+        "value": "1915",
+        "icon": "calendar"
+      },
+      {
+        "id": 6,
+        "label": "До Улан-Удэ",
+        "value": "200 км",
+        "icon": "map"
+      },
+      {
+        "id": 7,
+        "label": "Музеи района",
+        "value": "7",
+        "icon": "building"
+      }
+    ],
+    "tourRoutes": [
+      {
+        "id": "spiritual",
+        "name": "Духовный маршрут",
+        "description": "Дацаны, ступы и священные места буддийской традиции",
+        "landmarkIds": [
+          1,
+          7,
+          11
+        ],
+        "color": "#8b5cf6",
+        "duration": "3–4 часа",
+        "distance": "~25 км",
+        "difficulty": "Лёгкий",
+        "season": "Круглый год",
+        "badge": "Духовный"
+      },
+      {
+        "id": "nature",
+        "name": "Природный маршрут",
+        "description": "Горы, реки, целебные источники и боргойская степь",
+        "landmarkIds": [
+          2,
+          3,
+          5,
+          8,
+          9,
+          10
+        ],
+        "color": "#22c55e",
+        "duration": "1–2 дня",
+        "distance": "~120 км",
+        "difficulty": "Средний",
+        "season": "Май — сентябрь",
+        "badge": "Природа"
+      },
+      {
+        "id": "historical",
+        "name": "Исторический маршрут",
+        "description": "Памятники воинам и археологические находки эпохи гуннов",
+        "landmarkIds": [
+          4,
+          6
+        ],
+        "color": "#ef4444",
+        "duration": "5–6 часов",
+        "distance": "~45 км",
+        "difficulty": "Лёгкий",
+        "season": "Апрель — октябрь",
+        "badge": "История"
+      }
+    ],
+    "gastronomy": {
+      "title": "Боргойская баранина",
+      "subtitle": "Гастрономический бренд Бурятии",
+      "description": "Боргойская баранина — легендарное блюдо из мяса овец, выращенных на травах боргойской степи Кижингинского района. Нежный вкус, аромат степных трав и традиция приготовления на открытом огне сделали его символом гостеприимства бурят. По преданию, баранину из этих мест ценили и в императорской семье.",
+      "tips": [
+        "Попробуйте баранину на открытом огне в степи",
+        "Сочетайте с традиционным чаем с молоком",
+        "Загляните на местные праздники сбора стада"
+      ],
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+    },
+    "audioLegendText": "Легенда о духе горы Ехэ-Хада. Старики Кижингинского района рассказывают: на вершине этой горы живёт дух-хранитель степи. Он наблюдает за пастухами, за табунами лошадей и за тем, как меняются сезоны на бескрайних удолиях. Тот, кто поднимается на Ехэ-Хада с чистым сердцем и уважением к земле предков, услышит шёпот ветра — предсказание удачного года и благословение для семьи. Гора видна издалека, как страж Кижинги, и напоминает: степь щедра к тем, кто её любит.",
+    "mapCenter": [
+      51.82,
+      109.92
+    ],
+    "mapZoom": 10,
+    "heroVideo": "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_25fps.mp4",
+    "settlements": [
+      {
+        "id": 1,
+        "name": "Кижинга",
+        "population": 6800,
+        "type": "center"
+      },
+      {
+        "id": 2,
+        "name": "Новокижингинск",
+        "population": 1200,
+        "type": "village"
+      },
+      {
+        "id": 3,
+        "name": "Загустай",
+        "population": 900,
+        "type": "village"
+      },
+      {
+        "id": 4,
+        "name": "Могсохон",
+        "population": 850,
+        "type": "village"
+      },
+      {
+        "id": 5,
+        "name": "Улзытэ",
+        "population": 780,
+        "type": "village"
+      },
+      {
+        "id": 6,
+        "name": "Верхнее Кодунск",
+        "population": 650,
+        "type": "village"
+      },
+      {
+        "id": 7,
+        "name": "Эдэрмык",
+        "population": 600,
+        "type": "village"
+      },
+      {
+        "id": 8,
+        "name": "Боргой",
+        "population": 2100,
+        "type": "village"
+      },
+      {
+        "id": 9,
+        "name": "Аршан",
+        "population": 1800,
+        "type": "village"
+      }
+    ],
+    "populationHistory": [
+      {
+        "year": 1959,
+        "population": 12400
+      },
+      {
+        "year": 1970,
+        "population": 15800
+      },
+      {
+        "year": 1979,
+        "population": 19200
+      },
+      {
+        "year": 1989,
+        "population": 22100
+      },
+      {
+        "year": 2002,
+        "population": 20500
+      },
+      {
+        "year": 2010,
+        "population": 19800
+      },
+      {
+        "year": 2021,
+        "population": 19000
+      }
+    ],
+    "ethnicComposition": [
+      {
+        "label": "Буряты",
+        "percent": 72,
+        "color": "#1a6b47"
+      },
+      {
+        "label": "Русские",
+        "percent": 22,
+        "color": "#1e5a8a"
+      },
+      {
+        "label": "Другие",
+        "percent": 6,
+        "color": "#c4a035"
+      }
+    ]
+  }
+}

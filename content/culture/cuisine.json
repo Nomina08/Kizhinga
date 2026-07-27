@@ -1,0 +1,11 @@
+{
+  "id": 7,
+  "slug": "cuisine",
+  "title": "Кухня",
+  "subtitle": "Боргойская баранина и традиционные блюда",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+  "description": "Боргойская баранина, буузы, сэсэг и традиционный чай с молоком — визитная карточка гостеприимства. Мясо готовят на открытом огне, используя травы степи.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+  ]
+}

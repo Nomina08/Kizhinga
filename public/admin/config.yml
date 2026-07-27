@@ -1,0 +1,316 @@
+# Decap CMS — админка сайта «Кижингинский район»
+# Документация по входу: ADMIN.md
+
+backend:
+  name: github
+  repo: Nomina08/Kizhinga
+  branch: main
+  # Для OAuth на GitHub Pages см. ADMIN.md (base_url + auth_endpoint)
+
+local_backend:
+  url: http://localhost:8081/api/v1
+  allowed_hosts: ['localhost', '127.0.0.1']
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+site_url: https://nomina08.github.io/Kizhinga
+display_url: https://nomina08.github.io/Kizhinga
+logo_url: https://nomina08.github.io/Kizhinga/images/emblem.svg
+
+locale: ru
+
+slug:
+  encoding: unicode
+  clean_accents: true
+
+collections:
+  - name: landmarks
+    label: Места
+    label_singular: Место
+    folder: content/landmarks
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{name}}"
+    sortable_fields: [id, name, type]
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Название, name: name, widget: string, required: true }
+      - label: Тип
+        name: type
+        widget: select
+        options: [nature, culture, religion, history]
+        required: true
+      - { label: Эпоха, name: era, widget: string }
+      - { label: Широта, name: latitude, widget: number, value_type: float, required: true }
+      - { label: Долгота, name: longitude, widget: number, value_type: float, required: true }
+      - { label: Фото, name: imageUrl, widget: pasteImage, required: false }
+      - { label: Описание, name: description, widget: text, required: true }
+
+  - name: museums
+    label: Музеи
+    label_singular: Музей
+    folder: content/museums
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{name}} — {{village}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Название, name: name, widget: string, required: true }
+      - { label: Населённый пункт, name: village, widget: string, required: true }
+      - { label: Год основания, name: founded, widget: string }
+      - { label: Основатель, name: founder, widget: string, required: false }
+      - label: Тип
+        name: type
+        widget: select
+        options: [school, local, tourist]
+      - { label: Широта, name: latitude, widget: number, value_type: float }
+      - { label: Долгота, name: longitude, widget: number, value_type: float }
+      - { label: Фото, name: imageUrl, widget: pasteImage }
+      - { label: Описание, name: description, widget: text }
+      - label: Экспозиция (пункты)
+        name: highlights
+        widget: list
+        field: { label: Пункт, name: item, widget: string }
+
+  - name: people
+    label: Люди
+    label_singular: Человек
+    folder: content/people
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{name}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Имя, name: name, widget: string, required: true }
+      - { label: Год рождения, name: birthDate, widget: string }
+      - { label: Достижение, name: achievement, widget: string }
+      - { label: Сфера, name: field, widget: string }
+      - { label: Фото, name: photoUrl, widget: pasteImage }
+      - { label: Связь с районом, name: connectionToDistrict, widget: text }
+      - { label: Биография, name: fullBiography, widget: text }
+      - { label: Источник (URL), name: sourceUrl, widget: string, required: false }
+
+  - name: events
+    label: События
+    label_singular: Событие
+    folder: content/events
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Название, name: title, widget: string, required: true }
+      - { label: Дата, name: date, widget: string }
+      - { label: Месяц (число), name: month, widget: number, value_type: int, min: 1, max: 12 }
+      - { label: Место, name: location, widget: string }
+      - { label: Широта, name: latitude, widget: number, value_type: float }
+      - { label: Долгота, name: longitude, widget: number, value_type: float }
+      - { label: Фото, name: imageUrl, widget: pasteImage }
+      - { label: Описание, name: description, widget: text }
+      - label: Категория
+        name: category
+        widget: select
+        options: [holiday, culture, sport, religion]
+
+  - name: culture
+    label: Культура
+    label_singular: Тема
+    folder: content/culture
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Slug (URL), name: slug, widget: string, required: true, hint: "Латиница, напр. clothing" }
+      - { label: Заголовок, name: title, widget: string, required: true }
+      - { label: Подзаголовок, name: subtitle, widget: string }
+      - { label: Обложка, name: imageUrl, widget: pasteImage }
+      - { label: Описание, name: description, widget: text }
+      - label: Галерея
+        name: gallery
+        widget: list
+        field: { label: Фото, name: image, widget: pasteImage }
+
+  - name: nature
+    label: Природа
+    label_singular: Тема
+    folder: content/nature
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Slug (URL), name: slug, widget: string, required: true }
+      - { label: Заголовок, name: title, widget: string, required: true }
+      - { label: Подзаголовок, name: subtitle, widget: string }
+      - { label: Обложка, name: imageUrl, widget: pasteImage }
+      - { label: Описание, name: description, widget: text }
+      - { label: Широта (опц.), name: latitude, widget: number, value_type: float, required: false }
+      - { label: Долгота (опц.), name: longitude, widget: number, value_type: float, required: false }
+      - label: Галерея
+        name: gallery
+        widget: list
+        field: { label: Фото, name: image, widget: pasteImage }
+
+  - name: panoramas
+    label: Панорамы 360°
+    label_singular: Панорама
+    folder: content/panoramas
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Название, name: title, widget: string, required: true }
+      - { label: Подзаголовок, name: subtitle, widget: string }
+      - { label: Миниатюра, name: thumbnailUrl, widget: pasteImage }
+      - { label: Панорама (широкое фото), name: panoramaImage, widget: pasteImage, required: false }
+      - { label: Широта, name: latitude, widget: number, value_type: float, required: false }
+      - { label: Долгота, name: longitude, widget: number, value_type: float, required: false }
+      - { label: ID места (связь), name: landmarkId, widget: number, required: false }
+
+  - name: gallery
+    label: Галерея
+    label_singular: Фото
+    folder: content/gallery
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Фото, name: src, widget: pasteImage, required: true }
+      - { label: Заголовок, name: title, widget: string }
+      - { label: Подпись, name: caption, widget: string }
+
+  - name: legends
+    label: Легенды
+    label_singular: Легенда
+    folder: content/legends
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Заголовок, name: title, widget: string, required: true }
+      - { label: Текст, name: text, widget: text, required: true }
+      - label: Иконка
+        name: icon
+        widget: select
+        options: [utensils, droplets, landmark, mountain, scroll, music]
+
+  - name: timeline
+    label: История (хронология)
+    label_singular: Событие
+    folder: content/timeline
+    create: true
+    slug: "{{id}}"
+    extension: json
+    format: json
+    summary: "{{year}} — {{title}}"
+    fields:
+      - { label: ID, name: id, widget: number, required: true }
+      - { label: Год, name: year, widget: string, required: true }
+      - { label: Заголовок, name: title, widget: string, required: true }
+      - { label: Описание, name: description, widget: text }
+
+  - name: settings
+    label: Настройки сайта
+    files:
+      - name: site
+        label: Общие настройки
+        file: content/settings/site.json
+        fields:
+          - label: Статистика района
+            name: districtStats
+            widget: list
+            fields:
+              - { label: ID, name: id, widget: number }
+              - { label: Подпись, name: label, widget: string }
+              - { label: Значение, name: value, widget: string }
+              - { label: Иконка (emoji/имя), name: icon, widget: string }
+          - label: Маршруты
+            name: tourRoutes
+            widget: list
+            fields:
+              - { label: ID, name: id, widget: string }
+              - { label: Название, name: name, widget: string }
+              - { label: Описание, name: description, widget: text }
+              - label: ID мест
+                name: landmarkIds
+                widget: list
+                field: { label: ID места, name: id, widget: number, value_type: int }
+              - { label: Цвет, name: color, widget: string }
+              - { label: Длительность, name: duration, widget: string }
+              - { label: Расстояние, name: distance, widget: string }
+              - label: Сложность
+                name: difficulty
+                widget: select
+                options: [Лёгкий, Средний, Сложный]
+              - { label: Сезон, name: season, widget: string }
+              - { label: Бейдж, name: badge, widget: string }
+          - label: Гастрономия
+            name: gastronomy
+            widget: object
+            fields:
+              - { label: Заголовок, name: title, widget: string }
+              - { label: Подзаголовок, name: subtitle, widget: string }
+              - { label: Описание, name: description, widget: text }
+              - label: Советы
+                name: tips
+                widget: list
+                field: { label: Совет, name: tip, widget: string }
+              - { label: Фото, name: imageUrl, widget: pasteImage }
+          - { label: Текст аудио-легенды, name: audioLegendText, widget: text }
+          - label: Центр карты
+            name: mapCenter
+            widget: list
+            max: 2
+            min: 2
+            field: { label: Координата, name: coord, widget: number, value_type: float }
+          - { label: Масштаб карты, name: mapZoom, widget: number, value_type: int }
+          - { label: Видео на главной (URL), name: heroVideo, widget: string }
+          - label: Населённые пункты
+            name: settlements
+            widget: list
+            fields:
+              - { label: ID, name: id, widget: number }
+              - { label: Название, name: name, widget: string }
+              - { label: Население, name: population, widget: number }
+              - label: Тип
+                name: type
+                widget: select
+                options: [center, village]
+              - { label: Широта, name: latitude, widget: number, value_type: float }
+              - { label: Долгота, name: longitude, widget: number, value_type: float }
+          - label: Население по годам
+            name: populationHistory
+            widget: list
+            fields:
+              - { label: Год, name: year, widget: number }
+              - { label: Население, name: population, widget: number }
+          - label: Этнический состав
+            name: ethnicComposition
+            widget: list
+            fields:
+              - { label: Группа, name: label, widget: string }
+              - { label: Процент, name: percent, widget: number }
+              - { label: Цвет, name: color, widget: string }

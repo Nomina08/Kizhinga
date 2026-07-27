@@ -1,0 +1,13 @@
+{
+  "id": 2,
+  "slug": "rivers",
+  "title": "Реки",
+  "subtitle": "Уда и степные притоки",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg",
+  "description": "Река Уда и её притоки питают степные долины. Весной воды разливаются, создавая зелёные оазисы среди золотых просторов. Рыбалка и отдых у воды — часть жизни местных жителей.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mineral_spring_in_Tunkinsky_District.jpg/1280px-Mineral_spring_in_Tunkinsky_District.jpg"
+  ],
+  "latitude": 51.82,
+  "longitude": 109.9
+}

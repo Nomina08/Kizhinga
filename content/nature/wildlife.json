@@ -1,0 +1,11 @@
+{
+  "id": 4,
+  "slug": "wildlife",
+  "title": "Животные",
+  "subtitle": "Степная фауна Забайкалья",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+  "description": "На просторах района обитают суслики, журавли, орлы, лисы и табуны лошадей. Степь — дом для овец и крупного рогатого скота, а также редких видов птиц, занесённых в Красную книгу.",
+  "gallery": [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+  ]
+}

@@ -34,7 +34,7 @@ export const TOUR_BADGES: TourBadge[] = [
     id: 'complete',
     requiresAll: true,
     title: 'Мастер Кижинги',
-    description: 'Посетили все 6 достопримечательностей',
+    description: 'Посетили все достопримечательности района',
     icon: 'trophy',
   },
 ];

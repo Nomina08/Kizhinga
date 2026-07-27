@@ -7,9 +7,10 @@ import { getContentPreview } from '@/lib/contentResolver';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { BadgesPanel } from '@/components/BadgesPanel';
 import { TourProgress } from '@/components/TourProgress';
+import { ResetVisitProgressButton } from '@/components/visit/ResetVisitProgressButton';
 
 export function ProfilePage() {
-  const { favorites, recentlyViewed, toggleFavorite } = useApp();
+  const { favorites, recentlyViewed, toggleFavorite, visitorId, visitedCount, totalLandmarks } = useApp();
 
   const favoriteItems = Array.from(favorites)
     .map((key) => {
@@ -29,10 +30,26 @@ export function ProfilePage() {
         <PageHeader
           eyebrow="Личный кабинет"
           title="Избранное и просмотры"
-          subtitle="Сохраняйте интересные места и возвращайтесь к недавно просмотренным"
+          subtitle="Прогресс посещений сохраняется только в этом браузере — у каждого посетителя свои отметки"
         />
 
-        <div className="glass-panel p-6 mb-8">
+        <div className="glass-panel p-5 sm:p-6 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-6 border-b border-stone-200/70 dark:border-stone-700/50">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                Ваш профиль посетителя
+              </p>
+              <p className="text-sm text-stone-600 dark:text-stone-400">
+                Отмечено <span className="font-semibold text-stone-900 dark:text-white">{visitedCount} из {totalLandmarks}</span> мест
+              </p>
+              {visitorId && (
+                <p className="text-[11px] text-stone-400 mt-2 font-mono truncate max-w-xs" title={visitorId}>
+                  ID: {visitorId.slice(0, 8)}…
+                </p>
+              )}
+            </div>
+            <ResetVisitProgressButton />
+          </div>
           <TourProgress />
         </div>
 

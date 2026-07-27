@@ -3,3 +3,6 @@ export function assetPath(path: string): string {
   const normalized = path.startsWith('/') ? path : `/${path}`;
   return `${base}${normalized}`;
 }
+
+/** PDF: public/images/Путеводитель.pdf */
+export const GUIDE_PDF_URL = assetPath('/images/Путеводитель.pdf');

@@ -1,0 +1,237 @@
+{
+  "districtStats": [
+    {
+      "id": 1,
+      "label": "Образование района",
+      "value": "1966",
+      "icon": "calendar"
+    },
+    {
+      "id": 2,
+      "label": "Население",
+      "value": "~19 000",
+      "icon": "users"
+    },
+    {
+      "id": 3,
+      "label": "Минеральные источники",
+      "value": "15",
+      "icon": "map"
+    },
+    {
+      "id": 4,
+      "label": "Административный центр",
+      "value": "Кижинга",
+      "icon": "building"
+    },
+    {
+      "id": 5,
+      "label": "Основано село",
+      "value": "1915",
+      "icon": "calendar"
+    },
+    {
+      "id": 6,
+      "label": "До Улан-Удэ",
+      "value": "200 км",
+      "icon": "map"
+    },
+    {
+      "id": 7,
+      "label": "Музеи района",
+      "value": "7",
+      "icon": "building"
+    }
+  ],
+  "tourRoutes": [
+    {
+      "id": "spiritual",
+      "name": "Духовный маршрут",
+      "description": "Дацаны, ступы и священные места буддийской традиции",
+      "landmarkIds": [
+        1,
+        7,
+        11
+      ],
+      "color": "#8b5cf6",
+      "duration": "3–4 часа",
+      "distance": "~25 км",
+      "difficulty": "Лёгкий",
+      "season": "Круглый год",
+      "badge": "Духовный"
+    },
+    {
+      "id": "nature",
+      "name": "Природный маршрут",
+      "description": "Горы, реки, целебные источники и боргойская степь",
+      "landmarkIds": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
+      "color": "#22c55e",
+      "duration": "1–2 дня",
+      "distance": "~120 км",
+      "difficulty": "Средний",
+      "season": "Май — сентябрь",
+      "badge": "Природа"
+    },
+    {
+      "id": "historical",
+      "name": "Исторический маршрут",
+      "description": "Памятники воинам и археологические находки эпохи гуннов",
+      "landmarkIds": [
+        4,
+        6
+      ],
+      "color": "#ef4444",
+      "duration": "5–6 часов",
+      "distance": "~45 км",
+      "difficulty": "Лёгкий",
+      "season": "Апрель — октябрь",
+      "badge": "История"
+    }
+  ],
+  "gastronomy": {
+    "title": "Боргойская баранина",
+    "subtitle": "Гастрономический бренд Бурятии",
+    "description": "Боргойская баранина — легендарное блюдо из мяса овец, выращенных на травах боргойской степи Кижингинского района. Нежный вкус, аромат степных трав и традиция приготовления на открытом огне сделали его символом гостеприимства бурят. По преданию, баранину из этих мест ценили и в императорской семье.",
+    "tips": [
+      "Попробуйте баранину на открытом огне в степи",
+      "Сочетайте с традиционным чаем с молоком",
+      "Загляните на местные праздники сбора стада"
+    ],
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg"
+  },
+  "audioLegendText": "Легенда о духе горы Ехэ-Хада. Старики Кижингинского района рассказывают: на вершине этой горы живёт дух-хранитель степи. Он наблюдает за пастухами, за табунами лошадей и за тем, как меняются сезоны на бескрайних удолиях. Тот, кто поднимается на Ехэ-Хада с чистым сердцем и уважением к земле предков, услышит шёпот ветра — предсказание удачного года и благословение для семьи. Гора видна издалека, как страж Кижинги, и напоминает: степь щедра к тем, кто её любит.",
+  "mapCenter": [
+    51.82,
+    109.92
+  ],
+  "mapZoom": 10,
+  "heroVideo": "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_25fps.mp4",
+  "settlements": [
+    {
+      "id": 1,
+      "name": "Кижинга",
+      "population": 6800,
+      "type": "center",
+      "latitude": 51.835,
+      "longitude": 109.932
+    },
+    {
+      "id": 2,
+      "name": "Новокижингинск",
+      "population": 1200,
+      "type": "village",
+      "latitude": 51.87,
+      "longitude": 109.96
+    },
+    {
+      "id": 3,
+      "name": "Загустай",
+      "population": 900,
+      "type": "village",
+      "latitude": 51.79,
+      "longitude": 109.97
+    },
+    {
+      "id": 4,
+      "name": "Могсохон",
+      "population": 850,
+      "type": "village",
+      "latitude": 51.84,
+      "longitude": 109.87
+    },
+    {
+      "id": 5,
+      "name": "Улзытэ",
+      "population": 780,
+      "type": "village",
+      "latitude": 51.77,
+      "longitude": 109.91
+    },
+    {
+      "id": 6,
+      "name": "Верхнее Кодунск",
+      "population": 650,
+      "type": "village",
+      "latitude": 51.86,
+      "longitude": 109.85
+    },
+    {
+      "id": 7,
+      "name": "Эдэрмык",
+      "population": 600,
+      "type": "village",
+      "latitude": 51.81,
+      "longitude": 109.94
+    },
+    {
+      "id": 8,
+      "name": "Боргой",
+      "population": 2100,
+      "type": "village",
+      "latitude": 51.82,
+      "longitude": 109.88
+    },
+    {
+      "id": 9,
+      "name": "Аршан",
+      "population": 1800,
+      "type": "village",
+      "latitude": 51.75,
+      "longitude": 109.8
+    }
+  ],
+  "populationHistory": [
+    {
+      "year": 1959,
+      "population": 12400
+    },
+    {
+      "year": 1970,
+      "population": 15800
+    },
+    {
+      "year": 1979,
+      "population": 19200
+    },
+    {
+      "year": 1989,
+      "population": 22100
+    },
+    {
+      "year": 2002,
+      "population": 20500
+    },
+    {
+      "year": 2010,
+      "population": 19800
+    },
+    {
+      "year": 2021,
+      "population": 19000
+    }
+  ],
+  "ethnicComposition": [
+    {
+      "label": "Буряты",
+      "percent": 72,
+      "color": "#1a6b47"
+    },
+    {
+      "label": "Русские",
+      "percent": 22,
+      "color": "#1e5a8a"
+    },
+    {
+      "label": "Другие",
+      "percent": 6,
+      "color": "#c4a035"
+    }
+  ]
+}

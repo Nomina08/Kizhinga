@@ -32,7 +32,9 @@ interface AppContextValue {
   selectedRoute: RouteType | null;
   setSelectedRoute: (route: RouteType | null) => void;
   visitedLandmarks: Set<number>;
-  markLandmarkVisited: (id: number) => void;
+  toggleLandmarkVisit: (id: number) => void;
+  resetVisitProgress: () => void;
+  visitorId: string | null;
   visitedCount: number;
   totalLandmarks: number;
   progressPercent: number;
@@ -47,7 +49,15 @@ interface AppContextValue {
 const AppContext = createContext<AppContextValue | null>(null);
 
 const VISITED_KEY = 'kizhinga-visited-landmarks';
+const VISITOR_ID_KEY = 'kizhinga-visitor-id';
 const THEME_KEY = 'kizhinga-theme';
+
+function createVisitorId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return `guest-${Date.now().toString(36)}`;
+}
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -55,6 +65,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [visitedLandmarks, setVisitedLandmarks] = useState<Set<number>>(new Set());
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [recentlyViewed, setRecentlyViewed] = useState<RecentItem[]>([]);
+  const [visitorId, setVisitorId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   const totalLandmarks = landmarks.length;
@@ -103,6 +114,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         /* ignore */
       }
     }
+    let id = localStorage.getItem(VISITOR_ID_KEY);
+    if (!id) {
+      id = createVisitorId();
+      localStorage.setItem(VISITOR_ID_KEY, id);
+    }
+    setVisitorId(id);
   }, []);
 
   useEffect(() => {
@@ -115,13 +132,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   }, []);
 
-  const markLandmarkVisited = useCallback((id: number) => {
+  const toggleLandmarkVisit = useCallback((id: number) => {
     setVisitedLandmarks((prev) => {
       const next = new Set(prev);
-      next.add(id);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       localStorage.setItem(VISITED_KEY, JSON.stringify(Array.from(next)));
       return next;
     });
+  }, []);
+
+  const resetVisitProgress = useCallback(() => {
+    setVisitedLandmarks(new Set());
+    localStorage.removeItem(VISITED_KEY);
   }, []);
 
   const toggleFavorite = useCallback((type: FavoriteType, id: number) => {
@@ -160,7 +183,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         selectedRoute,
         setSelectedRoute,
         visitedLandmarks,
-        markLandmarkVisited,
+        toggleLandmarkVisit,
+        resetVisitProgress,
+        visitorId,
         visitedCount: visitedLandmarks.size,
         totalLandmarks,
         progressPercent,

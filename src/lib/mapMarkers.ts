@@ -66,6 +66,20 @@ export function createEventMarkerIcon() {
   });
 }
 
+export function createMuseumMarkerIcon() {
+  return L.divIcon({
+    className: 'event-marker-wrapper',
+    html: `
+      <div class="event-marker" style="background: linear-gradient(145deg, #b45309, #d97706);">
+        <span>🏛</span>
+      </div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16],
+  });
+}
+
 export const MAP_TILES = {
   light: {
     url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',

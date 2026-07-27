@@ -1,0 +1,12 @@
+{
+  "id": 6,
+  "title": "Степной марафон и конные скачки",
+  "date": "Июнь",
+  "month": 6,
+  "location": "Боргойская степь",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/East_Sayan_mountains_01.jpg/1280px-East_Sayan_mountains_01.jpg",
+  "description": "Спортивные состязания на степных просторах: конные скачки, национальная борьба и эстафеты. Молодёжь и гости района участвуют в соревнованиях под открытым небом.",
+  "category": "sport",
+  "latitude": 51.82,
+  "longitude": 109.88
+}

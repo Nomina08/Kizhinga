@@ -206,6 +206,10 @@
     @apply py-22 md:py-30 px-4 sm:px-6 lg:px-8;
   }
 
+  .section-shell-compact {
+    @apply py-10 md:py-14 px-4 sm:px-6 lg:px-8;
+  }
+
   .container-premium {
     @apply mx-auto max-w-7xl;
   }
@@ -302,7 +306,11 @@
   }
 
   .animate-on-scroll {
-    @apply opacity-0 translate-y-6 transition-all duration-700 ease-premium;
+    @apply opacity-100 translate-y-0 transition-all duration-700 ease-premium;
+  }
+
+  html.js .animate-on-scroll:not(.is-visible) {
+    @apply opacity-0 translate-y-6;
   }
 
   .animate-on-scroll.is-visible {

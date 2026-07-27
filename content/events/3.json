@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "title": "Праздник боргойской баранины",
+  "date": "Август",
+  "month": 8,
+  "location": "Боргойская степь",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Steppe_in_Buryatia.jpg/1280px-Steppe_in_Buryatia.jpg",
+  "description": "Гастрономический фестиваль, посвящённый знаменитой боргойской баранине. Пастухи демонстрируют лучшие породы овец, повара готовят блюда на открытом огне, звучат улигершин и народные песни.",
+  "category": "culture",
+  "latitude": 51.82,
+  "longitude": 109.88
+}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useApp } from '@/context/AppContext';
 import { BadgesPanel } from './BadgesPanel';
+import { VisitProgressList } from './visit/VisitProgressList';
 
 interface TourProgressProps {
   compact?: boolean;
@@ -49,7 +50,7 @@ export function TourProgress({ compact = false, scrolled = true }: TourProgressP
             Ваш прогресс в туре
           </h2>
           <p className="text-body-sm text-stone-600 dark:text-stone-400 mt-1">
-            Посещено {visitedCount} из {totalLandmarks} достопримечательностей
+            {visitedCount} из {totalLandmarks} — ваш личный чек-лист, хранится в браузере
           </p>
         </div>
         <span className="text-4xl font-display font-semibold text-buryat-green dark:text-buryat-gold">
@@ -65,6 +66,7 @@ export function TourProgress({ compact = false, scrolled = true }: TourProgressP
         />
       </div>
       <BadgesPanel className="mt-8" />
+      <VisitProgressList />
     </div>
   );
 }

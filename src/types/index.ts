@@ -75,7 +75,20 @@ export interface TourBadge {
   requiresAll?: boolean;
 }
 
-export type FavoriteType = 'landmark' | 'event' | 'culture' | 'nature' | 'panorama';
+export type FavoriteType = 'landmark' | 'event' | 'culture' | 'nature' | 'panorama' | 'museum';
+
+export interface Museum {
+  id: number;
+  name: string;
+  village: string;
+  founded: string;
+  founder?: string;
+  coordinates: [number, number];
+  imageUrl: string;
+  description: string;
+  highlights: string[];
+  type: 'school' | 'local' | 'tourist';
+}
 
 export interface FavoriteItem {
   type: FavoriteType;

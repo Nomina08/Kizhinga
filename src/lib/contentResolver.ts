@@ -5,6 +5,7 @@ import {
   natureTopics,
   panoramas,
 } from '@/data/extras';
+import { museums } from '@/data/museums';
 import type { FavoriteType } from '@/types';
 
 export interface ContentPreview {
@@ -76,6 +77,18 @@ export function getContentPreview(type: FavoriteType, id: number): ContentPrevie
         subtitle: item.subtitle,
         imageUrl: item.thumbnailUrl,
         href: `/panoramas/${id}/`,
+      };
+    }
+    case 'museum': {
+      const item = museums.find((m) => m.id === id);
+      if (!item) return null;
+      return {
+        type,
+        id,
+        title: item.name,
+        subtitle: item.village,
+        imageUrl: item.imageUrl,
+        href: `/museums/${id}/`,
       };
     }
     default:

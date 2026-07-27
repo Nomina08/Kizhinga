@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/clean-dev.mjs && next dev",
+    "dev:clean": "node scripts/clean-dev.mjs && next dev",
+    "content:bundle": "node scripts/bundle-content.mjs",
+    "content:seed": "tsx scripts/seed-content.ts && node scripts/patch-letopis.mjs",
+    "prebuild": "node scripts/bundle-content.mjs",
     "build": "next build",
     "preview": "npx serve out",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cms:local": "npx decap-server",
+    "cms:images": "node scripts/cms-image-proxy.mjs",
+    "cms:dev": "node scripts/cms-dev.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
@@ -29,6 +36,7 @@
     "postcss": "^8.4.49",
     "serve": "^14.2.4",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }

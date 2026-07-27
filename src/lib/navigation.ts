@@ -7,13 +7,16 @@ import {
   BookOpen,
   Users,
   Image,
-  Info,
   MoreHorizontal,
   Calendar,
   Palette,
   TreePine,
   Globe,
   User,
+  Building2,
+  MapPin,
+  Landmark,
+  Star,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -34,8 +37,8 @@ export const mainNav: NavItem[] = [
   { href: '/panoramas/', label: '360°', icon: Globe },
   { href: '/history/', label: 'История', icon: BookOpen },
   { href: '/people/', label: 'Люди', icon: Users },
+  { href: '/museums/', label: 'Музеи', icon: Building2, description: '7 музеев района' },
   { href: '/gallery/', label: 'Галерея', icon: Image },
-  { href: '/about/', label: 'О районе', icon: Info },
   { href: '/profile/', label: 'Профиль', icon: User },
 ];
 
@@ -51,19 +54,19 @@ export interface QuickAction {
   href: string;
   label: string;
   description: string;
-  emoji: string;
-  gradient: string;
+  icon: LucideIcon;
 }
 
 export const homeQuickActions: QuickAction[] = [
-  { href: '/map/', label: 'Карта района', description: 'Интерактивная карта', emoji: '🗺', gradient: 'from-blue-600 to-indigo-700' },
-  { href: '/places/', label: 'Найти место', description: '6 достопримечательностей', emoji: '📍', gradient: 'from-emerald-600 to-teal-700' },
-  { href: '/events/', label: 'События', description: 'Праздники и фестивали', emoji: '📅', gradient: 'from-violet-600 to-purple-700' },
-  { href: '/culture/', label: 'Культура', description: '8 тем о традициях', emoji: '🎭', gradient: 'from-purple-600 to-violet-700' },
-  { href: '/nature/', label: 'Природа', description: 'Горы, реки, степь', emoji: '🏔', gradient: 'from-stone-600 to-stone-800' },
-  { href: '/panoramas/', label: '360° тур', description: 'Панорамы мест', emoji: '🎥', gradient: 'from-buryat-green to-emerald-800' },
-  { href: '/routes/', label: 'Маршруты', description: '3 готовых маршрута', emoji: '🚗', gradient: 'from-amber-600 to-orange-700' },
-  { href: '/profile/', label: 'Профиль', description: 'Избранное и прогресс', emoji: '⭐', gradient: 'from-rose-600 to-pink-700' },
+  { href: '/map/', label: 'Карта района', description: 'Интерактивная карта', icon: Map },
+  { href: '/places/', label: 'Найти место', description: '11 достопримечательностей', icon: MapPin },
+  { href: '/museums/', label: 'Музеи', description: '7 музеев района', icon: Landmark },
+  { href: '/events/', label: 'События', description: 'Праздники и фестивали', icon: Calendar },
+  { href: '/culture/', label: 'Культура', description: 'Традиции и легенды', icon: Palette },
+  { href: '/nature/', label: 'Природа', description: 'Горы, реки, степь', icon: TreePine },
+  { href: '/panoramas/', label: '360° тур', description: 'Панорамы мест', icon: Globe },
+  { href: '/routes/', label: 'Маршруты', description: '3 готовых маршрута', icon: Route },
+  { href: '/profile/', label: 'Профиль', description: 'Избранное и прогресс', icon: Star },
 ];
 
 export function isNavActive(pathname: string, href: string): boolean {
