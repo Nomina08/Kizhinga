@@ -19,8 +19,9 @@ export {
   HERO_VIDEO,
 } from '@/lib/content';
 
-export const FLAG_IMAGE = assetPath('/images/flag.svg');
-export const EMBLEM_IMAGE = assetPath('/images/emblem.svg');
+export const FLAG_IMAGE = assetPath('/images/district-emblem.webp');
+export const EMBLEM_IMAGE = assetPath('/images/district-emblem.webp');
+export const DISTRICT_EMBLEM_IMAGE = assetPath('/images/district-emblem.webp');
 
 export const GITHUB_URL = 'https://github.com/Nomina08/Kizhinga';
 

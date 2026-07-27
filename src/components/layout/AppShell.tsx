@@ -5,9 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, X } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { SidebarProgress } from '@/components/layout/SidebarProgress';
-import { FLAG_IMAGE } from '@/data/data';
+import { DISTRICT_EMBLEM_IMAGE } from '@/data/data';
 import { useApp } from '@/context/AppContext';
 import { bottomNav, mainNav, isNavActive, moreNavItems } from '@/lib/navigation';
 
@@ -27,7 +26,11 @@ export function AppShell({ children }: AppShellProps) {
       <aside className="hidden lg:flex fixed inset-y-0 left-0 z-40 h-screen w-64 xl:w-72 flex-col border-r border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-[#121816]">
         <div className="shrink-0 px-5 py-5 border-b border-stone-200/60 dark:border-stone-800/60">
           <Link href="/" className="flex items-center gap-3">
-            <Logo size={40} />
+            <img
+              src={DISTRICT_EMBLEM_IMAGE}
+              alt="Герб Кижингинского района"
+              className="h-14 w-14 shrink-0 object-contain drop-shadow-sm"
+            />
             <div className="min-w-0">
               <p className="font-display text-lg font-semibold text-buryat-green dark:text-buryat-gold leading-tight truncate">
                 Кижинга
@@ -94,8 +97,11 @@ export function AppShell({ children }: AppShellProps) {
       <div className="flex flex-1 flex-col lg:pl-64 xl:pl-72 min-h-screen">
         <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between gap-3 px-4 py-3 border-b border-stone-200/80 dark:border-stone-800/80 bg-white/85 dark:bg-surface-dark/85 backdrop-blur-2xl">
           <Link href="/" className="flex items-center gap-2.5 min-w-0">
-            <Logo size={36} />
-            <img src={FLAG_IMAGE} alt="" className="h-6 w-9 rounded object-cover ring-1 ring-stone-200/50" />
+            <img
+              src={DISTRICT_EMBLEM_IMAGE}
+              alt="Герб Кижингинского района"
+              className="h-10 w-10 shrink-0 object-contain"
+            />
             <span className="font-display text-base font-semibold text-buryat-green dark:text-buryat-gold truncate">
               Кижинга
             </span>

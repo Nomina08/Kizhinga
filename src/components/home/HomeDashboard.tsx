@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Compass } from 'lucide-react';
 import { homeQuickActions } from '@/lib/navigation';
-import { FLAG_IMAGE, EMBLEM_IMAGE } from '@/data/data';
+import { EMBLEM_IMAGE } from '@/data/data';
 
 export function HomeDashboard() {
   return (
@@ -21,13 +21,8 @@ export function HomeDashboard() {
             <div className="flex items-center gap-4">
               <img
                 src={EMBLEM_IMAGE}
-                alt=""
-                className="h-16 w-16 sm:h-20 sm:w-20 drop-shadow-lg"
-              />
-              <img
-                src={FLAG_IMAGE}
-                alt=""
-                className="h-12 w-[4.5rem] sm:h-14 sm:w-[5.25rem] rounded-lg object-cover shadow-md ring-1 ring-stone-200/80 dark:ring-stone-700/50"
+                alt="Герб Кижингинского района"
+                className="h-16 w-16 sm:h-20 sm:w-20 object-contain drop-shadow-lg"
               />
             </div>
             <div className="flex-1">
