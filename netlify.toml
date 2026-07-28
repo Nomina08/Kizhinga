@@ -6,6 +6,11 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/oauth-status"
+  to = "/.netlify/functions/oauth-status"
+  status = 200
+
+[[redirects]]
   from = "/auth"
   to = "/.netlify/functions/auth"
   status = 200

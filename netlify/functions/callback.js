@@ -1,3 +1,16 @@
+const SITE_URL =
+  process.env.URL ||
+  process.env.DEPLOY_PRIME_URL ||
+  'https://coruscating-belekoy-b3081d.netlify.app';
+
+function getOAuthConfig() {
+  const clientId = process.env.GITHUB_CLIENT_ID || process.env.OAUTH_CLIENT_ID;
+  const clientSecret =
+    process.env.GITHUB_CLIENT_SECRET || process.env.OAUTH_CLIENT_SECRET;
+
+  return { clientId, clientSecret, siteUrl: SITE_URL };
+}
+
 function errorPage(message) {
   const safe = String(message).replace(/</g, '&lt;');
   return {
@@ -50,11 +63,9 @@ exports.handler = async (event) => {
     return errorPage('Missing authorization code');
   }
 
-  const siteUrl = process.env.URL;
-  const clientId = process.env.GITHUB_CLIENT_ID;
-  const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+  const { clientId, clientSecret, siteUrl } = getOAuthConfig();
 
-  if (!siteUrl || !clientId || !clientSecret) {
+  if (!clientId || !clientSecret) {
     return errorPage('OAuth is not configured on Netlify');
   }
 
