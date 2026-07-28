@@ -5,7 +5,6 @@ backend:
   name: github
   repo: Nomina08/Kizhinga
   branch: main
-  # Для OAuth на GitHub Pages см. ADMIN.md (base_url + auth_endpoint)
   site_domain: coruscating-belekoy-b3081d.netlify.app
 
 local_backend:
