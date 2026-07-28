@@ -5,7 +5,8 @@ backend:
   name: github
   repo: Nomina08/Kizhinga
   branch: main
-  site_domain: coruscating-belekoy-b3081d.netlify.app
+  base_url: https://coruscating-belekoy-b3081d.netlify.app
+  auth_endpoint: auth
 
 local_backend:
   url: http://localhost:8081/api/v1
