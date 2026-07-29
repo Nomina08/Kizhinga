@@ -7,6 +7,7 @@ import {
 } from '@/data/extras';
 import { museums } from '@/data/museums';
 import { CONTENT_PLACEHOLDER_IMAGE } from '@/lib/content';
+import { getEventRouteId } from '@/lib/eventHelpers';
 import type { FavoriteType } from '@/types';
 
 export interface ContentPreview {
@@ -41,7 +42,7 @@ export function getContentPreview(type: FavoriteType, id: number): ContentPrevie
         title: item.title,
         subtitle: item.date ?? '',
         imageUrl: item.imageUrl ?? CONTENT_PLACEHOLDER_IMAGE,
-        href: `/events/${id}/`,
+        href: `/events/${getEventRouteId(item)}/`,
       };
     }
     case 'culture': {

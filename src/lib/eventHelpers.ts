@@ -1,6 +1,16 @@
 import type { DistrictEvent, EventCategory } from '@/types';
 import { EVENT_CATEGORY_LABELS } from '@/types';
 
+export function getEventRouteId(event: DistrictEvent): string {
+  return event.slug ?? String(event.id);
+}
+
+export function findDistrictEvent(paramId: string, events: DistrictEvent[]): DistrictEvent | undefined {
+  return events.find(
+    (event) => getEventRouteId(event) === paramId || String(event.id) === paramId
+  );
+}
+
 export function getEventCategoryLabel(category?: EventCategory): string | undefined {
   if (!category) return undefined;
   return EVENT_CATEGORY_LABELS[category];

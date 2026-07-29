@@ -58,21 +58,32 @@
     return PUBLIC_FOLDER + '/' + normalized.split('/').pop();
   }
 
-  function assetPath(asset) {
-    if (!asset) return '';
-    if (typeof asset === 'string') return asset;
-    if (asset.get && asset.get('path')) return asset.get('path');
-    if (asset.path) return asset.path;
-    if (asset.toString) return asset.toString();
-    return '';
-  }
-
-  function buildRepoPath(file) {
-    var safeName = (file.name || 'image.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
-    return MEDIA_FOLDER + '/' + Date.now() + '-' + safeName;
-  }
-
   function getGithubToken() {
+    try {
+      var stored = localStorage.getItem('decap-cms-user');
+      if (stored) {
+        var user = JSON.parse(stored);
+        if (user && typeof user.token === 'string' && user.token.length > 10) {
+          return user.token;
+        }
+      }
+    } catch (e) {}
+
+    try {
+      if (window.CMS && typeof window.CMS.getBackend === 'function') {
+        var backend = window.CMS.getBackend();
+        if (backend && typeof backend.getToken === 'function') {
+          var token = backend.getToken();
+          if (token && typeof token.then === 'function') {
+            return null;
+          }
+          if (typeof token === 'string' && token.length > 10) {
+            return token;
+          }
+        }
+      }
+    } catch (e) {}
+
     try {
       for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);
@@ -90,6 +101,37 @@
       }
     } catch (e) {}
     return null;
+  }
+
+  function sanitizePublicPath(path) {
+    if (!path || typeof path !== 'string') return '';
+    if (path.indexOf('[object Object]') !== -1) return '';
+    return path;
+  }
+
+  function assetPath(asset) {
+    if (!asset) return '';
+    if (typeof asset === 'string') return asset;
+    try {
+      if (asset.get && typeof asset.get === 'function') {
+        var direct = asset.get('path');
+        if (typeof direct === 'string') return direct;
+        if (direct && direct.get && typeof direct.get === 'function') {
+          var nested = direct.get('path');
+          if (typeof nested === 'string') return nested;
+        }
+        var url = asset.get('url');
+        if (typeof url === 'string') return url;
+      }
+    } catch (e) {}
+    if (typeof asset.path === 'string') return asset.path;
+    if (typeof asset.url === 'string') return asset.url;
+    return '';
+  }
+
+  function buildRepoPath(file) {
+    var safeName = (file.name || 'image.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
+    return MEDIA_FOLDER + '/' + Date.now() + '-' + safeName;
   }
 
   function uploadViaLocalProxy(file) {
@@ -187,8 +229,8 @@
         : new File([file], finalName, { type: file.type || 'image/jpeg' });
 
     return Promise.resolve(onAddAsset(uploadFile)).then(function (asset) {
-      var path = assetPath(asset);
-      if (path) return toPublicPath(path);
+      var path = sanitizePublicPath(toPublicPath(assetPath(asset)));
+      if (path) return path;
       return PUBLIC_FOLDER + '/' + finalName;
     });
   }
@@ -265,7 +307,12 @@
     },
 
     setPath: function (path) {
-      this.props.onChange(path);
+      var safePath = sanitizePublicPath(path);
+      if (!safePath) {
+        this.setError('Не удалось сохранить путь к фото. Попробуйте «Выбрать файл» или Ctrl+V.');
+        return;
+      }
+      this.props.onChange(safePath);
       this.setState({ uploading: false, urlInput: '', error: null });
     },
 
@@ -318,6 +365,10 @@
           self.setPath(path);
         })
         .catch(function (err) {
+          if (!isLocalHost() && /^https?:\/\//i.test(url)) {
+            self.setPath(url);
+            return;
+          }
           if (isLocalHost()) {
             self.setError(
               err && err.message
@@ -326,7 +377,7 @@
             );
           } else {
             self.setError(
-              'Не удалось скачать по ссылке. Скопируйте само изображение: ПКМ → «Копировать изображение» → Ctrl+V.'
+              'Не удалось скачать по ссылке. Вставьте прямую ссылку на .jpg/.png или скопируйте изображение: ПКМ → «Копировать изображение» → Ctrl+V.'
             );
           }
         });

@@ -95,6 +95,8 @@ export type EventCategory = 'holiday' | 'culture' | 'sport' | 'religion';
 
 export interface DistrictEvent {
   id: number;
+  /** URL-сегмент, если имя файла в CMS не совпадает с id (например 7-1.json при id=7) */
+  slug?: string;
   title: string;
   date?: string;
   month?: number;

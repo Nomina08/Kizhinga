@@ -132,6 +132,7 @@ export const districtEvents: DistrictEvent[] = bundle.events.map((e) => {
   });
   const event: DistrictEvent = {
     id: e.id,
+    slug: e.slug,
     title: e.title ?? '',
     date: e.date || undefined,
     month: e.month ?? undefined,

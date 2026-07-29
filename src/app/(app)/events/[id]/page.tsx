@@ -5,19 +5,20 @@ import { ContentDetailPage } from '@/components/content/ContentCards';
 import { EVENTS_SECTION } from '@/lib/navigation';
 import {
   eventHasCoordinates,
+  findDistrictEvent,
   formatEventDetailSubtitle,
-  getEventCategoryLabel,
+  getEventRouteId,
 } from '@/lib/eventHelpers';
 import { CONTENT_PLACEHOLDER_IMAGE } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
 import { MapPin } from 'lucide-react';
 
 export function generateStaticParams() {
-  return districtEvents.map((e) => ({ id: String(e.id) }));
+  return districtEvents.map((e) => ({ id: getEventRouteId(e) }));
 }
 
 export default function EventPage({ params }: { params: { id: string } }) {
-  const event = districtEvents.find((e) => e.id === Number(params.id));
+  const event = findDistrictEvent(params.id, districtEvents);
   if (!event) notFound();
 
   const showLocation = Boolean(event.location || eventHasCoordinates(event));

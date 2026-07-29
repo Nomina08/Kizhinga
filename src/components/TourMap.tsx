@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { landmarks, tourRoutes, MAP_CENTER, MAP_ZOOM } from '@/data/data';
 import { districtEvents, settlements } from '@/data/extras';
+import { getEventRouteId } from '@/lib/eventHelpers';
 import { museums } from '@/data/museums';
 import { useApp } from '@/context/AppContext';
 import { LANDMARK_TYPE_COLORS, LANDMARK_TYPE_LABELS } from '@/types';
@@ -250,7 +251,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                   districtEvents
                     .filter((event) => event.coordinates?.length === 2)
                     .map((event) => (
-                    <Marker key={`event-${event.id}`} position={event.coordinates!} icon={createEventMarkerIcon()}>
+                    <Marker key={`event-${getEventRouteId(event)}`} position={event.coordinates!} icon={createEventMarkerIcon()}>
                       <Popup>
                         <div className="min-w-[200px]">
                           {event.date && (
@@ -258,7 +259,7 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                           )}
                           <h3 className="font-semibold text-sm mb-1">{event.title}</h3>
                           {event.location && <p className="text-xs text-stone-500 mb-2">{event.location}</p>}
-                          <Link href={`/events/${event.id}/`} className="text-xs font-semibold text-buryat-green">Подробнее →</Link>
+                          <Link href={`/events/${getEventRouteId(event)}/`} className="text-xs font-semibold text-buryat-green">Подробнее →</Link>
                         </div>
                       </Popup>
                     </Marker>

@@ -12,7 +12,11 @@ function readJsonFiles(dir) {
   return fs
     .readdirSync(dir)
     .filter((f) => f.endsWith('.json'))
-    .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+    .map((f) => {
+      const fileSlug = f.replace(/\.json$/, '');
+      const data = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      return { ...data, _fileSlug: fileSlug };
+    });
 }
 
 function sortById(items) {
@@ -93,6 +97,7 @@ function normalizeLandmark(item) {
 
 function normalizeEvent(item) {
   const hadCoords = hasValidCoords(item);
+  const fileSlug = item._fileSlug;
   const base = normalizeWithGallery(item);
   const out = {
     ...base,
@@ -103,6 +108,13 @@ function normalizeEvent(item) {
     gallery: base.gallery ?? [],
     category: base.category ?? '',
   };
+  delete out._fileSlug;
+  if (fileSlug && String(out.id) !== fileSlug) {
+    out.slug = fileSlug;
+  }
+  if (typeof out.imageUrl === 'string' && out.imageUrl.includes('[object Object]')) {
+    delete out.imageUrl;
+  }
   if (!hadCoords) {
     delete out.coordinates;
   }

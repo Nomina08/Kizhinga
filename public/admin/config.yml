@@ -120,7 +120,7 @@ collections:
     format: json
     summary: "{{title}} — {{date}}"
     fields:
-      - { label: ID, name: id, widget: number, required: true }
+      - { label: ID, name: id, widget: number, required: true, hint: "Уникальный номер! Не повторяйте существующие (1, 2, 4, 5, 6, 7…). Если ID занят — файл будет 7-1, 7-2 и т.д." }
       - { label: Название, name: title, widget: string, required: true }
       - { label: Дата, name: date, widget: string, required: false }
       - { label: Месяц (число), name: month, widget: number, value_type: int, min: 1, max: 12, required: false }
