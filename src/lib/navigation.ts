@@ -6,7 +6,6 @@ import {
   Route,
   BookOpen,
   Users,
-  Image,
   MoreHorizontal,
   Calendar,
   Palette,
@@ -26,19 +25,24 @@ export interface NavItem {
   description?: string;
 }
 
+export const EVENTS_SECTION = {
+  title: 'Культурный код «Хэжэнгэ»',
+  description: 'Праздники и традиции Кижингинского района',
+  eyebrow: 'Культурный код',
+} as const;
+
 export const mainNav: NavItem[] = [
   { href: '/', label: 'Главная', icon: Home },
   { href: '/map/', label: 'Карта', icon: Map },
   { href: '/places/', label: 'Места', icon: Mountain },
   { href: '/routes/', label: 'Маршруты', icon: Route },
-  { href: '/events/', label: 'События', icon: Calendar },
+  { href: '/events/', label: EVENTS_SECTION.title, icon: Calendar },
   { href: '/culture/', label: 'Культура', icon: Palette },
   { href: '/nature/', label: 'Природа', icon: TreePine },
-  { href: '/panoramas/', label: '360°', icon: Globe },
+  { href: '/panoramas/', label: 'Панорамы', icon: Globe },
   { href: '/history/', label: 'История', icon: BookOpen },
   { href: '/people/', label: 'Люди', icon: Users },
   { href: '/museums/', label: 'Музеи', icon: Building2, description: '7 музеев района' },
-  { href: '/gallery/', label: 'Галерея', icon: Image },
   { href: '/profile/', label: 'Профиль', icon: User },
 ];
 
@@ -61,10 +65,10 @@ export const homeQuickActions: QuickAction[] = [
   { href: '/map/', label: 'Карта района', description: 'Интерактивная карта', icon: Map },
   { href: '/places/', label: 'Найти место', description: '11 достопримечательностей', icon: MapPin },
   { href: '/museums/', label: 'Музеи', description: '7 музеев района', icon: Landmark },
-  { href: '/events/', label: 'События', description: 'Праздники и фестивали', icon: Calendar },
+  { href: '/events/', label: EVENTS_SECTION.title, description: EVENTS_SECTION.description, icon: Calendar },
   { href: '/culture/', label: 'Культура', description: 'Традиции и легенды', icon: Palette },
   { href: '/nature/', label: 'Природа', description: 'Горы, реки, степь', icon: TreePine },
-  { href: '/panoramas/', label: '360° тур', description: 'Панорамы мест', icon: Globe },
+  { href: '/panoramas/', label: 'Панорамы', description: 'Широкие виды мест', icon: Globe },
   { href: '/routes/', label: 'Маршруты', description: '3 готовых маршрута', icon: Route },
   { href: '/profile/', label: 'Профиль', description: 'Избранное и прогресс', icon: Star },
 ];

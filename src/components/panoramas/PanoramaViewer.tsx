@@ -34,7 +34,7 @@ export function PanoramaViewer({ imageUrl, title }: PanoramaViewerProps) {
     <div className="relative rounded-3xl overflow-hidden ring-1 ring-stone-200/50 dark:ring-stone-700/50 shadow-card">
       <div className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-md px-4 py-2 text-xs font-medium text-white">
         <Move className="h-3.5 w-3.5" />
-        Перетащите для обзора · 360°
+        Перетащите для обзора
       </div>
       <div
         ref={containerRef}

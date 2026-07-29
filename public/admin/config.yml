@@ -43,12 +43,18 @@ collections:
         name: type
         widget: select
         options: [nature, culture, religion, history]
-        required: true
-      - { label: Эпоха, name: era, widget: string }
-      - { label: Широта, name: latitude, widget: number, value_type: float, required: true }
-      - { label: Долгота, name: longitude, widget: number, value_type: float, required: true }
+        required: false
+      - { label: Эпоха, name: era, widget: string, required: false }
+      - { label: Широта, name: latitude, widget: number, value_type: float, required: false }
+      - { label: Долгота, name: longitude, widget: number, value_type: float, required: false }
       - { label: Фото, name: imageUrl, widget: pasteImage, required: false }
-      - { label: Описание, name: description, widget: text, required: true }
+      - { label: Описание, name: description, widget: text, required: false }
+      - label: Фотогалерея (до 10)
+        name: gallery
+        widget: list
+        max: 10
+        required: false
+        field: { label: Фото, name: image, widget: pasteImage }
 
   - name: museums
     label: Музеи
@@ -62,7 +68,7 @@ collections:
     fields:
       - { label: ID, name: id, widget: number, required: true }
       - { label: Название, name: name, widget: string, required: true }
-      - { label: Населённый пункт, name: village, widget: string, required: true }
+      - { label: Населённый пункт, name: village, widget: string, required: false }
       - { label: Год основания, name: founded, widget: string }
       - { label: Основатель, name: founder, widget: string, required: false }
       - label: Тип
@@ -77,6 +83,12 @@ collections:
         name: highlights
         widget: list
         field: { label: Пункт, name: item, widget: string }
+      - label: Фотогалерея (до 10)
+        name: gallery
+        widget: list
+        max: 10
+        required: false
+        field: { label: Фото, name: image, widget: pasteImage }
 
   - name: people
     label: Люди
@@ -99,8 +111,8 @@ collections:
       - { label: Источник (URL), name: sourceUrl, widget: string, required: false }
 
   - name: events
-    label: События
-    label_singular: Событие
+    label: Культурный код «Хэжэнгэ»
+    label_singular: Культурный код
     folder: content/events
     create: true
     slug: "{{id}}"
@@ -110,17 +122,24 @@ collections:
     fields:
       - { label: ID, name: id, widget: number, required: true }
       - { label: Название, name: title, widget: string, required: true }
-      - { label: Дата, name: date, widget: string }
-      - { label: Месяц (число), name: month, widget: number, value_type: int, min: 1, max: 12 }
-      - { label: Место, name: location, widget: string }
-      - { label: Широта, name: latitude, widget: number, value_type: float }
-      - { label: Долгота, name: longitude, widget: number, value_type: float }
-      - { label: Фото, name: imageUrl, widget: pasteImage }
-      - { label: Описание, name: description, widget: text }
+      - { label: Дата, name: date, widget: string, required: false }
+      - { label: Месяц (число), name: month, widget: number, value_type: int, min: 1, max: 12, required: false }
+      - { label: Место, name: location, widget: string, required: false }
+      - { label: Широта, name: latitude, widget: number, value_type: float, required: false }
+      - { label: Долгота, name: longitude, widget: number, value_type: float, required: false }
+      - { label: Фото, name: imageUrl, widget: pasteImage, required: false }
+      - { label: Описание, name: description, widget: text, required: false }
       - label: Категория
         name: category
         widget: select
         options: [holiday, culture, sport, religion]
+        required: false
+      - label: Фотогалерея (до 10)
+        name: gallery
+        widget: list
+        max: 10
+        required: false
+        field: { label: Фото, name: image, widget: pasteImage }
 
   - name: culture
     label: Культура
@@ -133,14 +152,15 @@ collections:
     summary: "{{title}}"
     fields:
       - { label: ID, name: id, widget: number, required: true }
-      - { label: Slug (URL), name: slug, widget: string, required: true, hint: "Латиница, напр. clothing" }
+      - { label: Slug (URL), name: slug, widget: string, required: false, hint: "Необязательно — если пусто, будет использован ID" }
       - { label: Заголовок, name: title, widget: string, required: true }
       - { label: Подзаголовок, name: subtitle, widget: string }
       - { label: Обложка, name: imageUrl, widget: pasteImage }
       - { label: Описание, name: description, widget: text }
-      - label: Галерея
+      - label: Галерея (до 10)
         name: gallery
         widget: list
+        max: 10
         field: { label: Фото, name: image, widget: pasteImage }
 
   - name: nature
@@ -154,20 +174,21 @@ collections:
     summary: "{{title}}"
     fields:
       - { label: ID, name: id, widget: number, required: true }
-      - { label: Slug (URL), name: slug, widget: string, required: true }
+      - { label: Slug (URL), name: slug, widget: string, required: false, hint: "Необязательно — если пусто, будет использован ID" }
       - { label: Заголовок, name: title, widget: string, required: true }
       - { label: Подзаголовок, name: subtitle, widget: string }
       - { label: Обложка, name: imageUrl, widget: pasteImage }
       - { label: Описание, name: description, widget: text }
       - { label: Широта (опц.), name: latitude, widget: number, value_type: float, required: false }
       - { label: Долгота (опц.), name: longitude, widget: number, value_type: float, required: false }
-      - label: Галерея
+      - label: Галерея (до 10)
         name: gallery
         widget: list
+        max: 10
         field: { label: Фото, name: image, widget: pasteImage }
 
   - name: panoramas
-    label: Панорамы 360°
+    label: Панорамы
     label_singular: Панорама
     folder: content/panoramas
     create: true
@@ -185,21 +206,6 @@ collections:
       - { label: Долгота, name: longitude, widget: number, value_type: float, required: false }
       - { label: ID места (связь), name: landmarkId, widget: number, required: false }
 
-  - name: gallery
-    label: Галерея
-    label_singular: Фото
-    folder: content/gallery
-    create: true
-    slug: "{{id}}"
-    extension: json
-    format: json
-    summary: "{{title}}"
-    fields:
-      - { label: ID, name: id, widget: number, required: true }
-      - { label: Фото, name: src, widget: pasteImage, required: true }
-      - { label: Заголовок, name: title, widget: string }
-      - { label: Подпись, name: caption, widget: string }
-
   - name: legends
     label: Легенды
     label_singular: Легенда
@@ -212,7 +218,7 @@ collections:
     fields:
       - { label: ID, name: id, widget: number, required: true }
       - { label: Заголовок, name: title, widget: string, required: true }
-      - { label: Текст, name: text, widget: text, required: true }
+      - { label: Текст, name: text, widget: text, required: false }
       - label: Иконка
         name: icon
         widget: select
@@ -229,7 +235,7 @@ collections:
     summary: "{{year}} — {{title}}"
     fields:
       - { label: ID, name: id, widget: number, required: true }
-      - { label: Год, name: year, widget: string, required: true }
+      - { label: Год, name: year, widget: string, required: false }
       - { label: Заголовок, name: title, widget: string, required: true }
       - { label: Описание, name: description, widget: text }
 

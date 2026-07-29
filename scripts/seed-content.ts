@@ -67,7 +67,6 @@ async function main() {
     tourRoutes,
     districtStats,
     timelineEvents,
-    galleryImages,
     gastronomy,
     AUDIO_LEGEND_TEXT,
     MAP_CENTER,
@@ -96,7 +95,6 @@ async function main() {
   writeCollection('panoramas', panoramas, withLatLng);
   writeCollection('legends', legends);
   writeCollection('timeline', timelineEvents);
-  writeCollection('gallery', galleryImages.map((g: { id: number }) => ({ ...g, id: g.id })));
 
   writeJson('settings', 'site.json', {
     districtStats,

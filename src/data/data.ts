@@ -1,4 +1,4 @@
-import type { Landmark, Person, Legend, TourRoute, DistrictStat, TimelineEvent, GalleryImage } from '@/types';
+import type { Landmark, Person, Legend, TourRoute, DistrictStat, TimelineEvent } from '@/types';
 import { assetPath } from '@/lib/assets';
 import { LETOPIS_URL } from '@/data/letopis';
 
@@ -11,7 +11,6 @@ export {
   tourRoutes,
   districtStats,
   timelineEvents,
-  galleryImages,
   gastronomy,
   AUDIO_LEGEND_TEXT,
   MAP_CENTER,

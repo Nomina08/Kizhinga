@@ -1,10 +1,16 @@
 import { districtEvents } from '@/data/extras';
 import { CatalogPage, TopicCard } from '@/components/content/ContentCards';
-import { EVENT_CATEGORY_LABELS } from '@/types';
+import { EVENTS_SECTION } from '@/lib/navigation';
+import { formatEventCardSubtitle, getEventCategoryLabel } from '@/lib/eventHelpers';
+import { CONTENT_PLACEHOLDER_IMAGE } from '@/lib/content';
 
 export default function EventsPage() {
   return (
-    <CatalogPage eyebrow="Календарь" title="События" subtitle="Праздники, фестивали и мероприятия Кижингинского района">
+    <CatalogPage
+      eyebrow={EVENTS_SECTION.eyebrow}
+      title={EVENTS_SECTION.title}
+      subtitle={EVENTS_SECTION.description}
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {districtEvents.map((event, index) => (
           <TopicCard
@@ -12,10 +18,10 @@ export default function EventsPage() {
             type="event"
             id={event.id}
             title={event.title}
-            subtitle={`${event.date} · ${event.location}`}
-            imageUrl={event.imageUrl}
+            subtitle={formatEventCardSubtitle(event)}
+            imageUrl={event.imageUrl || CONTENT_PLACEHOLDER_IMAGE}
             href={`/events/${event.id}/`}
-            badge={EVENT_CATEGORY_LABELS[event.category]}
+            badge={getEventCategoryLabel(event.category)}
             index={index}
           />
         ))}

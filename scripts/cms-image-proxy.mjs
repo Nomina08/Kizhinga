@@ -17,6 +17,10 @@ function extensionFromContentType(contentType) {
   if (contentType.includes('webp')) return 'webp';
   if (contentType.includes('gif')) return 'gif';
   if (contentType.includes('svg')) return 'svg';
+  if (contentType.includes('mp4')) return 'mp4';
+  if (contentType.includes('webm')) return 'webm';
+  if (contentType.includes('ogg')) return 'ogg';
+  if (contentType.includes('quicktime')) return 'mov';
   return 'jpg';
 }
 
@@ -44,7 +48,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (req.method !== 'POST' || req.url !== '/fetch-image') {
+  if (req.method !== 'POST' || (req.url !== '/fetch-image' && req.url !== '/upload')) {
     sendJson(res, 404, { error: 'Not found' });
     return;
   }
@@ -52,12 +56,44 @@ const server = http.createServer(async (req, res) => {
   let body = '';
   req.on('data', (chunk) => {
     body += chunk;
-    if (body.length > 1_000_000) req.destroy();
+    if (body.length > 70_000_000) req.destroy();
   });
 
   req.on('end', async () => {
     try {
       const parsed = JSON.parse(body || '{}');
+
+      if (req.url === '/upload') {
+        const content = String(parsed.content || '').trim();
+        const contentType = String(parsed.contentType || 'image/jpeg');
+        const rawName = String(parsed.filename || 'upload.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
+
+        if (!content) {
+          sendJson(res, 400, { error: 'Пустой файл' });
+          return;
+        }
+
+        const isMedia =
+          contentType.startsWith('image/') || contentType.startsWith('video/');
+        if (!isMedia) {
+          sendJson(res, 400, { error: 'Нужен файл изображения или видео' });
+          return;
+        }
+
+        const buffer = Buffer.from(content, 'base64');
+        const maxSize = contentType.startsWith('video/') ? 50 * 1024 * 1024 : 5 * 1024 * 1024;
+        if (buffer.length > maxSize) {
+          sendJson(res, 413, { error: contentType.startsWith('video/') ? 'Видео больше 50 МБ' : 'Файл больше 5 МБ' });
+          return;
+        }
+
+        await fs.mkdir(uploadDir, { recursive: true });
+        const filename = `${Date.now()}-${rawName}`;
+        await fs.writeFile(path.join(uploadDir, filename), buffer);
+        sendJson(res, 200, { path: `${publicPrefix}/${filename}`, contentType });
+        return;
+      }
+
       const url = String(parsed.url || '').trim();
 
       if (!url || !/^https?:\/\//i.test(url)) {

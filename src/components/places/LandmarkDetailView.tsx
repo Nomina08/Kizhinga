@@ -10,6 +10,7 @@ import { VisitToggle } from '@/components/visit/VisitToggle';
 import { useApp } from '@/context/AppContext';
 import { tourRoutes } from '@/data/data';
 import { Button } from '@/components/ui/Button';
+import { PhotoCarousel } from '@/components/ui/PhotoCarousel';
 
 interface LandmarkDetailViewProps {
   landmark: Landmark;
@@ -84,6 +85,10 @@ export function LandmarkDetailView({ landmark }: LandmarkDetailViewProps) {
               {landmark.description}
             </p>
           </div>
+
+          {landmark.gallery && landmark.gallery.length > 0 && (
+            <PhotoCarousel images={landmark.gallery} altPrefix={landmark.name} className="mb-10" />
+          )}
 
           {relatedRoutes.length > 0 && (
             <div className="glass-panel p-6 mb-8">

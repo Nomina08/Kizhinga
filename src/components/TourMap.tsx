@@ -247,13 +247,17 @@ export function TourMapInner({ fullPage = false }: TourMapInnerProps) {
                   ))}
 
                 {showEvents &&
-                  districtEvents.map((event) => (
-                    <Marker key={`event-${event.id}`} position={event.coordinates} icon={createEventMarkerIcon()}>
+                  districtEvents
+                    .filter((event) => event.coordinates?.length === 2)
+                    .map((event) => (
+                    <Marker key={`event-${event.id}`} position={event.coordinates!} icon={createEventMarkerIcon()}>
                       <Popup>
                         <div className="min-w-[200px]">
-                          <span className="badge bg-violet-500 text-white border-0 mb-2">📅 {event.date}</span>
+                          {event.date && (
+                            <span className="badge bg-violet-500 text-white border-0 mb-2">📅 {event.date}</span>
+                          )}
                           <h3 className="font-semibold text-sm mb-1">{event.title}</h3>
-                          <p className="text-xs text-stone-500 mb-2">{event.location}</p>
+                          {event.location && <p className="text-xs text-stone-500 mb-2">{event.location}</p>}
                           <Link href={`/events/${event.id}/`} className="text-xs font-semibold text-buryat-green">Подробнее →</Link>
                         </div>
                       </Popup>

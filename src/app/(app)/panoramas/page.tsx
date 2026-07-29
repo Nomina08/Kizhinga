@@ -3,7 +3,7 @@ import { CatalogPage, TopicCard } from '@/components/content/ContentCards';
 
 export default function PanoramasPage() {
   return (
-    <CatalogPage eyebrow="360°" title="Панорамы" subtitle="Виртуальный обзор дацанов, степи и священных мест">
+    <CatalogPage eyebrow="Обзор" title="Панорамы" subtitle="Широкие виды дацанов, степи и священных мест">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {panoramas.map((p, index) => (
           <TopicCard
@@ -14,7 +14,6 @@ export default function PanoramasPage() {
             subtitle={p.subtitle}
             imageUrl={p.thumbnailUrl}
             href={`/panoramas/${p.id}/`}
-            badge="360°"
             index={index}
           />
         ))}

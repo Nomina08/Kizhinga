@@ -6,6 +6,7 @@ import {
   panoramas,
 } from '@/data/extras';
 import { museums } from '@/data/museums';
+import { CONTENT_PLACEHOLDER_IMAGE } from '@/lib/content';
 import type { FavoriteType } from '@/types';
 
 export interface ContentPreview {
@@ -38,8 +39,8 @@ export function getContentPreview(type: FavoriteType, id: number): ContentPrevie
         type,
         id,
         title: item.title,
-        subtitle: item.date,
-        imageUrl: item.imageUrl,
+        subtitle: item.date ?? '',
+        imageUrl: item.imageUrl ?? CONTENT_PLACEHOLDER_IMAGE,
         href: `/events/${id}/`,
       };
     }

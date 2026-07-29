@@ -10,7 +10,7 @@
 
   var MEDIA_FOLDER = 'public/images/uploads';
   var PUBLIC_FOLDER = '/images/uploads';
-  var LOCAL_PROXY_URL = 'http://localhost:8081/api/v1';
+  var LOCAL_PROXY_URL = 'http://localhost:8082/upload';
   var LOCAL_IMAGE_PROXY_URL = 'http://localhost:8082/fetch-image';
   var REMOTE_IMAGE_PROXY_URL = 'https://coruscating-belekoy-b3081d.netlify.app/fetch-image';
   var DEFAULT_REPO = 'Nomina08/Kizhinga';
@@ -37,7 +37,7 @@
   function normalizeFile(file) {
     if (!file) return null;
     var type = file.type || 'image/png';
-    if (type.indexOf('image/') !== 0) return null;
+    if (type.indexOf('image/') !== 0 && type.indexOf('video/') !== 0) return null;
     var name = file.name;
     if (!name || name === 'blob' || name === 'image.png') {
       var ext = type.split('/')[1] || 'png';
@@ -98,17 +98,14 @@
       reader.onload = function () {
         var base64 = String(reader.result).split(',')[1];
         var safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-        var repoPath = MEDIA_FOLDER + '/' + Date.now() + '-' + safeName;
 
         fetch(LOCAL_PROXY_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            action: 'persistMedia',
-            params: {
-              asset: { path: repoPath, content: base64, encoding: 'base64' },
-              options: { commitMessage: 'Upload ' + safeName },
-            },
+            filename: safeName,
+            content: base64,
+            contentType: file.type || 'image/jpeg',
           }),
         })
           .then(function (response) {
@@ -116,7 +113,7 @@
               if (!response.ok || data.error) {
                 throw new Error(data.error || 'proxy error');
               }
-              resolve(toPublicPath(data.path || repoPath));
+              resolve(data.path || toPublicPath(buildRepoPath(file)));
             });
           })
           .catch(reject);
@@ -196,7 +193,27 @@
     });
   }
 
-  function uploadFromUrlViaServer(url) {
+  function runUploadChain(file, onAddAsset) {
+    if (isLocalHost()) {
+      var attempt = uploadViaLocalProxy(file);
+      if (onAddAsset) {
+        attempt = attempt.catch(function () {
+          return uploadViaCms(file, onAddAsset);
+        });
+      }
+      return attempt;
+    }
+
+    var remoteAttempt = uploadViaGitHub(file);
+    if (onAddAsset) {
+      remoteAttempt = remoteAttempt.catch(function () {
+        return uploadViaCms(file, onAddAsset);
+      });
+    }
+    return remoteAttempt;
+  }
+
+  function uploadFromUrlViaServer(url, onAddAsset) {
     var endpoint = isLocalHost() ? LOCAL_IMAGE_PROXY_URL : REMOTE_IMAGE_PROXY_URL;
 
     return fetch(endpoint, {
@@ -218,7 +235,7 @@
         var file = new File([blob], data.filename || 'web-' + Date.now() + '.jpg', {
           type: data.contentType || 'image/jpeg',
         });
-        return uploadViaGitHub(file);
+        return runUploadChain(file, onAddAsset);
       });
     });
   }
@@ -260,33 +277,14 @@
       var self = this;
       var file = normalizeFile(rawFile);
       if (!file) {
-        this.setError('Можно загружать только изображения (JPG, PNG, WebP…)');
+        this.setError('Можно загружать изображения (JPG, PNG, WebP…) и видео (MP4, WebM…)');
         return;
       }
 
       this.setState({ uploading: true, error: null });
 
       var onAddAsset = this.props.onAddAsset;
-      var attempt;
-
-      if (isLocalHost()) {
-        attempt = uploadViaLocalProxy(file);
-        if (onAddAsset) {
-          attempt = attempt.catch(function () {
-            return uploadViaCms(file, onAddAsset);
-          });
-        }
-        attempt = attempt.catch(function () {
-          return uploadViaGitHub(file);
-        });
-      } else {
-        attempt = uploadViaGitHub(file);
-        if (onAddAsset) {
-          attempt = attempt.catch(function () {
-            return uploadViaCms(file, onAddAsset);
-          });
-        }
-      }
+      var attempt = runUploadChain(file, onAddAsset);
 
       attempt
         .then(function (path) {
@@ -295,7 +293,9 @@
         .catch(function (err) {
           if (isLocalHost()) {
             self.setError(
-              'Не удалось загрузить. Запустите: npm run cms:dev (в отдельном терминале)'
+              err && err.message
+                ? err.message
+                : 'Не удалось загрузить. Запустите: npm run cms:dev (в отдельном терминале)'
             );
           } else {
             self.setError(
@@ -313,14 +313,22 @@
 
       this.setState({ uploading: true, error: null });
 
-      uploadFromUrlViaServer(url)
+      uploadFromUrlViaServer(url, this.props.onAddAsset)
         .then(function (path) {
           self.setPath(path);
         })
-        .catch(function () {
-          self.setError(
-            'Не удалось скачать по ссылке. Скопируйте само изображение: ПКМ → «Копировать изображение» → Ctrl+V.'
-          );
+        .catch(function (err) {
+          if (isLocalHost()) {
+            self.setError(
+              err && err.message
+                ? err.message
+                : 'Не удалось скачать по ссылке. Запустите: npm run cms:dev'
+            );
+          } else {
+            self.setError(
+              'Не удалось скачать по ссылке. Скопируйте само изображение: ПКМ → «Копировать изображение» → Ctrl+V.'
+            );
+          }
         });
     },
 
@@ -436,11 +444,11 @@
           h(
             'p',
             { className: 'paste-image-hint' },
-            uploading ? 'Загрузка…' : 'Или вставьте ссылку на фото ниже · или выберите файл'
+            uploading ? 'Загрузка…' : 'Фото, видео MP4, ссылка ниже · или выберите файл'
           ),
           h('input', {
             type: 'file',
-            accept: 'image/*',
+            accept: 'image/*,video/*',
             className: 'paste-image-file',
             onChange: this.handleFileInput,
             disabled: uploading,

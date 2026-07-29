@@ -8,6 +8,7 @@ export interface Landmark {
   description: string;
   imageUrl: string;
   era: string;
+  gallery?: string[];
   isVisited?: boolean;
 }
 
@@ -59,13 +60,6 @@ export interface TimelineEvent {
   description: string;
 }
 
-export interface GalleryImage {
-  id: number;
-  src: string;
-  title: string;
-  caption: string;
-}
-
 export interface TourBadge {
   id: string;
   title: string;
@@ -87,6 +81,7 @@ export interface Museum {
   imageUrl: string;
   description: string;
   highlights: string[];
+  gallery?: string[];
   type: 'school' | 'local' | 'tourist';
 }
 
@@ -96,16 +91,19 @@ export interface FavoriteItem {
   viewedAt: number;
 }
 
+export type EventCategory = 'holiday' | 'culture' | 'sport' | 'religion';
+
 export interface DistrictEvent {
   id: number;
   title: string;
-  date: string;
-  month: number;
-  location: string;
-  coordinates: [number, number];
-  imageUrl: string;
-  description: string;
-  category: 'holiday' | 'culture' | 'sport' | 'religion';
+  date?: string;
+  month?: number;
+  location?: string;
+  coordinates?: [number, number];
+  imageUrl?: string;
+  description?: string;
+  gallery?: string[];
+  category?: EventCategory;
 }
 
 export interface CultureTopic {
@@ -153,7 +151,7 @@ export interface PopulationPoint {
   population: number;
 }
 
-export const EVENT_CATEGORY_LABELS: Record<DistrictEvent['category'], string> = {
+export const EVENT_CATEGORY_LABELS: Record<EventCategory, string> = {
   holiday: 'Праздник',
   culture: 'Культура',
   sport: 'Спорт',

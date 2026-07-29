@@ -8,8 +8,7 @@ import { EMBLEM_IMAGE } from '@/data/data';
 
 export function HomeDashboard() {
   return (
-    <div className="min-h-full">
-      <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 pt-8 pb-10 md:pt-12 md:pb-14">
+    <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 pt-8 pb-8 md:pt-12 md:pb-10">
         <div className="absolute inset-0 bg-gradient-to-br from-buryat-green/5 via-stone-50 to-buryat-gold/5 dark:from-buryat-green/15 dark:via-transparent dark:to-buryat-gold/5 pointer-events-none" />
         <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-buryat-gold/10 blur-3xl pointer-events-none" />
 
@@ -85,6 +84,5 @@ export function HomeDashboard() {
           </div>
         </div>
       </section>
-    </div>
   );
 }

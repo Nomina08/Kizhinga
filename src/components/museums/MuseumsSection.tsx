@@ -6,6 +6,8 @@ import { museums } from '@/data/museums';
 import { LETOPIS_MUSEUMS_URL } from '@/data/letopis';
 import { CatalogPage, TopicCard } from '@/components/content/ContentCards';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { PhotoCarousel } from '@/components/ui/PhotoCarousel';
+import { CONTENT_PLACEHOLDER_IMAGE } from '@/lib/content';
 
 const typeLabels = {
   school: 'Школьный',
@@ -53,10 +55,12 @@ export function MuseumsCatalog() {
 }
 
 export function MuseumDetail({ museum }: { museum: (typeof museums)[0] }) {
+  const coverImage = museum.imageUrl || CONTENT_PLACEHOLDER_IMAGE;
+
   return (
     <article>
       <div className="relative h-[40vh] min-h-[240px] max-h-[420px] overflow-hidden">
-        <img src={museum.imageUrl} alt="" className="w-full h-full object-cover" />
+        <img src={coverImage} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" />
         <Link href="/museums/" className="absolute top-4 left-4 rounded-2xl bg-black/35 backdrop-blur-md px-4 py-2.5 text-sm text-white hover:bg-black/50">
           ← Музеи
@@ -72,6 +76,10 @@ export function MuseumDetail({ museum }: { museum: (typeof museums)[0] }) {
             {museum.founder && <span>Основатель: {museum.founder}</span>}
           </p>
           <p className="text-body leading-relaxed text-stone-700 dark:text-stone-300 mb-8">{museum.description}</p>
+          {museum.gallery && museum.gallery.length > 0 && (
+            <PhotoCarousel images={museum.gallery} altPrefix={museum.name} className="mb-8" />
+          )}
+          {(museum.highlights?.length ?? 0) > 0 && (
           <div className="glass-panel p-6">
             <h2 className="font-semibold flex items-center gap-2 mb-4">
               <Sparkles className="h-4 w-4 text-buryat-gold" /> Экспозиция
@@ -84,6 +92,7 @@ export function MuseumDetail({ museum }: { museum: (typeof museums)[0] }) {
               ))}
             </ul>
           </div>
+          )}
         </div>
       </div>
     </article>

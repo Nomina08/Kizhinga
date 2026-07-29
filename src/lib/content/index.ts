@@ -5,9 +5,9 @@ import type {
   TourRoute,
   DistrictStat,
   TimelineEvent,
-  GalleryImage,
   Museum,
   DistrictEvent,
+  EventCategory,
   CultureTopic,
   NatureTopic,
   Panorama,
@@ -16,6 +16,8 @@ import type {
 } from '@/types';
 import { assetPath } from '@/lib/assets';
 import rawBundle from '@/generated/content.json';
+
+export const CONTENT_PLACEHOLDER_IMAGE = assetPath('/images/district-emblem.webp');
 
 interface ContentBundle {
   landmarks: Array<Omit<Landmark, 'coordinates'> & { coordinates: [number, number] }>;
@@ -27,7 +29,6 @@ interface ContentBundle {
   panoramas: Panorama[];
   legends: Legend[];
   timeline: TimelineEvent[];
-  gallery: GalleryImage[];
   settings: {
     districtStats: DistrictStat[];
     tourRoutes: TourRoute[];
@@ -48,7 +49,7 @@ interface ContentBundle {
   };
 }
 
-const bundle = rawBundle as ContentBundle;
+const bundle = rawBundle as unknown as ContentBundle;
 
 /** Пути из CMS (/images/uploads/...) и GitHub Pages basePath */
 export function resolveMediaUrl(url: string | undefined): string {
@@ -60,13 +61,14 @@ export function resolveMediaUrl(url: string | undefined): string {
   return assetPath(normalized);
 }
 
-function resolveImages<T extends { imageUrl?: string; photoUrl?: string; src?: string; thumbnailUrl?: string; panoramaImage?: string; gallery?: string[] }>(
+function resolveImages<T extends { imageUrl?: string; photoUrl?: string; src?: string; thumbnailUrl?: string; panoramaImage?: string; poster?: string; gallery?: string[] }>(
   item: T
 ): T {
   const out = { ...item };
   if (out.imageUrl) out.imageUrl = resolveMediaUrl(out.imageUrl);
   if (out.photoUrl) out.photoUrl = resolveMediaUrl(out.photoUrl);
   if (out.src) out.src = resolveMediaUrl(out.src);
+  if (out.poster) out.poster = resolveMediaUrl(out.poster);
   if (out.thumbnailUrl) out.thumbnailUrl = resolveMediaUrl(out.thumbnailUrl);
   if (out.panoramaImage) out.panoramaImage = resolveMediaUrl(out.panoramaImage);
   if (out.gallery) out.gallery = out.gallery.map(resolveMediaUrl);
@@ -79,6 +81,15 @@ function toCoords(item: { latitude?: number; longitude?: number; coordinates?: [
   return [51.82, 109.92];
 }
 
+const EVENT_CATEGORIES = ['holiday', 'culture', 'sport', 'religion'] as const;
+
+function normalizeEventCategory(raw: unknown): EventCategory | undefined {
+  if (typeof raw === 'string' && (EVENT_CATEGORIES as readonly string[]).includes(raw)) {
+    return raw as EventCategory;
+  }
+  return undefined;
+}
+
 export const landmarks: Landmark[] = bundle.landmarks.map((l) =>
   resolveImages({ ...l, coordinates: toCoords(l) })
 );
@@ -89,20 +100,56 @@ export const museums: Museum[] = bundle.museums.map((m) =>
   resolveImages({
     ...m,
     coordinates: toCoords(m),
-    highlights: m.highlights?.map((h) => (typeof h === 'object' && h && 'item' in h ? String((h as { item: string }).item) : String(h))),
+    highlights: (m.highlights ?? []).map((h) =>
+      typeof h === 'object' && h && 'item' in h ? String((h as { item: string }).item) : String(h)
+    ),
   })
 );
 
-export const districtEvents: DistrictEvent[] = bundle.events.map((e) =>
-  resolveImages({ ...e, coordinates: toCoords(e) })
+export const districtEvents: DistrictEvent[] = bundle.events.map((e) => {
+  const item = resolveImages({
+    ...e,
+    gallery: e.gallery ?? [],
+  });
+  const event: DistrictEvent = {
+    id: e.id,
+    title: e.title ?? '',
+    date: e.date || undefined,
+    month: e.month ?? undefined,
+    location: e.location || undefined,
+    description: e.description || undefined,
+    imageUrl: item.imageUrl || undefined,
+    gallery: item.gallery,
+    category: normalizeEventCategory(e.category),
+  };
+  if (e.coordinates?.length === 2) {
+    event.coordinates = toCoords(e);
+  }
+  return event;
+});
+
+export const cultureTopics: CultureTopic[] = bundle.culture.map((topic) =>
+  resolveImages({
+    ...topic,
+    slug: topic.slug || String(topic.id),
+    subtitle: topic.subtitle ?? '',
+    description: topic.description ?? '',
+    gallery: topic.gallery ?? [],
+  })
 );
 
-export const cultureTopics: CultureTopic[] = bundle.culture.map(resolveImages);
-
 export const natureTopics: NatureTopic[] = bundle.nature.map((n) => {
-  const item = resolveImages(n);
-  if (item.coordinates) {
+  const item = resolveImages({
+    ...n,
+    slug: n.slug || String(n.id),
+    subtitle: n.subtitle ?? '',
+    description: n.description ?? '',
+    gallery: n.gallery ?? [],
+  });
+  if (item.coordinates?.length === 2) {
     item.coordinates = toCoords(item);
+  } else {
+    delete item.coordinates;
   }
   return item;
 });
@@ -115,10 +162,6 @@ export const panoramas: Panorama[] = bundle.panoramas.map((p) => {
 
 export const legends: Legend[] = bundle.legends;
 export const timelineEvents: TimelineEvent[] = bundle.timeline;
-
-export const galleryImages: GalleryImage[] = bundle.gallery.map((g) =>
-  resolveImages(g)
-);
 
 export const districtStats: DistrictStat[] = bundle.settings.districtStats ?? [];
 export const tourRoutes: TourRoute[] = (bundle.settings.tourRoutes ?? []).map((route) => ({

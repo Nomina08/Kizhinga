@@ -40,8 +40,9 @@ function normalizeCoords(item) {
 }
 
 function stripLatLng(item) {
-  const { latitude, longitude, ...rest } = item;
-  return normalizeCoords(rest);
+  const normalized = normalizeCoords(item);
+  const { latitude, longitude, ...rest } = normalized;
+  return rest;
 }
 
 function normalizeListField(list, key) {
@@ -49,10 +50,83 @@ function normalizeListField(list, key) {
   return list.map((entry) => (typeof entry === 'object' && entry != null && key in entry ? entry[key] : entry));
 }
 
+function normalizeGallery(item) {
+  if (!item.gallery) return item;
+  const gallery = normalizeListField(item.gallery, 'image').slice(0, 10);
+  return { ...item, gallery };
+}
+
+function normalizeWithGallery(item) {
+  const base = stripLatLng(item);
+  if (base.gallery) {
+    base.gallery = normalizeListField(base.gallery, 'image').slice(0, 10);
+  }
+  return base;
+}
+
+function normalizeLandmark(item) {
+  const base = normalizeWithGallery(item);
+  return {
+    ...base,
+    type: base.type ?? 'culture',
+    era: base.era ?? '',
+    description: base.description ?? '',
+    imageUrl: base.imageUrl ?? '',
+    gallery: base.gallery ?? [],
+  };
+}
+
+function normalizeEvent(item) {
+  const hadCoords = item.latitude != null && item.longitude != null;
+  const base = normalizeWithGallery(item);
+  const out = {
+    ...base,
+    date: base.date ?? '',
+    location: base.location ?? '',
+    description: base.description ?? '',
+    imageUrl: base.imageUrl ?? '',
+    gallery: base.gallery ?? [],
+    category: base.category ?? '',
+  };
+  if (!hadCoords) {
+    delete out.coordinates;
+  }
+  return out;
+}
+
+function normalizeSlugTopic(item) {
+  const base = normalizeGallery(item);
+  return {
+    ...base,
+    slug: base.slug ? String(base.slug) : String(base.id),
+    subtitle: base.subtitle ?? '',
+    description: base.description ?? '',
+    imageUrl: base.imageUrl ?? '',
+    gallery: base.gallery ?? [],
+  };
+}
+
+function normalizeNatureTopic(item) {
+  const hadCoords = item.latitude != null && item.longitude != null;
+  const base = stripLatLng(normalizeSlugTopic(item));
+  if (!hadCoords) {
+    delete base.coordinates;
+  }
+  return base;
+}
+
 function normalizeMuseum(item) {
   const base = stripLatLng(item);
-  if (base.highlights) base.highlights = normalizeListField(base.highlights, 'item');
-  return base;
+  return {
+    ...base,
+    village: base.village ?? '',
+    founded: base.founded ?? '',
+    description: base.description ?? '',
+    imageUrl: base.imageUrl ?? '',
+    type: base.type ?? 'local',
+    highlights: normalizeListField(base.highlights ?? [], 'item'),
+    gallery: base.gallery ? normalizeListField(base.gallery, 'image').slice(0, 10) : [],
+  };
 }
 
 function normalizeSettings(settings) {
@@ -79,30 +153,21 @@ function normalizeSettings(settings) {
   return out;
 }
 
-function normalizeGallery(item) {
-  if (!item.gallery) return item;
-  const gallery = item.gallery.map((g) =>
-    typeof g === 'object' && g != null && 'image' in g ? g.image : g
-  );
-  return { ...item, gallery };
-}
-
 const settingsPath = path.join(contentDir, 'settings', 'site.json');
 const settings = fs.existsSync(settingsPath)
   ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
   : {};
 
 const bundle = {
-  landmarks: sortById(readJsonFiles(path.join(contentDir, 'landmarks')).map(stripLatLng)),
+  landmarks: sortById(readJsonFiles(path.join(contentDir, 'landmarks')).map(normalizeLandmark)),
   people: sortById(readJsonFiles(path.join(contentDir, 'people'))),
   museums: sortById(readJsonFiles(path.join(contentDir, 'museums')).map(normalizeMuseum)),
-  events: sortById(readJsonFiles(path.join(contentDir, 'events')).map(stripLatLng)),
-  culture: sortBySlug(readJsonFiles(path.join(contentDir, 'culture')).map(normalizeGallery)),
-  nature: sortBySlug(readJsonFiles(path.join(contentDir, 'nature')).map((i) => stripLatLng(normalizeGallery(i)))),
+  events: sortById(readJsonFiles(path.join(contentDir, 'events')).map(normalizeEvent)),
+  culture: sortBySlug(readJsonFiles(path.join(contentDir, 'culture')).map(normalizeSlugTopic)),
+  nature: sortBySlug(readJsonFiles(path.join(contentDir, 'nature')).map(normalizeNatureTopic)),
   panoramas: sortById(readJsonFiles(path.join(contentDir, 'panoramas')).map(stripLatLng)),
   legends: sortById(readJsonFiles(path.join(contentDir, 'legends'))),
   timeline: sortById(readJsonFiles(path.join(contentDir, 'timeline'))),
-  gallery: sortById(readJsonFiles(path.join(contentDir, 'gallery'))),
   settings: normalizeSettings(settings),
 };
 
