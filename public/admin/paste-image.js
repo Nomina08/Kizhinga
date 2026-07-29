@@ -1,6 +1,6 @@
 /**
- * Виджет pasteImage — вставка фото из интернета (Ctrl+V), по ссылке, drag-and-drop.
- * Локально: npm run cms:dev. На сайте: загрузка через GitHub API после входа.
+ * Виджет pasteImage — Ctrl+V, ссылка, drag-and-drop, выбор файла.
+ * Локально: npm run cms:dev. На GitHub Pages: GitHub API + прямые ссылки.
  */
 (function () {
   if (typeof CMS === 'undefined' || typeof createClass === 'undefined' || typeof h === 'undefined') {
@@ -15,6 +15,11 @@
   var REMOTE_IMAGE_PROXY_URL = 'https://coruscating-belekoy-b3081d.netlify.app/fetch-image';
   var DEFAULT_REPO = 'Nomina08/Kizhinga';
   var DEFAULT_BRANCH = 'main';
+
+  var SITE_BASE = (function () {
+    var match = window.location.pathname.match(/^(\/[^/]+)\/admin/);
+    return match ? match[1] : '';
+  })();
 
   function isLocalHost() {
     var host = window.location.hostname;
@@ -32,6 +37,15 @@
       }
     } catch (e) {}
     return { repo: DEFAULT_REPO, branch: DEFAULT_BRANCH };
+  }
+
+  function resolvePreviewUrl(path) {
+    if (!path || typeof path !== 'string') return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    if (path.charAt(0) === '/' && SITE_BASE && path.indexOf(SITE_BASE + '/') !== 0) {
+      return SITE_BASE + path;
+    }
+    return path;
   }
 
   function normalizeFile(file) {
@@ -58,75 +72,50 @@
     return PUBLIC_FOLDER + '/' + normalized.split('/').pop();
   }
 
-  function getGithubToken() {
-    try {
-      var stored = localStorage.getItem('decap-cms-user');
-      if (stored) {
-        var user = JSON.parse(stored);
-        if (user && typeof user.token === 'string' && user.token.length > 10) {
-          return user.token;
-        }
-      }
-    } catch (e) {}
-
-    try {
-      if (window.CMS && typeof window.CMS.getBackend === 'function') {
-        var backend = window.CMS.getBackend();
-        if (backend && typeof backend.getToken === 'function') {
-          var token = backend.getToken();
-          if (token && typeof token.then === 'function') {
-            return null;
-          }
-          if (typeof token === 'string' && token.length > 10) {
-            return token;
-          }
-        }
-      }
-    } catch (e) {}
-
-    try {
-      for (var i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i);
-        try {
-          var raw = localStorage.getItem(key);
-          if (!raw || raw.charAt(0) !== '{') continue;
-          var data = JSON.parse(raw);
-          if (data && typeof data.token === 'string' && data.token.length > 10) {
-            return data.token;
-          }
-          if (data && typeof data.access_token === 'string' && data.access_token.length > 10) {
-            return data.access_token;
-          }
-        } catch (e) {}
-      }
-    } catch (e) {}
-    return null;
-  }
-
   function sanitizePublicPath(path) {
     if (!path || typeof path !== 'string') return '';
     if (path.indexOf('[object Object]') !== -1) return '';
-    return path;
+    return path.trim();
   }
 
-  function assetPath(asset) {
-    if (!asset) return '';
-    if (typeof asset === 'string') return asset;
-    try {
-      if (asset.get && typeof asset.get === 'function') {
-        var direct = asset.get('path');
-        if (typeof direct === 'string') return direct;
-        if (direct && direct.get && typeof direct.get === 'function') {
-          var nested = direct.get('path');
-          if (typeof nested === 'string') return nested;
+  function getGithubTokenAsync() {
+    return new Promise(function (resolve) {
+      try {
+        var stored = localStorage.getItem('decap-cms-user');
+        if (stored) {
+          var user = JSON.parse(stored);
+          if (user && typeof user.token === 'string' && user.token.length > 10) {
+            resolve(user.token);
+            return;
+          }
         }
-        var url = asset.get('url');
-        if (typeof url === 'string') return url;
-      }
-    } catch (e) {}
-    if (typeof asset.path === 'string') return asset.path;
-    if (typeof asset.url === 'string') return asset.url;
-    return '';
+      } catch (e) {}
+
+      try {
+        if (window.CMS && typeof window.CMS.getBackend === 'function') {
+          var backend = window.CMS.getBackend();
+          if (backend && typeof backend.getToken === 'function') {
+            var token = backend.getToken();
+            if (token && typeof token.then === 'function') {
+              token
+                .then(function (t) {
+                  resolve(typeof t === 'string' && t.length > 10 ? t : null);
+                })
+                .catch(function () {
+                  resolve(null);
+                });
+              return;
+            }
+            if (typeof token === 'string' && token.length > 10) {
+              resolve(token);
+              return;
+            }
+          }
+        }
+      } catch (e) {}
+
+      resolve(null);
+    });
   }
 
   function buildRepoPath(file) {
@@ -155,7 +144,7 @@
               if (!response.ok || data.error) {
                 throw new Error(data.error || 'proxy error');
               }
-              resolve(data.path || toPublicPath(buildRepoPath(file)));
+              resolve(sanitizePublicPath(data.path || toPublicPath(buildRepoPath(file))));
             });
           })
           .catch(reject);
@@ -167,24 +156,21 @@
     });
   }
 
-  function uploadViaGitHub(file) {
-    return new Promise(function (resolve, reject) {
-      var token = getGithubToken();
+  function uploadViaGitHubAsync(file) {
+    return getGithubTokenAsync().then(function (token) {
       if (!token) {
-        reject(new Error('Войдите через GitHub в админке'));
-        return;
+        throw new Error('Войдите через GitHub в админке (кнопка сверху)');
       }
 
       var repoConfig = getRepoConfig();
       var repoPath = buildRepoPath(file);
-      var reader = new FileReader();
 
-      reader.onload = function () {
-        var base64 = String(reader.result).split(',')[1];
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          var base64 = String(reader.result).split(',')[1];
 
-        fetch(
-          'https://api.github.com/repos/' + repoConfig.repo + '/contents/' + repoPath,
-          {
+          fetch('https://api.github.com/repos/' + repoConfig.repo + '/contents/' + repoPath, {
             method: 'PUT',
             headers: {
               Authorization: 'Bearer ' + token,
@@ -196,23 +182,22 @@
               content: base64,
               branch: repoConfig.branch,
             }),
-          }
-        )
-          .then(function (response) {
-            return response.json().then(function (data) {
-              if (!response.ok || !data.content) {
-                throw new Error(data.message || 'GitHub upload failed');
-              }
-              resolve(toPublicPath(repoPath));
-            });
           })
-          .catch(reject);
-      };
-
-      reader.onerror = function () {
-        reject(new Error('Не удалось прочитать файл'));
-      };
-      reader.readAsDataURL(file);
+            .then(function (response) {
+              return response.json().then(function (data) {
+                if (!response.ok || !data.content) {
+                  throw new Error(data.message || 'Не удалось загрузить на GitHub');
+                }
+                resolve(toPublicPath(repoPath));
+              });
+            })
+            .catch(reject);
+        };
+        reader.onerror = function () {
+          reject(new Error('Не удалось прочитать файл'));
+        };
+        reader.readAsDataURL(file);
+      });
     });
   }
 
@@ -224,35 +209,30 @@
     var safeName = (file.name || 'image.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
     var finalName = Date.now() + '-' + safeName;
     var uploadFile =
-      file.name === finalName
-        ? file
-        : new File([file], finalName, { type: file.type || 'image/jpeg' });
+      file.name === finalName ? file : new File([file], finalName, { type: file.type || 'image/jpeg' });
+    var expectedPath = PUBLIC_FOLDER + '/' + finalName;
 
-    return Promise.resolve(onAddAsset(uploadFile)).then(function (asset) {
-      var path = sanitizePublicPath(toPublicPath(assetPath(asset)));
-      if (path) return path;
-      return PUBLIC_FOLDER + '/' + finalName;
+    return Promise.resolve(onAddAsset(uploadFile)).then(function () {
+      return expectedPath;
     });
   }
 
   function runUploadChain(file, onAddAsset) {
     if (isLocalHost()) {
-      var attempt = uploadViaLocalProxy(file);
-      if (onAddAsset) {
-        attempt = attempt.catch(function () {
-          return uploadViaCms(file, onAddAsset);
-        });
-      }
-      return attempt;
-    }
-
-    var remoteAttempt = uploadViaGitHub(file);
-    if (onAddAsset) {
-      remoteAttempt = remoteAttempt.catch(function () {
-        return uploadViaCms(file, onAddAsset);
+      return uploadViaLocalProxy(file).catch(function () {
+        if (onAddAsset) return uploadViaCms(file, onAddAsset);
+        return uploadViaGitHubAsync(file);
       });
     }
-    return remoteAttempt;
+
+    return uploadViaGitHubAsync(file).catch(function (githubErr) {
+      if (onAddAsset) {
+        return uploadViaCms(file, onAddAsset).catch(function () {
+          throw githubErr;
+        });
+      }
+      throw githubErr;
+    });
   }
 
   function uploadFromUrlViaServer(url, onAddAsset) {
@@ -268,7 +248,7 @@
           throw new Error(data.error || 'download failed');
         }
 
-        if (data.path) return data.path;
+        if (data.path) return sanitizePublicPath(data.path);
 
         var binary = atob(data.base64);
         var bytes = new Uint8Array(binary.length);
@@ -279,6 +259,21 @@
         });
         return runUploadChain(file, onAddAsset);
       });
+    });
+  }
+
+  function uploadFromUrl(url, onAddAsset) {
+    var trimmed = (url || '').trim();
+    if (!trimmed || !/^https?:\/\//i.test(trimmed)) {
+      return Promise.reject(new Error('Вставьте ссылку, начинающуюся с http:// или https://'));
+    }
+
+    if (isLocalHost()) {
+      return uploadFromUrlViaServer(trimmed, onAddAsset);
+    }
+
+    return uploadFromUrlViaServer(trimmed, onAddAsset).catch(function () {
+      return trimmed;
     });
   }
 
@@ -306,10 +301,27 @@
       document.removeEventListener('paste', this._docPaste);
     },
 
+    getDisplayUrl: function (value) {
+      if (!value) return '';
+      if (this.props.getAsset) {
+        try {
+          var asset = this.props.getAsset(value, this.props.field);
+          if (asset) {
+            if (typeof asset.toString === 'function') {
+              var s = asset.toString();
+              if (s && s.indexOf('[object') === -1) return resolvePreviewUrl(s);
+            }
+            if (asset.url) return resolvePreviewUrl(String(asset.url));
+          }
+        } catch (e) {}
+      }
+      return resolvePreviewUrl(value);
+    },
+
     setPath: function (path) {
       var safePath = sanitizePublicPath(path);
       if (!safePath) {
-        this.setError('Не удалось сохранить путь к фото. Попробуйте «Выбрать файл» или Ctrl+V.');
+        this.setError('Не удалось сохранить фото. Войдите через GitHub и попробуйте «Выбрать файл» или Ctrl+V.');
         return;
       }
       this.props.onChange(safePath);
@@ -330,10 +342,7 @@
 
       this.setState({ uploading: true, error: null });
 
-      var onAddAsset = this.props.onAddAsset;
-      var attempt = runUploadChain(file, onAddAsset);
-
-      attempt
+      runUploadChain(file, this.props.onAddAsset)
         .then(function (path) {
           self.setPath(path);
         })
@@ -342,44 +351,34 @@
             self.setError(
               err && err.message
                 ? err.message
-                : 'Не удалось загрузить. Запустите: npm run cms:dev (в отдельном терминале)'
+                : 'Не удалось загрузить. Запустите: npm run cms:dev'
             );
           } else {
             self.setError(
               err && err.message
                 ? err.message
-                : 'Не удалось загрузить. Проверьте вход через GitHub и попробуйте «Выбрать файл».'
+                : 'Не удалось загрузить. Нажмите «Войти через GitHub» и повторите.'
             );
           }
         });
     },
 
-    uploadFromUrl: function (url) {
+    uploadFromUrlHandler: function (url) {
       var self = this;
       if (!url) return;
 
       this.setState({ uploading: true, error: null });
 
-      uploadFromUrlViaServer(url, this.props.onAddAsset)
+      uploadFromUrl(url, this.props.onAddAsset)
         .then(function (path) {
           self.setPath(path);
         })
         .catch(function (err) {
-          if (!isLocalHost() && /^https?:\/\//i.test(url)) {
-            self.setPath(url);
-            return;
-          }
-          if (isLocalHost()) {
-            self.setError(
-              err && err.message
-                ? err.message
-                : 'Не удалось скачать по ссылке. Запустите: npm run cms:dev'
-            );
-          } else {
-            self.setError(
-              'Не удалось скачать по ссылке. Вставьте прямую ссылку на .jpg/.png или скопируйте изображение: ПКМ → «Копировать изображение» → Ctrl+V.'
-            );
-          }
+          self.setError(
+            err && err.message
+              ? err.message
+              : 'Не удалось загрузить по ссылке. Скопируйте само изображение (Ctrl+V) или выберите файл.'
+          );
         });
     },
 
@@ -404,14 +403,14 @@
       var htmlUrl = extractImageUrlFromHtml(cd.getData('text/html'));
       if (htmlUrl) {
         e.preventDefault();
-        this.uploadFromUrl(htmlUrl);
+        this.uploadFromUrlHandler(htmlUrl);
         return;
       }
 
       var text = (cd.getData('text/plain') || '').trim();
       if (text && /^https?:\/\//i.test(text)) {
         e.preventDefault();
-        this.uploadFromUrl(text);
+        this.uploadFromUrlHandler(text);
       }
     },
 
@@ -432,9 +431,16 @@
     },
 
     handleFileInput: function (e) {
+      e.stopPropagation();
       var file = e.target.files && e.target.files[0];
       if (file) this.uploadFile(file);
       e.target.value = '';
+    },
+
+    handlePickFile: function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (this._fileInput) this._fileInput.click();
     },
 
     handleUrlChange: function (e) {
@@ -443,7 +449,7 @@
 
     handleUrlSubmit: function (e) {
       e.preventDefault();
-      this.uploadFromUrl(this.state.urlInput.trim());
+      this.uploadFromUrlHandler(this.state.urlInput.trim());
     },
 
     clearImage: function () {
@@ -466,6 +472,8 @@
       var error = this.state.error;
       var dragOver = this.state.dragOver;
       var local = isLocalHost();
+      var previewUrl = this.getDisplayUrl(value);
+      var self = this;
 
       return h(
         'div',
@@ -483,27 +491,42 @@
             onBlur: this.blurZone,
             tabIndex: 0,
           },
-          value
-            ? h('img', { className: 'paste-image-preview', src: value, alt: '' })
+          previewUrl
+            ? h('img', { className: 'paste-image-preview', src: previewUrl, alt: '' })
             : h(
                 'div',
                 { className: 'paste-image-placeholder' },
-                h('strong', {}, '1. ПКМ по фото в интернете → «Копировать изображение»'),
+                h('strong', {}, '1. ПКМ по фото → «Копировать изображение»'),
                 h('br'),
                 h('strong', {}, '2. Кликните сюда → Ctrl+V')
               ),
           h(
             'p',
             { className: 'paste-image-hint' },
-            uploading ? 'Загрузка…' : 'Фото, видео MP4, ссылка ниже · или выберите файл'
+            uploading ? 'Загрузка…' : 'Ctrl+V · перетащить · выбрать файл · ссылка ниже'
           ),
           h('input', {
+            ref: function (el) {
+              self._fileInput = el;
+            },
             type: 'file',
             accept: 'image/*,video/*',
             className: 'paste-image-file',
+            style: { display: 'none' },
             onChange: this.handleFileInput,
             disabled: uploading,
-          })
+          }),
+          h(
+            'button',
+            {
+              type: 'button',
+              className: 'paste-image-url-btn',
+              style: { marginTop: '10px' },
+              onClick: this.handlePickFile,
+              disabled: uploading,
+            },
+            'Выбрать файл'
+          )
         ),
         h(
           'form',
@@ -523,7 +546,7 @@
               className: 'paste-image-url-btn',
               disabled: uploading || !this.state.urlInput,
             },
-            'Загрузить по ссылке'
+            'Использовать ссылку'
           )
         ),
         value
@@ -540,10 +563,13 @@
           : null,
         error ? h('p', { className: 'paste-image-error' }, error) : null,
         !error && local
+          ? h('p', { className: 'paste-image-hint' }, 'Локально: npm run cms:dev в отдельном терминале')
+          : null,
+        !error && !local
           ? h(
               'p',
               { className: 'paste-image-hint' },
-              'Локально нужен терминал: npm run cms:dev'
+              'После загрузки нажмите Publish. По ссылке фото сохранится как URL (работает на сайте).'
             )
           : null
       );
