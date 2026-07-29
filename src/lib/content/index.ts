@@ -75,10 +75,29 @@ function resolveImages<T extends { imageUrl?: string; photoUrl?: string; src?: s
   return out;
 }
 
+function parseCoord(value: unknown): number | null {
+  if (value == null || value === '') return null;
+  const n = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
 function toCoords(item: { latitude?: number; longitude?: number; coordinates?: [number, number] }): [number, number] {
-  if (item.coordinates?.length === 2) return item.coordinates;
-  if (item.latitude != null && item.longitude != null) return [item.latitude, item.longitude];
+  if (item.coordinates?.length === 2) {
+    const a = parseCoord(item.coordinates[0]);
+    const b = parseCoord(item.coordinates[1]);
+    if (a != null && b != null) return [a, b];
+  }
+  const lat = parseCoord(item.latitude);
+  const lng = parseCoord(item.longitude);
+  if (lat != null && lng != null) return [lat, lng];
   return [51.82, 109.92];
+}
+
+function hasValidCoords(item: { latitude?: number; longitude?: number; coordinates?: [number, number] }): boolean {
+  if (item.coordinates?.length === 2) {
+    return parseCoord(item.coordinates[0]) != null && parseCoord(item.coordinates[1]) != null;
+  }
+  return parseCoord(item.latitude) != null && parseCoord(item.longitude) != null;
 }
 
 const EVENT_CATEGORIES = ['holiday', 'culture', 'sport', 'religion'] as const;
@@ -122,7 +141,7 @@ export const districtEvents: DistrictEvent[] = bundle.events.map((e) => {
     gallery: item.gallery,
     category: normalizeEventCategory(e.category),
   };
-  if (e.coordinates?.length === 2) {
+  if (hasValidCoords(e)) {
     event.coordinates = toCoords(e);
   }
   return event;
@@ -146,7 +165,7 @@ export const natureTopics: NatureTopic[] = bundle.nature.map((n) => {
     description: n.description ?? '',
     gallery: n.gallery ?? [],
   });
-  if (item.coordinates?.length === 2) {
+  if (hasValidCoords(item)) {
     item.coordinates = toCoords(item);
   } else {
     delete item.coordinates;

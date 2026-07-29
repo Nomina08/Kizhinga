@@ -17,5 +17,10 @@ export function formatEventDetailSubtitle(event: DistrictEvent): string {
 }
 
 export function eventHasCoordinates(event: DistrictEvent): boolean {
-  return Array.isArray(event.coordinates) && event.coordinates.length === 2;
+  return (
+    Array.isArray(event.coordinates) &&
+    event.coordinates.length === 2 &&
+    Number.isFinite(event.coordinates[0]) &&
+    Number.isFinite(event.coordinates[1])
+  );
 }

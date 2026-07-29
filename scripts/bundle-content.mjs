@@ -23,20 +23,35 @@ function sortBySlug(items) {
   return items.sort((a, b) => (a.slug ?? '').localeCompare(b.slug ?? ''));
 }
 
+function parseCoord(value) {
+  if (value == null || value === '') return null;
+  const n = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function hasValidCoords(item) {
+  const lat = parseCoord(item.latitude);
+  const lng = parseCoord(item.longitude);
+  if (lat != null && lng != null) return true;
+  if (!Array.isArray(item.coordinates) || item.coordinates.length !== 2) return false;
+  return parseCoord(item.coordinates[0]) != null && parseCoord(item.coordinates[1]) != null;
+}
+
 function normalizeCoords(item) {
+  const lat = parseCoord(item.latitude);
+  const lng = parseCoord(item.longitude);
+  if (lat != null && lng != null) {
+    return { ...item, coordinates: [lat, lng] };
+  }
   if (Array.isArray(item.coordinates) && item.coordinates.length === 2) {
-    return item;
+    const a = parseCoord(item.coordinates[0]);
+    const b = parseCoord(item.coordinates[1]);
+    if (a != null && b != null) {
+      return { ...item, coordinates: [a, b] };
+    }
   }
-  if (item.latitude != null && item.longitude != null) {
-    return { ...item, coordinates: [item.latitude, item.longitude] };
-  }
-  if (Array.isArray(item.coordinates)) {
-    const coords = item.coordinates.map((c) =>
-      typeof c === 'object' && c != null && 'coord' in c ? c.coord : c
-    );
-    return { ...item, coordinates: coords };
-  }
-  return item;
+  const { coordinates, latitude, longitude, ...rest } = item;
+  return rest;
 }
 
 function stripLatLng(item) {
@@ -77,7 +92,7 @@ function normalizeLandmark(item) {
 }
 
 function normalizeEvent(item) {
-  const hadCoords = item.latitude != null && item.longitude != null;
+  const hadCoords = hasValidCoords(item);
   const base = normalizeWithGallery(item);
   const out = {
     ...base,
@@ -107,7 +122,7 @@ function normalizeSlugTopic(item) {
 }
 
 function normalizeNatureTopic(item) {
-  const hadCoords = item.latitude != null && item.longitude != null;
+  const hadCoords = hasValidCoords(item);
   const base = stripLatLng(normalizeSlugTopic(item));
   if (!hadCoords) {
     delete base.coordinates;
